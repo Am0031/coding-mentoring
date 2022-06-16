@@ -1,0 +1,72 @@
+[
+  {
+    "email": "john@sample.com",
+    "username": "john412",
+    "type": "mentor",
+    "frameworks": ["javascript", "express", "html"],
+    "personalGoal": "casual learning",
+    "learningFormat": ["email", "slack", "in person"],
+    "availability": [
+      ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      ["morning", "evening"]
+    ],
+    "preferedTeachingLevel": "beginner",
+    "location": "birmingham",
+    "mentees": [
+      {
+        "name": "jay",
+        "location": "birmingham",
+        "status": "current",
+        "frameworks": ["javascript", "express", "html"]
+      },
+      {
+        "name": "linda",
+        "location": "birmingham",
+        "status": "current",
+        "frameworks": ["javascript", "express", "html"]
+      },
+      {
+        "name": "jenny",
+        "location": "birmingham",
+        "status": "past",
+        "frameworks": ["javascript", "express", "html"]
+      },
+      {
+        "name": "henry",
+        "location": "birmingham",
+        "status": "past",
+        "frameworks": ["javascript", "express", "html"]
+      }
+    ],
+    "tasks": [
+      {
+        "mentee": "jay",
+        "framework": "express",
+        "taskName": "express server",
+        "status": "not started",
+        "deadline": "29/06/2022",
+        "resource": []
+      },
+      {
+        "mentee": "jay",
+        "framework": "css",
+        "taskName": "bootstrap practice",
+        "status": "completed",
+        "deadline": "29/06/2022",
+        "completionDate": "20/06/2022",
+        "resource": [],
+        "feedback": "great job!"
+      },
+      {
+        "mentee": "linda",
+        "framework": "css",
+        "taskName": "bootstrap practice",
+        "status": "not started",
+        "deadline": "29/06/2022",
+        "resource": []
+      }
+    ],
+
+    "rating": 9.3
+  }
+]
