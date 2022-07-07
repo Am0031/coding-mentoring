@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
 
-class MentorFrameworks extends Model {}
+class AssignedTasks extends Model {}
 
-MentorFrameworks.init(
+AssignedTasks.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -20,6 +20,14 @@ MentorFrameworks.init(
         key: "id",
       },
     },
+    menteeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Mentee,
+        key: "id",
+      },
+    },
     frameworkId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -28,8 +36,24 @@ MentorFrameworks.init(
         key: "id",
       },
     },
-    level: {
+    taskId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Tasks,
+        key: "id",
+      },
+    },
+    taskDeadline: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    taskStatus: {
       type: DataTypes.STRING,
+      defaultValue: "Not Started",
+    },
+    taskPoints: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
@@ -38,8 +62,8 @@ MentorFrameworks.init(
     timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: "mentorFrameworks",
+    modelName: "assignedTasks",
   }
 );
 
-module.exports = MentorFrameworks;
+module.exports = AssignedTasks;
