@@ -11,4 +11,5 @@ const options = { host: DB_HOST, dialect: "mysql", port: 3306, logging: false };
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, options);
 
+
 module.exports = sequelize;

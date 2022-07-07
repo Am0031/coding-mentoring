@@ -10,7 +10,7 @@
     "inquirer": "^9.0.0",
     "jest": "^28.1.2",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.19",
+    "path": "^0.12.7",
     "sequelize": "^6.21.2",
     "sqlite3": "^5.0.8"
   },
@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/Am0031/coding-mentoring/issues"
   },
-  "homepage": "https://github.com/Am0031/coding-mentoring#readme"
+  "homepage": "https://github.com/Am0031/coding-mentoring#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
 }
