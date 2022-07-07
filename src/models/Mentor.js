@@ -41,14 +41,23 @@ Mentor.init(
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: [2, 50],
+      },
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: [2, 50],
+      },
     },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: [2, 50],
+      },
     },
     email: {
       type: DataTypes.STRING,
@@ -60,6 +69,9 @@ Mentor.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: [2, 50],
+      },
     },
     location: {
       type: DataTypes.STRING,
