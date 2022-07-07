@@ -42,6 +42,6 @@ const menteeData = [
   },
 ];
 
-const seeMentees = () => Mentee.bulkCreate(menteeData);
+const seedMentees = () => Mentee.bulkCreate(menteeData);
 
-module.exports = seeMentees;
+module.exports = seedMentees;
