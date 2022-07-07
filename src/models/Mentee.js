@@ -81,7 +81,7 @@ Mentee.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    leaingFormat: {
+    learningFormat: {
       type: DataTypes.STRING,
       allowNull: false,
     },
