@@ -12,7 +12,7 @@ Frameworks.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    framework: {
+    frameworkName: {
       type: DataTypes.STRING,
       allowNull: false,
     },

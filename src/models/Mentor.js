@@ -86,7 +86,7 @@ Mentor.init(
       allowNull: false,
     },
     personalGoal: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     profileImageUrl: {
