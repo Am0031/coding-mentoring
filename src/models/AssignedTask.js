@@ -4,6 +4,7 @@ const sequelize = require("../config/connection");
 const Framework = require("./Framework");
 const Mentee = require("./Mentee");
 const Mentor = require("./Mentor");
+const Partnership = require("./Partnership");
 const Task = require("./Task");
 
 class AssignedTask extends Model {}
@@ -20,24 +21,24 @@ AssignedTask.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Mentor,
-        key: "id",
+        model: Partnership,
+        key: "mentorId",
       },
     },
     menteeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Mentee,
-        key: "id",
+        model: Partnership,
+        key: "menteeId",
       },
     },
     frameworkId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Framework,
-        key: "id",
+        model: Task,
+        key: "frameworkId",
       },
     },
     taskId: {

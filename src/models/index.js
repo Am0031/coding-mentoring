@@ -45,23 +45,14 @@ Task.belongsTo(Framework, {
   foreignKey: "frameworkId",
 });
 
-// Framework.hasMany(AssignedTask, {
-//   foreignKey: "frameworkId",
-// });
+Task.belongsToMany(Partnership, {
+  through: AssignedTask,
+});
 
-// AssignedTask.belongsTo(Framework, {
-//   foreignKey: "frameworkId",
-//   onDelete: "CASCADE",
-// });
-
-// Mentor.hasMany(AssignedTask, {
-//   foreignKey: "mentorId",
-// });
-
-// AssignedTask.belongsTo(Mentor, {
-//   foreignKey: "mentorId",
-//   onDelete: "CASCADE",
-// });
+Partnership.belongsToMany(Task, {
+  through: AssignedTask,
+  onDelete: "CASCADE",
+});
 
 // Mentee.hasMany(AssignedTask, {
 //   foreignKey: "menteeId",
