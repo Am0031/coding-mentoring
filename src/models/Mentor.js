@@ -105,20 +105,6 @@ Mentor.init(
         isUrl: true,
       },
     },
-    linkedInUrl: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      validate: {
-        isUrl: true,
-      },
-    },
-    portfolioUrl: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      validate: {
-        isUrl: true,
-      },
-    },
   },
   {
     sequelize,

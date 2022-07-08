@@ -1,6 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
+const Framework = require("./Framework");
+const Mentee = require("./Mentee");
+const Mentor = require("./Mentor");
+const Task = require("./Task");
 
 class AssignedTask extends Model {}
 
@@ -55,6 +59,10 @@ AssignedTask.init(
     taskPoints: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: Task,
+        key: "points",
+      },
     },
   },
   {

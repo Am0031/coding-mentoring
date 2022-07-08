@@ -54,32 +54,30 @@ Task.belongsTo(Framework, {
 //   onDelete: "CASCADE",
 // });
 
-Mentor.hasMany(AssignedTask, {
-  foreignKey: "mentorId",
-});
+// Mentor.hasMany(AssignedTask, {
+//   foreignKey: "mentorId",
+// });
 
-AssignedTask.belongsTo(Mentor, {
-  foreignKey: "mentorId",
-  onDelete: "CASCADE",
-});
+// AssignedTask.belongsTo(Mentor, {
+//   foreignKey: "mentorId",
+//   onDelete: "CASCADE",
+// });
 
-Mentee.hasMany(AssignedTask, {
-  foreignKey: "menteeId",
-});
+// Mentee.hasMany(AssignedTask, {
+//   foreignKey: "menteeId",
+// });
 
-AssignedTask.belongsTo(Mentee, {
-  foreignKey: "menteeId",
-  onDelete: "CASCADE",
-});
-
-Task.hasMany(AssignedTask, {
-  foreignKey: "taskId",
-});
-
-AssignedTask.belongsTo(Task, {
-  foreignKey: "taskId",
-  onDelete: "CASCADE",
-});
+// AssignedTask.belongsTo(Mentee, {
+//   foreignKey: "menteeId",
+//   onDelete: "CASCADE",
+// });
+// Task.hasMany(AssignedTask, {
+//   foreignKey: "taskId",
+// });
+// AssignedTask.belongsTo(Task, {
+//   foreignKey: "taskId",
+//   onDelete: "CASCADE",
+// });
 
 module.exports = {
   AssignedTask,

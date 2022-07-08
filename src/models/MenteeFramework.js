@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
+const Framework = require("./Framework");
+const Mentee = require("./Mentee");
 
 class MenteeFramework extends Model {}
 

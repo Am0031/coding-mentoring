@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
+const Framework = require("./Framework");
 
 class Task extends Model {}
 
@@ -17,7 +18,7 @@ Task.init(
       allowNull: false,
     },
     taskDescription: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     taskLevel: {
@@ -32,12 +33,9 @@ Task.init(
         key: "id",
       },
     },
-    taskURL: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        isUrl: true,
-      },
+    points: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     resourceURL: {
       type: DataTypes.STRING,

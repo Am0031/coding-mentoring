@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
+const Framework = require("./Framework");
+const Mentor = require("./Mentor");
 
 class MentorFramework extends Model {}
 

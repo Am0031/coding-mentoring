@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
+const Mentee = require("./Mentee");
+const Mentor = require("./Mentor");
 
 class Partnership extends Model {}
 
