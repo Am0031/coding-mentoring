@@ -57,7 +57,6 @@ Mentor.init(
       allowNull: false,
       validate: {
         len: [2, 50],
-        unique: true,
       },
     },
     email: {
@@ -65,7 +64,6 @@ Mentor.init(
       allowNull: false,
       validate: {
         isEmail: true,
-        unique: true,
       },
     },
     password: {

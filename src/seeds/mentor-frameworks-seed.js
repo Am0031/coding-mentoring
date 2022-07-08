@@ -2,38 +2,38 @@ const { MentorFramework } = require("../models");
 
 const mentorFrameworkData = [
   {
-    mentorId: 1,
-    frameworkId: 2,
+    mentor_id: 1,
+    framework_id: 2,
     level: "guide",
   },
   {
-    mentorId: 2,
-    frameworkId: 4,
+    mentor_id: 2,
+    framework_id: 4,
     level: "master",
   },
   {
-    mentorId: 2,
-    frameworkId: 5,
+    mentor_id: 2,
+    framework_id: 5,
     level: "master",
   },
   {
-    mentorId: 1,
-    frameworkId: 3,
+    mentor_id: 1,
+    framework_id: 3,
     level: "guru",
   },
   {
-    mentorId: 3,
-    frameworkId: 1,
+    mentor_id: 3,
+    framework_id: 1,
     level: "guru",
   },
   {
-    mentorId: 3,
-    frameworkId: 2,
+    mentor_id: 3,
+    framework_id: 2,
     level: "guru",
   },
   {
-    mentorId: 3,
-    frameworkId: 3,
+    mentor_id: 3,
+    framework_id: 3,
     level: "guru",
   },
 ];

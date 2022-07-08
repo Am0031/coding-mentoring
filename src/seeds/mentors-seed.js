@@ -4,7 +4,7 @@ const mentorData = [
   {
     firstName: "Bob",
     lastName: "Smith",
-    userName: "bobsmith",
+    username: "bobsmith",
     email: "bobsmith@example.org",
     password: "password987",
     location: "Birmingham",
@@ -18,7 +18,7 @@ const mentorData = [
   {
     firstName: "Alice",
     lastName: "Smith",
-    userName: "alicesmith",
+    username: "alicesmith",
     email: "alicesmith@example.org",
     password: "password666",
     location: "London",
@@ -32,7 +32,7 @@ const mentorData = [
   {
     firstName: "Mary",
     lastName: "Black",
-    userName: "maryberry",
+    username: "maryberry",
     email: "maryblack@example.org",
     password: "password601",
     location: "York",

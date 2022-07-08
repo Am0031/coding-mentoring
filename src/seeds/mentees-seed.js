@@ -4,7 +4,7 @@ const menteeData = [
   {
     firstName: "Cherelle",
     lastName: "Simpson",
-    userName: "C-Sim",
+    username: "C-Sim",
     email: "cherellesimpson@example.org",
     password: "password123",
     location: "Birmingham",
@@ -18,7 +18,7 @@ const menteeData = [
   {
     firstName: "Ricky",
     lastName: "Green",
-    userName: "rickygreen",
+    username: "rickygreen",
     email: "rickygreen@example.org",
     password: "password345",
     location: "Kettering",
@@ -32,7 +32,7 @@ const menteeData = [
   {
     firstName: "Abdi",
     lastName: "Osman",
-    userName: "osman",
+    username: "osman",
     email: "aosman@example.org",
     password: "password456",
     location: "Reading",

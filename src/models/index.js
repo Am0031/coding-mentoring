@@ -9,66 +9,51 @@ const Task = require("./Task");
 
 Mentor.belongsToMany(Mentee, {
   through: Partnership,
-  foreignKey: "mentorId",
+  foreignKey: "mentor_id",
 });
 
 Mentee.belongsToMany(Mentor, {
   through: Partnership,
-  foreignKey: "menteeId",
+  foreignKey: "mentee_id",
 });
 
 Mentor.belongsToMany(Framework, {
   through: MentorFramework,
-  foreignKey: "mentorId",
+  foreignKey: "mentor_id",
 });
 
 Framework.belongsToMany(Mentor, {
   through: MentorFramework,
-  foreignKey: "frameworkId",
+  foreignKey: "framework_id",
 });
 
 Mentee.belongsToMany(Framework, {
   through: MenteeFramework,
-  foreignKey: "menteeId",
+  foreignKey: "mentee_id",
 });
 
 Framework.belongsToMany(Mentee, {
   through: MenteeFramework,
-  foreignKey: "frameworkId",
+  foreignKey: "framework_id",
 });
 
 Framework.hasMany(Task, {
-  foreignKey: "frameworkId",
+  foreignKey: "framework_id",
 });
 
 Task.belongsTo(Framework, {
-  foreignKey: "frameworkId",
+  foreignKey: "framework_id",
 });
 
 Task.belongsToMany(Partnership, {
   through: AssignedTask,
+  foreignKey: "task_id",
 });
 
 Partnership.belongsToMany(Task, {
   through: AssignedTask,
-  onDelete: "CASCADE",
+  foreignKey: "partnership_id",
 });
-
-// Mentee.hasMany(AssignedTask, {
-//   foreignKey: "menteeId",
-// });
-
-// AssignedTask.belongsTo(Mentee, {
-//   foreignKey: "menteeId",
-//   onDelete: "CASCADE",
-// });
-// Task.hasMany(AssignedTask, {
-//   foreignKey: "taskId",
-// });
-// AssignedTask.belongsTo(Task, {
-//   foreignKey: "taskId",
-//   onDelete: "CASCADE",
-// });
 
 module.exports = {
   AssignedTask,

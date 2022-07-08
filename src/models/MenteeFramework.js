@@ -14,7 +14,7 @@ MenteeFramework.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    menteeId: {
+    mentee_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -22,7 +22,7 @@ MenteeFramework.init(
         key: "id",
       },
     },
-    frameworkId: {
+    framework_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

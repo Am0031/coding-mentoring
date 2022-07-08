@@ -15,7 +15,7 @@ class Mentee extends Model {
       email: this.email,
       location: this.location,
       availability: this.availability,
-      leaingFormat: this.leaingFormat,
+      learningFormat: this.learningFormat,
       personalGoal: this.personalGoal,
       profileImageUrl: this.profileImageUrl,
       gitHubUrl: this.gitHubUrl,
@@ -57,7 +57,6 @@ Mentee.init(
       allowNull: false,
       validate: {
         len: [2, 50],
-        unique: true,
       },
     },
     email: {
@@ -65,7 +64,6 @@ Mentee.init(
       allowNull: false,
       validate: {
         isEmail: true,
-        unique: true,
       },
     },
     password: {

@@ -1,9 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
-const Framework = require("./Framework");
-const Mentee = require("./Mentee");
-const Mentor = require("./Mentor");
 const Partnership = require("./Partnership");
 const Task = require("./Task");
 
@@ -17,31 +14,15 @@ AssignedTask.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    mentorId: {
+    partnership_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: Partnership,
-        key: "mentorId",
+        key: "id",
       },
     },
-    menteeId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Partnership,
-        key: "menteeId",
-      },
-    },
-    frameworkId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Task,
-        key: "frameworkId",
-      },
-    },
-    taskId: {
+    task_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -49,21 +30,13 @@ AssignedTask.init(
         key: "id",
       },
     },
-    taskDeadline: {
+    task_deadline: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    taskStatus: {
-      type: DataTypes.STRING,
-      defaultValue: "Not Started",
-    },
-    taskPoints: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Task,
-        key: "points",
-      },
+    task_complete: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {

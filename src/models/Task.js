@@ -13,19 +13,19 @@ Task.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    taskName: {
+    task_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    taskDescription: {
+    task_description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    taskLevel: {
+    task_level: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    frameworkId: {
+    framework_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
