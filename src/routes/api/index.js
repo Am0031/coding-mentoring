@@ -1,16 +1,15 @@
 const { Router } = require("express");
 
-const mentor = require("./mentors");
-const mentee = require("./mentees");
-const taskGroup = require("./task-group");
-const frameWorks = require("./framework");
+const mentors = require("./mentors");
+const mentees = require("./mentees");
+const tasks = require("./tasks");
+const frameWorks = require("./frameworks");
 
 const router = Router();
 
-router.use("/mentors", mentor);
-router.use("/mentees", mentee);
+router.use("/mentors", mentors);
+router.use("/mentees", mentees);
 router.use("/tasks", tasks);
 router.use("/frameworks", frameWorks);
-router.use("/assignedTasks", assignedTasks);
 
 module.exports = router;
