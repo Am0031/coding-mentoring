@@ -27,6 +27,19 @@ const mentorData = [
     profileImageUrl:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
   },
+  {
+    firstName: "Mary",
+    lastName: "Black",
+    userName: "maryberry",
+    email: "maryblack@example.org",
+    password: "password601",
+    location: "York",
+    availability: "weekdays",
+    teachingFormat: "online",
+    personalGoal: "develop my skills as a coding teacher",
+    profileImageUrl:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+  },
 ];
 
 const seedMentors = () => Mentor.bulkCreate(mentorData);

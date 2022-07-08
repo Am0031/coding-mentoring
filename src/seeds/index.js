@@ -20,6 +20,9 @@ const seedAll = async () => {
   await seedTasks();
   console.log("\n----- TASKS SEEDED -----\n");
 
+  await seedMentorFrameworks();
+  console.log("\n----- MENTOR FRAMEWORKS SEEDED -----\n");
+
   process.exit(0);
 };
 
