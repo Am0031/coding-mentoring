@@ -1,4 +1,4 @@
-const { Mentee } = require("../../models");
+// const { Mentee } = require("../../models");
 
 const getAllMentees = (req, res) => {
   return res.json({ message: "getting all mentees" });

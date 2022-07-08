@@ -1,4 +1,4 @@
-const { Task } = require("../../models");
+// const { Task } = require("../../models");
 
 const getAllTasks = (req, res) => {
   return res.json({ message: "getting all tasks" });
