@@ -31,6 +31,14 @@ const taskData = [
     frameworkId: 3,
     resourceURL: "https://www.w3schools.com/jsref/jsref_find.asp",
   },
+  {
+    taskName: "Inquirer package",
+    taskDescription:
+      "Your challenge is to build a function that can uses inquirer to ask questions to the user and returns a summary table of the answers collected.",
+    taskLevel: "beginner",
+    frameworkId: 5,
+    resourceURL: "https://www.npmjs.com/package/inquirer",
+  },
 ];
 
 const seedTasks = () => Task.bulkCreate(taskData);

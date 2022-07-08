@@ -25,6 +25,12 @@ const assignedTaskData = [
     frameworkId: 3,
     taskId: 4,
   },
+  {
+    mentorId: 2,
+    menteeId: 2,
+    frameworkId: 5,
+    taskId: 5,
+  },
 ];
 
 const seedAssignedTasks = () => AssignedTask.bulkCreate(assignedTaskData);
