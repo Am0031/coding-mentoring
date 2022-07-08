@@ -9,7 +9,8 @@ const router = Router();
 
 router.use("/mentors", mentor);
 router.use("/mentees", mentee);
-router.use("/assignedtasks", taskGroup);
+router.use("/tasks", tasks);
 router.use("/frameworks", frameWorks);
+router.use("/assignedTasks", assignedTasks);
 
 module.exports = router;
