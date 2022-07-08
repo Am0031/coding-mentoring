@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
 
-class Frameworks extends Model {}
+class Framework extends Model {}
 
-Frameworks.init(
+Framework.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -22,8 +22,8 @@ Frameworks.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "frameworks",
+    modelName: "framework",
   }
 );
 
-module.exports = Frameworks;
+module.exports = Framework;

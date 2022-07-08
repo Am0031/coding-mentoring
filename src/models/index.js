@@ -1,11 +1,11 @@
-const AssignedTasks = require("./AssignedTasks");
-const Frameworks = require("./Frameworks");
+const AssignedTask = require("./AssignedTask");
+const Framework = require("./Framework");
 const Mentee = require("./Mentee");
-const MenteeFrameworks = require("./MenteeFrameworks");
+const MenteeFramework = require("./MenteeFramework");
 const Mentor = require("./Mentor");
-const MentorFrameworks = require("./MentorFrameworks");
+const MentorFramework = require("./MentorFramework");
 const Partnership = require("./Partnership");
-const Tasks = require("./Tasks");
+const Task = require("./Task");
 
 Mentor.belongsToMany(Mentee, {
   through: Partnership,
@@ -17,68 +17,77 @@ Mentee.belongsToMany(Mentor, {
   foreignKey: "menteeId",
 });
 
-Mentor.belongsToMany(Frameworks, {
-  through: MentorFrameworks,
+Mentor.belongsToMany(Framework, {
+  through: MentorFramework,
   foreignKey: "mentorId",
 });
 
-Frameworks.belongsToMany(Mentor, {
-  through: MentorFrameworks,
+Framework.belongsToMany(Mentor, {
+  through: MentorFramework,
   foreignKey: "frameworkId",
 });
 
-Mentee.belongsToMany(Frameworks, {
-  through: MenteeFrameworks,
+Mentee.belongsToMany(Framework, {
+  through: MenteeFramework,
   foreignKey: "menteeId",
 });
 
-Frameworks.belongsToMany(Mentee, {
-  through: MenteeFrameworks,
+Framework.belongsToMany(Mentee, {
+  through: MenteeFramework,
   foreignKey: "frameworkId",
 });
 
-Frameworks.hasMany(Tasks, {
+Framework.hasMany(Task, {
   foreignKey: "frameworkId",
 });
 
-Tasks.belongsTo(Frameworks, {
+Task.belongsTo(Framework, {
   foreignKey: "frameworkId",
 });
 
-Frameworks.hasMany(AssignedTasks, {
-  foreignKey: "frameworkId",
+// Framework.hasMany(AssignedTask, {
+//   foreignKey: "frameworkId",
+// });
+
+// AssignedTask.belongsTo(Framework, {
+//   foreignKey: "frameworkId",
+//   onDelete: "CASCADE",
+// });
+
+Mentor.hasMany(AssignedTask, {
+  foreignKey: "mentorId",
 });
 
-AssignedTasks.belongsTo(Frameworks, {
-  foreignKey: "frameworkId",
+AssignedTask.belongsTo(Mentor, {
+  foreignKey: "mentorId",
   onDelete: "CASCADE",
 });
 
-Mentor.hasMany(AssignedTasks, {
-  foreignKey: "mentorId",
+Mentee.hasMany(AssignedTask, {
+  foreignKey: "menteeId",
 });
 
-AssignedTasks.belongsTo(Mentor, {
-  foreignKey: "mentorId",
+AssignedTask.belongsTo(Mentee, {
+  foreignKey: "menteeId",
   onDelete: "CASCADE",
 });
 
-Mentee.hasMany(AssignedTasks, {
-  foreignKey: "menteeId",
+Task.hasMany(AssignedTask, {
+  foreignKey: "taskId",
 });
 
-AssignedTasks.belongsTo(Mentee, {
-  foreignKey: "menteeId",
+AssignedTask.belongsTo(Task, {
+  foreignKey: "taskId",
   onDelete: "CASCADE",
 });
 
 module.exports = {
-  AssignedTasks,
-  Frameworks,
+  AssignedTask,
+  Framework,
   Mentee,
-  MenteeFrameworks,
+  MenteeFramework,
   Mentor,
-  MentorFrameworks,
+  MentorFramework,
   Partnership,
-  Tasks,
+  Task,
 };

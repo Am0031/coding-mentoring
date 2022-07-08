@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
 
-class MenteeFrameworks extends Model {}
+class MentorFramework extends Model {}
 
-MenteeFrameworks.init(
+MentorFramework.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,11 +12,11 @@ MenteeFrameworks.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    menteeId: {
+    mentorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Mentee,
+        model: Mentor,
         key: "id",
       },
     },
@@ -24,7 +24,7 @@ MenteeFrameworks.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Frameworks,
+        model: Framework,
         key: "id",
       },
     },
@@ -38,8 +38,8 @@ MenteeFrameworks.init(
     timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: "menteeFrameworks",
+    modelName: "mentorFramework",
   }
 );
 
-module.exports = MenteeFrameworks;
+module.exports = MentorFramework;
