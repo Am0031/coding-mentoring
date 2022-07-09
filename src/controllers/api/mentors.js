@@ -7,7 +7,7 @@ const getMentors = async (req, res) => {
       include: [
         {
           model: Framework,
-          attributes: ["id", "framework_name"],
+          attributes: ["id", "frameworkName"],
           through: { attributes: ["level"], as: "level" },
         },
       ],
@@ -24,7 +24,7 @@ const getMentors = async (req, res) => {
       const email = each.email;
       const frameworks = each.frameworks.map((i) => {
         const frmId = i.id;
-        const name = i.framework_name;
+        const name = i.frameworkName;
         const level = i.level.level;
         return { frmId, name, level };
       });
@@ -67,7 +67,7 @@ const getMentorById = async (req, res) => {
     const { id } = req.params;
     const mentor = await Mentor.findByPk(id, {
       attributes: ["id", "username", "teachingFormat", "location", "email"],
-      include: [{ model: Framework, attributes: ["framework_name"] }],
+      include: [{ model: Framework, attributes: ["frameworkName"] }],
     });
     if (!mentor) {
       return res.status(500).json({ message: "Mentor not found" });
