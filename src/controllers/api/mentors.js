@@ -44,15 +44,24 @@ const getMentors = async (req, res) => {
 
     const { framework, teachingFormat, location } = req.body;
 
+    //need to see how we are getting this data from the front end (from the framework checkboxes) - maybe it can be placed in an array from there directly, even if only 1 framework selected
+    const frameworkArray = [];
+    Array.isArray(framework)
+      ? frameworkArray.push(...framework)
+      : frameworkArray.push(framework);
+
+    //flitering on only 1 teaching format at a time, and only one city at a time
     const filteredMentors = formattedMentors
-      .filter(
-        (item) =>
-          !framework ||
-          item.frameworks.map((i) => i.frmId).indexOf(framework) !== -1
-      )
       .filter((item) => !location || item.location === location)
       .filter(
         (item) => !teachingFormat || item.teachingFormat === teachingFormat
+      )
+      .filter(
+        (item) =>
+          frameworkArray.length === 0 ||
+          item.frameworks
+            .map((i) => i.frmId)
+            .some((element) => frameworkArray.includes(element))
       );
 
     return res.json(filteredMentors);
