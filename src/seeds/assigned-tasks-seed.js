@@ -2,31 +2,31 @@ const { AssignedTask } = require("../models");
 
 const assignedTaskData = [
   {
-    partnership_id: 1,
+    partnershipId: 1,
     taskId: 1,
     taskDeadline: "2022-08-27",
     taskComplete: false,
   },
   {
-    partnership_id: 1,
+    partnershipId: 1,
     taskId: 2,
     taskDeadline: "2022-08-27",
     taskComplete: false,
   },
   {
-    partnership_id: 3,
+    partnershipId: 3,
     taskId: 3,
     taskDeadline: "2022-08-27",
     taskComplete: false,
   },
   {
-    partnership_id: 3,
+    partnershipId: 3,
     taskId: 4,
     taskDeadline: "2022-08-27",
     taskComplete: false,
   },
   {
-    partnership_id: 2,
+    partnershipId: 2,
     taskId: 5,
     taskDeadline: "2022-08-27",
     taskComplete: false,
