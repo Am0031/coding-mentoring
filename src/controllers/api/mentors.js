@@ -132,7 +132,20 @@ const updateMentorById = async (req, res) => {
 
 //maybe - if someone wants to delete their account - how do we do that
 const deleteMentorById = async (req, res) => {
-  return res.json({ message: "deleting mentor by ID" });
+  try {
+    const { id } = req.params;
+    const mentor = await Mentor.findByPk(id);
+
+    if (!mentor) {
+      return res.status(404).json({ message: "Mentor not found" });
+    }
+
+    await Mentor.destroy({ where: { id } });
+    return res.status(200).json({ message: "Mentor deleted" });
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
 };
 
 module.exports = {
