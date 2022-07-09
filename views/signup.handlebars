@@ -1,6 +1,5 @@
 {{> publicNavBar}}
 
-
 <main class="container">
   <section class="mt-4 border p-3 rounded-2 bg-light">
     <h2 class="text-center">Sign Up</h2>
@@ -72,7 +71,9 @@
           placeholder="Select availability"
         />
       </div>
-        <div class="mb-3">
+
+      {{#if (isEqualTo currentPage "mentor")}}
+      <div class="mb-3">
         <input
           type="text"
           class="form-control"
@@ -80,6 +81,19 @@
           placeholder="Select teaching format"
         />
       </div>
+      {{/if}}
+
+      {{#if (isEqualTo currentPage "mentee")}}
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="learningFormat"
+          placeholder="Select learning format"
+        />
+      </div>
+      {{/if}}
+
       <div class="mb-3">
         <input
           type="text"
