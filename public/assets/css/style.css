@@ -1,3 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: 'Bitter', serif;
+  --fw-reg: 400;
+  --fw-reg-italic: 400;
+  --fw-bold: 800;
+  --fw-bold-italic: 800;
+}
+
 body {
   margin: 0;
   padding: 0;
