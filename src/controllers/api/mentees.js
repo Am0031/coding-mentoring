@@ -67,7 +67,37 @@ const getMentees = async (req, res) => {
 };
 
 const getMenteeById = async (req, res) => {
-  return res.json({ message: "getting mentee by ID" });
+  try {
+    const { id } = req.params;
+    const mentee = await Mentee.findByPk(id, {
+      attributes: [
+        "id",
+        "username",
+        "learningFormat",
+        "personalGoal",
+        "location",
+        "availability",
+        "email",
+        "profileImageUrl",
+        "gitHubUrl",
+        "xp",
+      ],
+      include: [
+        {
+          model: Framework,
+          attributes: ["id", "frameworkName"],
+          through: { attributes: ["level"], as: "level" },
+        },
+      ],
+    });
+    if (!mentee) {
+      return res.status(500).json({ message: "Mentee not found" });
+    }
+    return res.json(mentee);
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
 };
 
 const updateMenteeById = async (req, res) => {

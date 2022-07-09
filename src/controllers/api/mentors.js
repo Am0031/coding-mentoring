@@ -76,8 +76,25 @@ const getMentorById = async (req, res) => {
   try {
     const { id } = req.params;
     const mentor = await Mentor.findByPk(id, {
-      attributes: ["id", "username", "teachingFormat", "location", "email"],
-      include: [{ model: Framework, attributes: ["frameworkName"] }],
+      attributes: [
+        "id",
+        "username",
+        "teachingFormat",
+        "personalGoal",
+        "location",
+        "availability",
+        "email",
+        "profileImageUrl",
+        "gitHubUrl",
+        "xp",
+      ],
+      include: [
+        {
+          model: Framework,
+          attributes: ["id", "frameworkName"],
+          through: { attributes: ["level"], as: "level" },
+        },
+      ],
     });
     if (!mentor) {
       return res.status(500).json({ message: "Mentor not found" });
