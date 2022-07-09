@@ -14,7 +14,7 @@ MentorFramework.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    mentor_id: {
+    mentorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -22,7 +22,7 @@ MentorFramework.init(
         key: "id",
       },
     },
-    framework_id: {
+    frameworkId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

@@ -3,33 +3,33 @@ const { AssignedTask } = require("../models");
 const assignedTaskData = [
   {
     partnership_id: 1,
-    task_id: 1,
-    task_deadline: "2022-08-27",
-    task_complete: false,
+    taskId: 1,
+    taskDeadline: "2022-08-27",
+    taskComplete: false,
   },
   {
     partnership_id: 1,
-    task_id: 2,
-    task_deadline: "2022-08-27",
-    task_complete: false,
+    taskId: 2,
+    taskDeadline: "2022-08-27",
+    taskComplete: false,
   },
   {
     partnership_id: 3,
-    task_id: 3,
-    task_deadline: "2022-08-27",
-    task_complete: false,
+    taskId: 3,
+    taskDeadline: "2022-08-27",
+    taskComplete: false,
   },
   {
     partnership_id: 3,
-    task_id: 4,
-    task_deadline: "2022-08-27",
-    task_complete: false,
+    taskId: 4,
+    taskDeadline: "2022-08-27",
+    taskComplete: false,
   },
   {
     partnership_id: 2,
-    task_id: 5,
-    task_deadline: "2022-08-27",
-    task_complete: false,
+    taskId: 5,
+    taskDeadline: "2022-08-27",
+    taskComplete: false,
   },
 ];
 

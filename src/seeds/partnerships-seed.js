@@ -2,19 +2,19 @@ const { Partnership } = require("../models");
 
 const partnershipData = [
   {
-    mentor_id: 1,
-    mentee_id: 1,
-    project_name: "front-end practice",
+    mentorId: 1,
+    menteeId: 1,
+    projectName: "front-end practice",
   },
   {
-    mentor_id: 2,
-    mentee_id: 2,
-    project_name: "CLI with node",
+    mentorId: 2,
+    menteeId: 2,
+    projectName: "CLI with node",
   },
   {
-    mentor_id: 3,
-    mentee_id: 1,
-    project_name: "javascript practice",
+    mentorId: 3,
+    menteeId: 1,
+    projectName: "javascript practice",
   },
 ];
 
