@@ -1,7 +1,19 @@
-// const { Mentor } = require("../../models");
+const { Mentor, MentorFramework, Framework } = require("../../models");
 
-const getAllMentors = (req, res) => {
-  return res.json({ message: "getting all mentors" });
+const getAllMentors = async (req, res) => {
+  try {
+    const mentors = await Mentor.findAll({
+      attributes: ["id", "username", "teachingFormat", "location", "email"],
+      include: [{ model: Framework, attributes: ["framework_name"] }],
+    });
+    if (!mentors) {
+      return res.status(500).json({ message: "Mentors not found" });
+    }
+    return res.json(mentors);
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
 };
 
 const getMentorById = (req, res) => {
