@@ -56,7 +56,6 @@ const getMentors = async (req, res) => {
       );
 
     return res.json(filteredMentors);
-
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
@@ -80,8 +79,6 @@ const getMentorById = async (req, res) => {
   }
 };
 
-
-
 //maybe - if we have an edit option on the front end
 const updateMentorById = async (req, res) => {
   return res.json({ message: "updating mentor by ID" });
@@ -95,7 +92,6 @@ const deleteMentorById = async (req, res) => {
 module.exports = {
   getMentors,
   getMentorById,
-  getMentors,
   updateMentorById,
   deleteMentorById,
 };
