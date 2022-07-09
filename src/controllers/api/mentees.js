@@ -101,7 +101,26 @@ const getMenteeById = async (req, res) => {
 };
 
 const updateMenteeById = async (req, res) => {
-  return res.json({ message: "updating mentee by ID" });
+  try {
+    const { id } = req.params;
+    const mentee = await Mentee.findByPk(id);
+
+    if (!mentee) {
+      return res.status(404).json({ message: "Mentee not found" });
+    }
+
+    const passedInfo = req.body;
+    if (!passedInfo) {
+      return res.status(500).json({ message: "Unable to update mentee" });
+    }
+
+    await Mentee.update(passedInfo, { where: { id } });
+
+    return res.status(200).json({ message: "Mentee updated" });
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
 };
 
 const deleteMenteeById = async (req, res) => {
