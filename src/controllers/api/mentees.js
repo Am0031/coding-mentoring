@@ -1,6 +1,6 @@
-// const { Mentee } = require("../../models");
+const { Mentee } = require("../../models");
 
-const getAllMentees = (req, res) => {
+const getMentees = (req, res) => {
   return res.json({ message: "getting all mentees" });
 };
 
@@ -17,7 +17,7 @@ const deleteMenteeById = (req, res) => {
 };
 
 module.exports = {
-  getAllMentees,
+  getMentees,
   getMenteeById,
   updateMenteeById,
   deleteMenteeById,

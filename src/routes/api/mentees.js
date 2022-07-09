@@ -3,13 +3,13 @@ const { Router } = require("express");
 const router = Router();
 
 const {
-  getAllMentees,
+  getMentees,
   getMenteeById,
   updateMenteeById,
   deleteMenteeById,
 } = require("../../controllers/api/mentees");
 
-router.get("/", getAllMentees);
+router.post("/", getMentees);
 router.get("/:id", getMenteeById);
 router.put("/:id", updateMenteeById);
 router.delete("/:id", deleteMenteeById);
