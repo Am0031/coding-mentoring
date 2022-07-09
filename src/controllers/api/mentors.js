@@ -108,7 +108,26 @@ const getMentorById = async (req, res) => {
 
 //maybe - if we have an edit option on the front end
 const updateMentorById = async (req, res) => {
-  return res.json({ message: "updating mentor by ID" });
+  try {
+    const { id } = req.params;
+    const mentor = await Mentor.findByPk(id);
+
+    if (!mentor) {
+      return res.status(404).json({ message: "Mentor not found" });
+    }
+
+    const passedInfo = req.body;
+    if (!passedInfo) {
+      return res.status(500).json({ message: "Unable to update mentor" });
+    }
+
+    await Mentor.update(passedInfo, { where: { id } });
+
+    return res.status(200).json({ message: "Mentor updated" });
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
 };
 
 //maybe - if someone wants to delete their account - how do we do that
