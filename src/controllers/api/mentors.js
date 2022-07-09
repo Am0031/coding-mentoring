@@ -23,10 +23,10 @@ const getMentors = async (req, res) => {
       const location = each.location;
       const email = each.email;
       const frameworks = each.frameworks.map((i) => {
-        const frmId = i.id;
+        const id = i.id;
         const name = i.frameworkName;
         const level = i.level.level;
-        return { frmId, name, level };
+        return { id, name, level };
       });
 
       const response = {
@@ -61,7 +61,7 @@ const getMentors = async (req, res) => {
         (item) =>
           framework.length === 0 ||
           item.frameworks
-            .map((i) => i.frmId)
+            .map((i) => i.id)
             .some((element) => framework.includes(element))
       );
 
