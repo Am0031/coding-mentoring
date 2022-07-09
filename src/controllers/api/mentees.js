@@ -124,7 +124,20 @@ const updateMenteeById = async (req, res) => {
 };
 
 const deleteMenteeById = async (req, res) => {
-  return res.json({ message: "deleting mentee by ID" });
+  try {
+    const { id } = req.params;
+    const mentee = await Mentee.findByPk(id);
+
+    if (!mentee) {
+      return res.status(404).json({ message: "Mentee not found" });
+    }
+
+    await Mentee.destroy({ where: { id } });
+    return res.status(200).json({ message: "Mentee deleted" });
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
 };
 
 module.exports = {
