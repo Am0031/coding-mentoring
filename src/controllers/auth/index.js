@@ -1,14 +1,127 @@
-const login = (req, res) => {
-  console.log("login");
-  return res.json({ message: "login" });
-};
-const signup = (req, res) => {
-  console.log("signup");
-  return res.json({ message: "signup" });
-};
-const logout = (req, res) => {
-  console.log("logout");
-  return res.json({ message: "logout" });
+const { Mentor, Mentee } = require("../../models");
+// TODO hardcoded for now, but link to radio button click when ready
+const { loginType } = "mentor"
+const { signUpType} = "mentee"
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+
+    if (loginType === "mentor") {
+
+    const user = await Mentor.findOne({ where: { email } });
+
+    if (!user) {
+      console.log(
+        `[ERROR]: Failed to login | No mentor with email address of ${email}`
+      );
+
+      return res.status(500).json({ success: false });
+    }
+
+    
+  } else if (loginType === "mentee") {
+
+    const user = await Mentee.findOne({ where: { email } });
+
+    if (!user) {
+      console.log(
+        `[ERROR]: Failed to login | No mentee with email address of ${email}`
+      );
+
+      return res.status(500).json({ success: false });
+    }
+    }
+
+    const isAuthorised = await user.checkPassword(password);
+
+    if (isAuthorised) {
+      req.session.save(() => {
+        req.session.isLoggedIn = true;
+        req.session.user = user.getUser();
+        return res.json({ success: true });
+      });
+    } else {
+      return res.status(500).json({ success: false });
+    }
+  } catch (error) {
+    console.log(`[ERROR]: Failed to login | ${error.message}`);
+
+    return res.status(500).json({ success: false });
+  }
 };
 
-module.exports = { login, signup, logout };
+const signup = () => {
+  if (signUpType === "mentor") {
+
+    mentorSignup();
+  } else if (signUpType === "mentee") {
+    menteeSignup();
+  }
+};
+
+const mentorSignup = (req, res) => {
+  try {
+
+    const { firstName, lastName, username, email, password, location, availability, teachingFormat, personalGoal, profileImageUrl, gitHubUrl } = req.body;
+
+    const mentor = await Mentor.findOne({ where: { email } });
+
+    if (mentor) {
+      console.log(
+        `[ERROR]: Failed to create mentor | Email address of ${email} already exists as a mentor`
+      );
+
+      return res.status(500).json({ success: false });
+    }
+
+    const data = await Mentor.create({
+      firstName, lastName, username, email, password, location, availability, teachingFormat, personalGoal, profileImageUrl, gitHubUrl
+    });
+    return res.json({ success: true });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to create mentor | ${error.message}`);
+
+    return res.status(500).json({ success: false });
+  }
+};
+
+const menteeSignup = (req, res) => {
+  try {
+    const { firstName, lastName, username, email, password, location, availability, learningFormat, personalGoal, profileImageUrl, gitHubUrl } = req.body;
+
+    const mentee = await Mentee.findOne({ where: { email } });
+
+    if (mentee) {
+      console.log(
+        `[ERROR]: Failed to create mentee | Email address of ${email} already exists as a mentee`
+      );
+
+      return res.status(500).json({ success: false });
+    }
+
+    const data = await Mentee.create({
+      firstName, lastName, username, email, password, location, availability, learningFormat, personalGoal, profileImageUrl, gitHubUrl
+    });
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to create mentee | ${error.message}`);
+
+    return res.status(500).json({ success: false });
+  }
+};
+
+const logout = (req, res) => {
+  if (req.session.isLoggedIn) {
+    req.session.destroy(() => {
+      return res.status(204).end();
+    });
+  } else {
+    return res.status(404).end();
+  }
+};
+
+
+module.exports = { login, signup, menteeSignup, mentorSignup, logout };
