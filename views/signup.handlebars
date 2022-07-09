@@ -72,7 +72,7 @@
         />
       </div>
 
-      {{#if (isEqualTo currentPage "mentor")}}
+      {{#if (isEqualTo userType "mentor")}}
       <div class="mb-3">
         <input
           type="text"
@@ -83,7 +83,7 @@
       </div>
       {{/if}}
 
-      {{#if (isEqualTo currentPage "mentee")}}
+      {{#if (isEqualTo userType "mentee")}}
       <div class="mb-3">
         <input
           type="text"
