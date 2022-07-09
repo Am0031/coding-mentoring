@@ -1,37 +1,32 @@
 const { Mentor, Mentee } = require("../../models");
-// TODO hardcoded for now, but link to radio button click when ready
-const { loginType } = "mentor"
-const { signUpType} = "mentee"
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let user;
+    const { email, password, userType } = req.body;
 
+    if (userType === "mentor") {
+      user = await Mentor.findOne({ where: { email } });
 
-    if (loginType === "mentor") {
+      if (!user) {
+        console.log(
+          `[ERROR]: Failed to login | No mentor with email address of ${email}`
+        );
 
-    const user = await Mentor.findOne({ where: { email } });
-
-    if (!user) {
-      console.log(
-        `[ERROR]: Failed to login | No mentor with email address of ${email}`
-      );
-
-      return res.status(500).json({ success: false });
+        return res.status(500).json({ success: false });
+      }
     }
 
-    
-  } else if (loginType === "mentee") {
+    if (userType === "mentee") {
+      user = await Mentee.findOne({ where: { email } });
 
-    const user = await Mentee.findOne({ where: { email } });
+      if (!user) {
+        console.log(
+          `[ERROR]: Failed to login | No mentee with email address of ${email}`
+        );
 
-    if (!user) {
-      console.log(
-        `[ERROR]: Failed to login | No mentee with email address of ${email}`
-      );
-
-      return res.status(500).json({ success: false });
-    }
+        return res.status(500).json({ success: false });
+      }
     }
 
     const isAuthorised = await user.checkPassword(password);
@@ -52,19 +47,21 @@ const login = async (req, res) => {
   }
 };
 
-const signup = () => {
-  if (signUpType === "mentor") {
-
-    mentorSignup();
-  } else if (signUpType === "mentee") {
-    menteeSignup();
-  }
-};
-
-const mentorSignup = (req, res) => {
+const mentorSignup = async (req, res) => {
   try {
-
-    const { firstName, lastName, username, email, password, location, availability, teachingFormat, personalGoal, profileImageUrl, gitHubUrl } = req.body;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      location,
+      availability,
+      teachingFormat,
+      personalGoal,
+      profileImageUrl,
+      gitHubUrl,
+    } = req.body;
 
     const mentor = await Mentor.findOne({ where: { email } });
 
@@ -77,8 +74,19 @@ const mentorSignup = (req, res) => {
     }
 
     const data = await Mentor.create({
-      firstName, lastName, username, email, password, location, availability, teachingFormat, personalGoal, profileImageUrl, gitHubUrl
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      location,
+      availability,
+      teachingFormat,
+      personalGoal,
+      profileImageUrl,
+      gitHubUrl,
     });
+
     return res.json({ success: true });
   } catch (error) {
     console.log(`[ERROR]: Failed to create mentor | ${error.message}`);
@@ -87,9 +95,21 @@ const mentorSignup = (req, res) => {
   }
 };
 
-const menteeSignup = (req, res) => {
+const menteeSignup = async (req, res) => {
   try {
-    const { firstName, lastName, username, email, password, location, availability, learningFormat, personalGoal, profileImageUrl, gitHubUrl } = req.body;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      location,
+      availability,
+      learningFormat,
+      personalGoal,
+      profileImageUrl,
+      gitHubUrl,
+    } = req.body;
 
     const mentee = await Mentee.findOne({ where: { email } });
 
@@ -102,7 +122,17 @@ const menteeSignup = (req, res) => {
     }
 
     const data = await Mentee.create({
-      firstName, lastName, username, email, password, location, availability, learningFormat, personalGoal, profileImageUrl, gitHubUrl
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      location,
+      availability,
+      learningFormat,
+      personalGoal,
+      profileImageUrl,
+      gitHubUrl,
     });
 
     return res.json({ success: true });
@@ -110,6 +140,18 @@ const menteeSignup = (req, res) => {
     console.log(`[ERROR]: Failed to create mentee | ${error.message}`);
 
     return res.status(500).json({ success: false });
+  }
+};
+
+const signup = (req, res) => {
+  const { userType } = req.body;
+
+  if (userType === "mentor") {
+    return mentorSignup(req, res);
+  }
+
+  if (userType === "mentee") {
+    return menteeSignup(req, res);
   }
 };
 
@@ -122,6 +164,5 @@ const logout = (req, res) => {
     return res.status(404).end();
   }
 };
-
 
 module.exports = { login, signup, menteeSignup, mentorSignup, logout };
