@@ -35,8 +35,6 @@ const getTasks = async (req, res) => {
 
     const formattedTasks = tasks.map(formatTasks);
 
-    console.log(formattedTasks);
-
     const { framework, taskLevel } = req.body;
 
     const filteredTasks = formattedTasks
@@ -48,8 +46,6 @@ const getTasks = async (req, res) => {
       );
 
     return res.json(filteredTasks);
-
-    // return formattedTasks;
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
@@ -63,7 +59,7 @@ const getTaskById = async (req, res) => {
       attributes: ["id", "taskName", "taskDescription", "taskLevel", "points"],
       include: Framework,
     });
-    const task = temptask.map((i) => i.dataValues);
+    const task = temptask.dataValues;
 
     if (!task) {
       return res.status(500).json({ message: "Task not found" });
@@ -90,12 +86,10 @@ const getTaskById = async (req, res) => {
       return response;
     };
 
-    const formattedTask = tasks.map(formatTask);
+    const formattedTask = formatTask(task);
 
     console.log(formattedTask);
     return res.json(formattedTask);
-
-    // return formattedTasks;
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
@@ -110,6 +104,10 @@ const createTask = async (req, res) => {
       return res.status(400).json({ message: "Unable to create task" });
     }
 
+    let { points } = req.body;
+    if (!points) {
+      points = 20;
+    }
     // we could add the userId to a task model, so mentors can filter on that and choose to view only their tasks
     // const { id } = req.session.user;
 
@@ -117,6 +115,7 @@ const createTask = async (req, res) => {
       taskName,
       taskDescription,
       taskLevel,
+      points,
       frameworkId,
     });
 

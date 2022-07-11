@@ -12,7 +12,7 @@ const {
 
 router.post("/", getTasks);
 router.get("/:id", getTaskById);
-router.post("/", createTask);
+router.post("/create", createTask);
 router.put("/:id", updateTaskById);
 router.delete("/:id", deleteTaskById);
 
