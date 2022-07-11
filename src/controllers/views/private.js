@@ -1,22 +1,21 @@
 const renderDashboard = (req, res) => {
-  // function will render mentee dashboard if user is mentee, or mentor dashboard if user is mentor
-  return res.json({ message: "showing dashboard" });
+  return res.render("dashboard");
 };
 
 const renderMenteeSearch = (req, res) => {
-  return res.json({ message: "showing mentee search" });
+  return res.render("mentor-search");
 };
 
 const renderMenteeProfile = (req, res) => {
-  return res.json({ message: "showing mentee profile" });
+  return res.render("mentor-profile");
 };
 
 const renderTaskSearch = (req, res) => {
-  return res.json({ message: "showing task search" });
+  return res.render("task-search");
 };
 
 const renderTaskDetails = (req, res) => {
-  return res.json({ message: "showing task details" });
+  return res.render("task-details");
 };
 
 module.exports = {

@@ -1,19 +1,19 @@
-const { Framework } = require("../../models");
+const { Framework, Mentor, Mentee } = require("../../models");
 
 const renderHomePage = (req, res) => {
-  return res.json({ message: "showing home page" });
+  return res.render("home");
 };
 
 const renderLoginPage = (req, res) => {
-  return res.json({ message: "showing login" });
+  return res.render("login");
 };
 
 const renderSignupPage = (req, res) => {
-  return res.json({ message: "showing signup" });
+  return res.render("signup");
 };
 
 const renderInfoPage = (req, res) => {
-  return res.json({ message: "showing info page" });
+  return res.render("info");
 };
 
 const renderMentorSearch = async (req, res) => {
@@ -31,7 +31,7 @@ const renderMentorSearch = async (req, res) => {
 };
 
 const renderMentorProfile = (req, res) => {
-  return res.json({ message: "showing mentor profile" });
+  return res.render("mentor-profile");
 };
 
 module.exports = {
