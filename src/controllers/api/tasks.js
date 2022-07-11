@@ -150,8 +150,21 @@ const updateTaskById = async (req, res) => {
   }
 };
 
-const deleteTaskById = (req, res) => {
-  return res.json({ message: "deleting task by ID" });
+const deleteTaskById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const task = await Task.findByPk(id);
+
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    await Task.destroy({ where: { id } });
+    return res.status(200).json({ message: "Task deleted" });
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
 };
 
 module.exports = {
