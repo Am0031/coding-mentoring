@@ -31,8 +31,11 @@ const renderMentorSearch = async (req, res) => {
   }
 };
 
-const renderMentorProfile = (req, res) => {
-  return res.render("mentor-profile");
+const renderMentorProfile = async (req, res) => {
+  const { id } = req.params;
+  const mentor = await Mentor.findByPk(id);
+  const chosenMentor = mentor.getUser();
+  return res.render("mentor-profile", { user: chosenMentor });
 };
 
 module.exports = {
