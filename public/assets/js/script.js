@@ -29,7 +29,8 @@ const handleMentorSearch = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
-  debugger;
+  const target = $(e.target);
+
   const location = $("#inputLocation").val();
   const teachingFormatSelect = $("#formatSelect").find(":selected").text();
 
@@ -39,17 +40,14 @@ const handleMentorSearch = async (e) => {
     ? (teachingFormat = "")
     : (teachingFormat = teachingFormatSelect);
 
-  const checkboxes = [];
+  const allChecked = document.querySelectorAll("input[type=checkbox]:checked");
+  const checkboxes = Array.from(allChecked).map((checkbox) =>
+    parseInt(checkbox.id)
+  );
 
-  //this part doesn't work - need to work out how to get IDs back from each checked checkbox
-  $("input[type=checkbox]:checked").each(() => {
-    const id = $(this).attr("id");
-    checkboxes.push(id);
-  });
-
-  //need to pass checkboxes array into framework when getting id issue is resolved
+  //passing checkboxes array, teaching format string and city string into our body object
   const searchBody = {
-    framework: [2, 3],
+    framework: checkboxes,
     teachingFormat,
     location,
   };

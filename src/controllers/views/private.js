@@ -1,4 +1,4 @@
-const {Framework, Mentee, Task} = require("../../models");
+const { Framework, Mentee, Task } = require("../../models");
 
 const renderDashboard = async (req, res) => {
   const { userType, user } = req.session;
@@ -6,7 +6,7 @@ const renderDashboard = async (req, res) => {
   return res.render("dashboard", { user: user });
 };
 
-const renderMenteeSearch = (req, res) => {
+const renderMenteeSearch = async (req, res) => {
   try {
     const frameworks = await Framework.findAll();
     if (!frameworks) {
@@ -25,7 +25,6 @@ const renderMenteeProfile = async (req, res) => {
   const mentee = await Mentee.findByPk(id);
   const chosenMentee = mentee.getUser();
   return res.render("mentee-profile", { user: chosenMentee });
-  
 };
 
 const renderTaskSearch = async (req, res) => {
