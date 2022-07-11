@@ -40,7 +40,7 @@ const handleMentorSearch = async (e) => {
     ? (teachingFormat = "")
     : (teachingFormat = teachingFormatSelect);
 
-  const allChecked = document.querySelectorAll("input[type=checkbox]:checked");
+  const allChecked = $("input[type=checkbox]:checked");
   const checkboxes = Array.from(allChecked).map((checkbox) =>
     parseInt(checkbox.id)
   );
