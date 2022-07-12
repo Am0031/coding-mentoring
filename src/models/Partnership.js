@@ -14,7 +14,7 @@ Partnership.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    mentor_id: {
+    mentorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -22,7 +22,7 @@ Partnership.init(
         key: "id",
       },
     },
-    mentee_id: {
+    menteeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -30,7 +30,7 @@ Partnership.init(
         key: "id",
       },
     },
-    project_name: {
+    projectName: {
       type: DataTypes.STRING,
       allowNull: true,
     },

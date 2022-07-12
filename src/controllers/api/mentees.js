@@ -8,10 +8,6 @@ const getMenteeById = (req, res) => {
   return res.json({ message: "getting mentee by ID" });
 };
 
-const createMentee = (req, res) => {
-  return res.json({ message: "creating mentee" });
-};
-
 const updateMenteeById = (req, res) => {
   return res.json({ message: "updating mentee by ID" });
 };
@@ -23,7 +19,6 @@ const deleteMenteeById = (req, res) => {
 module.exports = {
   getAllMentees,
   getMenteeById,
-  createMentee,
   updateMenteeById,
   deleteMenteeById,
 };
