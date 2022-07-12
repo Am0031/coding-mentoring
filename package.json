@@ -7,12 +7,14 @@
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
+    "handlebars": "^4.7.7",
     "inquirer": "^9.0.0",
     "jest": "^28.1.2",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "sequelize": "^6.21.2",
-    "sqlite3": "^5.0.8"
+    "sqlite3": "^5.0.8",
+    "y": "^0.3.2"
   },
   "name": "coding-mentoring",
   "description": "Platform to match coding mentors with coding mentees",

@@ -12,6 +12,8 @@ Task.init(
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
+      // add foreign key to link mentor id to task
+      // needs a relationship between mentor table and task table
     },
     taskName: {
       type: DataTypes.STRING,
