@@ -62,7 +62,6 @@ const handleSignupClick = async (e) => {
       gitHubUrl)
     ) {
       if (password === confirmPassword) {
-        // try {
         const payload = {
           firstName,
           lastName,
@@ -148,8 +147,42 @@ const handleSignupClick = async (e) => {
   }
 };
 
-const handleLoginClick = () => {
+const handleLoginClick = async (e) => {
   console.log("handling login");
+
+  e.preventDefault();
+
+  const email = $("#email").val();
+  const password = $("#password").val();
+
+  if (email && password) {
+    try {
+      const payload = {
+        email,
+        password,
+      };
+
+      const response = await fetch("/auth/login", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        window.location.assign("/dashboard");
+      } else {
+        renderError("login-error", "Failed to login. Try again.");
+      }
+    } catch (error) {
+      renderError("login-error", "Failed to login. Try again.");
+    }
+  } else {
+    renderError("login-error", "Please complete all required fields.");
+  }
 };
 
 const handleMentorSearch = async (e) => {

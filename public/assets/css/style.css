@@ -19,3 +19,9 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.navbar,
+.footer {
+  background-color: var(--yale-blue);
+  color: var(--alice-blue);
+}
