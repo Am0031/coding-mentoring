@@ -7,10 +7,12 @@ const {
   getMentorById,
   updateMentorById,
   deleteMentorById,
+  getMentorData,
 } = require("../../controllers/api/mentors");
 
 router.post("/", getMentors);
 router.get("/:id", getMentorById);
+router.get("/data/:id", getMentorData);
 router.put("/:id", updateMentorById);
 router.delete("/:id", deleteMentorById);
 
