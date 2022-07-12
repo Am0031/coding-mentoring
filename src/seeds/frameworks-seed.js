@@ -2,58 +2,58 @@ const { Framework } = require("../models");
 
 const frameworkData = [
   {
-    framework_name: "HTML",
+    frameworkName: "HTML",
   },
   {
-    framework_name: "CSS",
+    frameworkName: "CSS",
   },
   {
-    framework_name: "Javascript",
+    frameworkName: "Javascript",
   },
   {
-    framework_name: "Express",
+    frameworkName: "Express",
   },
   {
-    framework_name: "Node",
+    frameworkName: "Node",
   },
   {
-    framework_name: "Inquirer",
+    frameworkName: "Inquirer",
   },
   {
-    framework_name: "Handlebars",
+    frameworkName: "Handlebars",
   },
   {
-    framework_name: "Web API",
+    frameworkName: "Web API",
   },
   {
-    framework_name: "3rd party API",
+    frameworkName: "3rd party API",
   },
   {
-    framework_name: "Server side API",
+    frameworkName: "Server side API",
   },
   {
-    framework_name: "React",
+    frameworkName: "React",
   },
   {
-    framework_name: "Vue",
+    frameworkName: "Vue",
   },
   {
-    framework_name: "Angular",
+    frameworkName: "Angular",
   },
   {
-    framework_name: "C#",
+    frameworkName: "C#",
   },
   {
-    framework_name: "C++",
+    frameworkName: "C++",
   },
   {
-    framework_name: "Git",
+    frameworkName: "Git",
   },
   {
-    framework_name: "Bash",
+    frameworkName: "Bash",
   },
   {
-    framework_name: "Java",
+    frameworkName: "Java",
   },
 ];
 

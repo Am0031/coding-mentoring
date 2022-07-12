@@ -14,7 +14,7 @@ AssignedTask.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    partnership_id: {
+    partnershipId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -22,7 +22,7 @@ AssignedTask.init(
         key: "id",
       },
     },
-    task_id: {
+    taskId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -30,11 +30,11 @@ AssignedTask.init(
         key: "id",
       },
     },
-    task_deadline: {
+    taskDeadline: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    task_complete: {
+    taskComplete: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },

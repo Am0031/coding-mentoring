@@ -103,6 +103,10 @@ Mentor.init(
         isUrl: true,
       },
     },
+    xp: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   },
   {
     sequelize,

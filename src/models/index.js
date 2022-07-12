@@ -9,50 +9,50 @@ const Task = require("./Task");
 
 Mentor.belongsToMany(Mentee, {
   through: Partnership,
-  foreignKey: "mentor_id",
+  foreignKey: "mentorId",
 });
 
 Mentee.belongsToMany(Mentor, {
   through: Partnership,
-  foreignKey: "mentee_id",
+  foreignKey: "menteeId",
 });
 
 Mentor.belongsToMany(Framework, {
   through: MentorFramework,
-  foreignKey: "mentor_id",
+  foreignKey: "mentorId",
 });
 
 Framework.belongsToMany(Mentor, {
   through: MentorFramework,
-  foreignKey: "framework_id",
+  foreignKey: "frameworkId",
 });
 
 Mentee.belongsToMany(Framework, {
   through: MenteeFramework,
-  foreignKey: "mentee_id",
+  foreignKey: "menteeId",
 });
 
 Framework.belongsToMany(Mentee, {
   through: MenteeFramework,
-  foreignKey: "framework_id",
+  foreignKey: "frameworkId",
 });
 
 Framework.hasMany(Task, {
-  foreignKey: "framework_id",
+  foreignKey: "frameworkId",
 });
 
 Task.belongsTo(Framework, {
-  foreignKey: "framework_id",
+  foreignKey: "frameworkId",
 });
 
 Task.belongsToMany(Partnership, {
   through: AssignedTask,
-  foreignKey: "task_id",
+  foreignKey: "taskId",
 });
 
 Partnership.belongsToMany(Task, {
   through: AssignedTask,
-  foreignKey: "partnership_id",
+  foreignKey: "partnershipId",
 });
 
 module.exports = {
