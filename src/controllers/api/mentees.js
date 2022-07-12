@@ -1,4 +1,10 @@
-const { Mentee, Framework } = require("../../models");
+const {
+  Mentee,
+  Framework,
+  Task,
+  Partnership,
+  Mentor,
+} = require("../../models");
 
 const getMentees = async (req, res) => {
   try {
@@ -140,9 +146,39 @@ const deleteMenteeById = async (req, res) => {
   }
 };
 
+const getMenteeData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const menteeData = await Task.findAll({
+      include: [
+        {
+          model: Framework,
+          attributes: ["frameworkName"],
+        },
+        {
+          model: Partnership,
+          attributes: ["mentorId", "menteeId"],
+          through: {
+            attributes: ["partnershipId", "taskDeadline", "taskComplete"],
+          },
+          where: { menteeId: id },
+        },
+      ],
+    });
+    if (!menteeData) {
+      return res.status(500).json({ message: "Mentee data not found" });
+    }
+    return res.json(menteeData);
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
+};
+
 module.exports = {
   getMentees,
   getMenteeById,
   updateMenteeById,
   deleteMenteeById,
+  getMenteeData,
 };
