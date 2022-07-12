@@ -1,0 +1,6 @@
+{
+  "learningFormat": "",
+  "frameworks": [2, 3],
+  "location": "Birmingham",
+  "comment": "Only 1 learning format at a time so it passes only 1 string, either'online' or 'in person' - Only 1 city at a time, taking the input from a field - Can choose several frameworks at a time, with checked boxes, the default 'All' would pass an empty array, but still need to be array format"
+}

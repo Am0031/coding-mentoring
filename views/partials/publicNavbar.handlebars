@@ -13,19 +13,34 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarColor01"
+      >
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link {{#if (isEqualTo currentPage "home")}}active{{/if}}" aria-current="page" href="/">Home</a>
+            <a class="nav-link {{#if (isEqualTo currentPage "home")}} active{{/if}}" href="/">Home </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{#if (isEqualTo currentPage "login")}}active{{/if}}" href="/login">Login</a>
+            <a class="nav-link{{#if (isEqualTo currentPage "login")}} active{{/if}}" href="/login">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{#if (isEqualTo currentPage "signup")}}active{{/if}}" href="/signup">Sign Up</a>
+            <a class="nav-link{{#if (isEqualTo currentPage "signup")}} active{{/if}}" href="/signup">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/info">How it works</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/search/mentors">Our mentors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/contact">Contact Us</a>
           </li>
         </ul>
       </div>
     </div>
+  </div>
+</nav>
+  
   </nav>
 </header>

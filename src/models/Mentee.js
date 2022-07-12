@@ -19,8 +19,6 @@ class Mentee extends Model {
       personalGoal: this.personalGoal,
       profileImageUrl: this.profileImageUrl,
       gitHubUrl: this.gitHubUrl,
-      linkedInUrl: this.linkedInUrl,
-      portfolioUrl: this.portfolioUrl,
     };
   }
 
