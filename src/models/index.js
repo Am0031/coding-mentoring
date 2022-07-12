@@ -55,6 +55,22 @@ Partnership.belongsToMany(Task, {
   foreignKey: "partnershipId",
 });
 
+Mentor.hasMany(Partnership, {
+  foreignKey: "mentorId",
+});
+
+Partnership.belongsTo(Mentor, {
+  foreignKey: "mentorId",
+});
+
+Mentee.hasMany(Partnership, {
+  foreignKey: "menteeId",
+});
+
+Partnership.belongsTo(Mentee, {
+  foreignKey: "menteeId",
+});
+
 module.exports = {
   AssignedTask,
   Framework,

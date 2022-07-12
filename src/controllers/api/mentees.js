@@ -157,9 +157,10 @@ const getMenteeData = async (req, res) => {
         },
         {
           model: Partnership,
-          attributes: ["mentorId", "menteeId"],
+          attributes: ["menteeId"],
+          include: [{ model: Mentor }, { model: Mentee }],
           through: {
-            attributes: ["partnershipId", "taskDeadline", "taskComplete"],
+            attributes: ["partnershipId"],
           },
           where: { menteeId: id },
         },
