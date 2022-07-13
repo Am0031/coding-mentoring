@@ -15,7 +15,7 @@ const generateMenteeCards = (response) => {
     <h4 class="card-title">${each.username}</h4>
   </div>
   <div class="card-body">
-    <p class="postText">${each.learningFormat}</p>
+    <p class="postText">${each.collaborationFormat}</p>
     <p class="postText">${each.location}</p>
     <p class="postText">${each.availability}</p>
   </div>
@@ -32,7 +32,7 @@ const generateMentorCards = (response) => {
     <h4 class="card-title">${each.username}</h4>
   </div>
   <div class="card-body">
-    <p class="postText">${each.teachingFormat}</p>
+    <p class="postText">${each.collaborationFormat}</p>
     <p class="postText">${each.location}</p>
     <p class="postText">${each.availability}</p>
   </div>
@@ -54,8 +54,8 @@ const handleSignupClick = async (e) => {
   const confirmPassword = $("#confirmPassword").val();
   const location = $("#location").val();
   const availability = $("#availability").val();
-  const teachingFormat = $("#teachingFormat").val();
-  const learningFormat = $("#learningFormat").val();
+  const collaborationFormat = $("#collaborationFormat").val();
+  const collaborationFormat = $("#collaborationFormat").val();
   const personalGoal = $("#personalGoal").val();
   const profileImageUrl = $("#profileImageUrl").val();
   const gitHubUrl = $("#gitHubUrl").val();
@@ -73,7 +73,7 @@ const handleSignupClick = async (e) => {
       confirmPassword,
       location,
       availability,
-      teachingFormat,
+      collaborationFormat,
       personalGoal,
       profileImageUrl,
       gitHubUrl)
@@ -88,7 +88,7 @@ const handleSignupClick = async (e) => {
           confirmPassword,
           location,
           availability,
-          teachingFormat,
+          collaborationFormat,
           personalGoal,
           profileImageUrl,
           gitHubUrl,
@@ -113,7 +113,7 @@ const handleSignupClick = async (e) => {
       confirmPassword,
       location,
       availability,
-      learningFormat,
+      collaborationFormat,
       personalGoal,
       profileImageUrl,
       gitHubUrl)
@@ -128,7 +128,7 @@ const handleSignupClick = async (e) => {
           confirmPassword,
           location,
           availability,
-          learningFormat,
+          collaborationFormat,
           personalGoal,
           profileImageUrl,
           gitHubUrl,
@@ -209,23 +209,23 @@ const handleMenteeSearch = async (e) => {
   const target = $(e.target);
 
   const location = $("#inputLocation").val();
-  const teachingFormatSelect = $("#formatSelect").find(":selected").text();
+  const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
 
-  let learningFormat;
+  let collaborationFormat;
 
-  learningFormatSelect === "All"
-    ? (learningFormat = "")
-    : (learningFormat = learningFormatSelect);
+  collaborationFormatSelect === "All"
+    ? (collaborationFormat = "")
+    : (collaborationFormat = collaborationFormatSelect);
 
   const allChecked = $("input[type=checkbox]:checked");
   const checkboxes = Array.from(allChecked).map((checkbox) =>
     parseInt(checkbox.id)
   );
 
-  //passing checkboxes array, teaching format string and city string into our body object
+  //passing checkboxes array, collaboration format string and city string into our body object
   const searchBody = {
     framework: checkboxes,
-    learningFormat,
+    collaborationFormat,
     location,
   };
 
@@ -255,23 +255,23 @@ const handleMentorSearch = async (e) => {
   const target = $(e.target);
 
   const location = $("#inputLocation").val();
-  const teachingFormatSelect = $("#formatSelect").find(":selected").text();
+  const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
 
-  let teachingFormat;
+  let collaborationFormat;
 
-  teachingFormatSelect === "All"
-    ? (teachingFormat = "")
-    : (teachingFormat = teachingFormatSelect);
+  collaborationFormatSelect === "All"
+    ? (collaborationFormat = "")
+    : (collaborationFormat = collaborationFormatSelect);
 
   const allChecked = $("input[type=checkbox]:checked");
   const checkboxes = Array.from(allChecked).map((checkbox) =>
     parseInt(checkbox.id)
   );
 
-  //passing checkboxes array, teaching format string and city string into our body object
+  //passing checkboxes array, collaboration format string and city string into our body object
   const searchBody = {
     framework: checkboxes,
-    teachingFormat,
+    collaborationFormat,
     location,
   };
 

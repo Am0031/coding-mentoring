@@ -72,7 +72,6 @@
         />
       </div>
 
-      {{#if (isEqualTo userType "mentor")}}
       <div class="mb-3">
         <input
           type="text"
@@ -81,18 +80,6 @@
           placeholder="Select collaboration format"
         />
       </div>
-      {{/if}}
-
-      {{#if (isEqualTo userType "mentee")}}
-      <div class="mb-3">
-        <input
-          type="text"
-          class="form-control"
-          id="collaborationFormat"
-          placeholder="Select collaboration format"
-        />
-      </div>
-      {{/if}}
 
       <div class="mb-3">
         <input
