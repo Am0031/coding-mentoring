@@ -160,23 +160,7 @@ const deleteMentorById = async (req, res) => {
 const getMentorData = async (req, res) => {
   try {
     const { id } = req.params;
-    // const mentorData = await Task.findAll({
-    //   include: [
-    //     {
-    //       model: Framework,
-    //       attributes: ["frameworkName"],
-    //     },
-    //     {
-    //       model: Partnership,
-    //       attributes: ["mentorId"],
-    //       include: [{ model: Mentor }, { model: Mentee }],
-    //       through: {
-    //         attributes: ["partnershipId"],
-    //       },
-    //       where: { mentorId: id },
-    //     },
-    //   ],
-    // });
+
     const mentorData = await Partnership.findAll({
       attributes: ["id", "projectName"],
       where: { mentorId: id },
