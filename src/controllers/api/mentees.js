@@ -9,7 +9,7 @@ const {
 const getMentees = async (req, res) => {
   try {
     const mentees = await Mentee.findAll({
-      attributes: ["id", "username", "learningFormat", "location"],
+      attributes: ["id", "username", "collaborationFormat", "location"],
       include: [
         {
           model: Framework,
@@ -25,7 +25,7 @@ const getMentees = async (req, res) => {
     const formatMentees = (each) => {
       const id = each.id;
       const username = each.username;
-      const learningFormat = each.learningFormat;
+      const collaborationFormat = each.collaborationFormat;
       const location = each.location;
       const email = each.email;
       const frameworks = each.frameworks.map((i) => {
@@ -38,7 +38,7 @@ const getMentees = async (req, res) => {
       const response = {
         id,
         username,
-        learningFormat,
+        collaborationFormat,
         location,
         email,
         frameworks,
@@ -48,14 +48,16 @@ const getMentees = async (req, res) => {
 
     const formattedMentees = mentees.map(formatMentees);
 
-    const { framework, learningFormat, location } = req.body;
+    const { framework, collaborationFormat, location } = req.body;
 
     //flitering on only 1 teaching format at a time, and only one city at a time
     //filtering on an array of frameworks (always in array format in body)
     const filteredMentees = formattedMentees
       .filter((item) => !location || item.location === location)
       .filter(
-        (item) => !learningFormat || item.learningFormat === learningFormat
+        (item) =>
+          !collaborationFormat ||
+          item.collaborationFormat === collaborationFormat
       )
       .filter(
         (item) =>
@@ -79,7 +81,7 @@ const getMenteeById = async (req, res) => {
       attributes: [
         "id",
         "username",
-        "learningFormat",
+        "collaborationFormat",
         "personalGoal",
         "location",
         "availability",

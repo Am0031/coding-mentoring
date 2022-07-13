@@ -15,7 +15,7 @@ class Mentee extends Model {
       email: this.email,
       location: this.location,
       availability: this.availability,
-      learningFormat: this.learningFormat,
+      collaborationFormat: this.collaborationFormat,
       personalGoal: this.personalGoal,
       profileImageUrl: this.profileImageUrl,
       gitHubUrl: this.gitHubUrl,
@@ -79,7 +79,7 @@ Mentee.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    learningFormat: {
+    collaborationFormat: {
       type: DataTypes.STRING,
       allowNull: false,
     },

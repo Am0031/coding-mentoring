@@ -10,7 +10,7 @@ const {
 const getMentors = async (req, res) => {
   try {
     const mentors = await Mentor.findAll({
-      attributes: ["id", "username", "teachingFormat", "location"],
+      attributes: ["id", "username", "collaborationFormat", "location"],
       include: [
         {
           model: Framework,
@@ -26,7 +26,7 @@ const getMentors = async (req, res) => {
     const formatMentors = (each) => {
       const id = each.id;
       const username = each.username;
-      const teachingFormat = each.teachingFormat;
+      const collaborationFormat = each.collaborationFormat;
       const location = each.location;
       const email = each.email;
       const frameworks = each.frameworks.map((i) => {
@@ -39,7 +39,7 @@ const getMentors = async (req, res) => {
       const response = {
         id,
         username,
-        teachingFormat,
+        collaborationFormat,
         location,
         email,
         frameworks,
@@ -49,7 +49,7 @@ const getMentors = async (req, res) => {
 
     const formattedMentors = mentors.map(formatMentors);
 
-    const { framework, teachingFormat, location } = req.body;
+    const { framework, collaborationFormat, location } = req.body;
 
     //need to make sure we are getting this as an array (from the framework checkboxes) empty array if "all" or array of the id of the frameworks selected
     //otherwise, we would need the below checkpoint - and filter on frameworkArray below in the 3rd filter
@@ -62,7 +62,7 @@ const getMentors = async (req, res) => {
     const filteredMentors = formattedMentors
       .filter((item) => !location || item.location === location)
       .filter(
-        (item) => !teachingFormat || item.teachingFormat === teachingFormat
+        (item) => !collaborationFormat || item.collaborationFormat === collaborationFormat
       )
       .filter(
         (item) =>
@@ -86,7 +86,7 @@ const getMentorById = async (req, res) => {
       attributes: [
         "id",
         "username",
-        "teachingFormat",
+        "collaborationFormat",
         "personalGoal",
         "location",
         "availability",
