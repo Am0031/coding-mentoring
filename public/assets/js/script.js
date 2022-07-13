@@ -1,4 +1,7 @@
 //frontend js
+const signupForm = $("#signup-form");
+const loginForm = $("#login-form");
+const logoutBtn = $("#logout-btn");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -42,10 +45,11 @@ const generateMentorCards = (response) => {
   return responseHtml;
 };
 
-const handleSignupClick = async (e) => {
+const handleSignUpSubmit = async (e) => {
   e.preventDefault();
   console.log("handling signup");
 
+  // TODO trim once working
   const firstName = $("#firstName").val();
   const lastName = $("#lastName").val();
   const username = $("#lastName").val();
@@ -55,30 +59,23 @@ const handleSignupClick = async (e) => {
   const location = $("#location").val();
   const availability = $("#availability").val();
   const collaborationFormat = $("#collaborationFormat").val();
-  const collaborationFormat = $("#collaborationFormat").val();
   const personalGoal = $("#personalGoal").val();
   const profileImageUrl = $("#profileImageUrl").val();
   const gitHubUrl = $("#gitHubUrl").val();
 
-  //  TODO - pass in mentor/mentee selection from radio button
-  const userType = "mentor";
-
-  if (userType === "mentor") {
-    if (
-      (firstName,
-      lastName,
-      username,
-      email,
-      password,
-      confirmPassword,
-      location,
-      availability,
-      collaborationFormat,
-      personalGoal,
-      profileImageUrl,
-      gitHubUrl)
-    ) {
-      if (password === confirmPassword) {
+  if (
+    firstName &&
+    lastName &&
+    username &&
+    email &&
+    password &&
+    confirmPassword &&
+    location &&
+    availability &&
+    collaborationFormat
+  ) {
+    if (password === confirmPassword) {
+      try {
         const payload = {
           firstName,
           lastName,
@@ -94,77 +91,33 @@ const handleSignupClick = async (e) => {
           gitHubUrl,
         };
 
-        return payload;
-      } else {
-        renderError("signup-error", "Passwords do not match. Try again.");
+        const response = await fetch("/auth/signup", {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.assign("/login");
+        } else {
+          renderError("signup-error", "Failed to create account. Try again.");
+        }
+      } catch (error) {
+        renderError("signup-error", "Failed to create account. Try again.");
       }
     } else {
-      renderError("signup-error", "Please complete all required fields.");
+      renderError("signup-error", "Passwords do not match. Try again.");
     }
-  }
-
-  if (userType === "mentor") {
-    if (
-      (firstName,
-      lastName,
-      username,
-      email,
-      password,
-      confirmPassword,
-      location,
-      availability,
-      collaborationFormat,
-      personalGoal,
-      profileImageUrl,
-      gitHubUrl)
-    ) {
-      if (password === confirmPassword) {
-        const payload = {
-          firstName,
-          lastName,
-          username,
-          email,
-          password,
-          confirmPassword,
-          location,
-          availability,
-          collaborationFormat,
-          personalGoal,
-          profileImageUrl,
-          gitHubUrl,
-        };
-
-        return payload;
-      } else {
-        renderError("signup-error", "Passwords do not match. Try again.");
-      }
-    } else {
-      renderError("signup-error", "Please complete all required fields.");
-    }
-  }
-
-  try {
-    const response = await fetch("/auth/signup", {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      window.location.assign("/login");
-    } else {
-      renderError("signup-error", "Failed to create account. Try again.");
-    }
-  } catch (error) {
-    renderError("signup-error", "Failed to create account. Try again.");
+  } else {
+    renderError("signup-error", "*Please complete all required fields.");
   }
 };
 
-const handleLoginClick = async (e) => {
+const handleLoginSubmit = async (e) => {
   console.log("handling login");
 
   e.preventDefault();
@@ -198,7 +151,7 @@ const handleLoginClick = async (e) => {
       renderError("login-error", "Failed to login. Try again.");
     }
   } else {
-    renderError("login-error", "Please complete all required fields.");
+    renderError("login-error", "Please complete all fields.");
   }
 };
 
@@ -294,7 +247,9 @@ const handleMentorSearch = async (e) => {
   }
 };
 
-$("#signup-btn").click(handleSignupClick);
-$("#login-btn").click(handleLoginClick);
+signupForm.submit(handleSignUpSubmit);
+loginForm.submit(handleLoginSubmit);
+// $("#signup-btn").click(handleSignupClick);
+// $("#login-btn").click(handleLoginClick);
 $("#mentorSearch").submit(handleMentorSearch);
 $("#menteeSearch").submit(handleMenteeSearch);
