@@ -151,20 +151,21 @@ const deleteMenteeById = async (req, res) => {
 const getMenteeData = async (req, res) => {
   try {
     const { id } = req.params;
-    const menteeData = await Task.findAll({
+    const menteeData = await Partnership.findAll({
+      attributes: ["id", "projectName"],
+      where: { menteeId: id },
       include: [
+        { model: Mentee, attributes: ["id", "username"], as: "mentee" },
+        { model: Mentor, attributes: ["id", "username"], as: "mentor" },
         {
-          model: Framework,
-          attributes: ["frameworkName"],
-        },
-        {
-          model: Partnership,
-          attributes: ["menteeId"],
-          include: [{ model: Mentor }, { model: Mentee }],
-          through: {
-            attributes: ["partnershipId"],
-          },
-          where: { menteeId: id },
+          model: Task,
+          through: { attributes: ["taskDeadline", "taskComplete"] },
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
         },
       ],
     });
