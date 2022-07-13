@@ -77,6 +77,50 @@
 			"response": []
 		},
 		{
+			"name": "GET Mentor Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/mentors/data/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"mentors",
+						"data",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Mentee Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/mentees/data/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"mentees",
+						"data",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET Mentees",
 			"request": {
 				"method": "POST",
@@ -221,7 +265,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"framework\": [2]\r\n\r\n}",
+					"raw": "{\r\n    \"framework\": [3]\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
