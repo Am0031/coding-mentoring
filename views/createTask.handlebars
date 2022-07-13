@@ -35,11 +35,9 @@
             >
             <select id="framework-selection">
               <option value="">--Please choose an option--</option>
-              <option value="1">JavaScript</option>
-              <option value="1">JavaScript</option>
-              <option value="1">JavaScript</option>
-              <option value="1">JavaScript</option>
-              <option value="1">JavaScript</option>
+              {{each data.frameworks}}
+              <option value={{id}}>{{frameworkName}}</option>
+              {{/each}}
             </select>
           </div>
           <div id="create-task-error"></div>
