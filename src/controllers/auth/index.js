@@ -3,6 +3,7 @@ const { Mentor, Mentee } = require("../../models");
 const login = async (req, res) => {
   try {
     let user;
+
     const { email, password, userType } = req.body;
 
     if (userType === "mentor") {
