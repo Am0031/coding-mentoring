@@ -9,7 +9,7 @@ const menteeData = [
     password: "password123",
     location: "Birmingham",
     availability: "weekends",
-    learningFormat: "online",
+    collaborationFormat: "online",
     personalGoal: "become a full stack developer",
     profileImageUrl:
       "https://images.unsplash.com/photo-1515191107209-c28698631303?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
@@ -24,7 +24,7 @@ const menteeData = [
     password: "password345",
     location: "Kettering",
     availability: "weekdays",
-    learningFormat: "online",
+    collaborationFormat: "online",
     personalGoal: "develop my javascript skills and find a job",
     profileImageUrl:
       "https://images.unsplash.com/photo-1581456495146-65a71b2c8e52?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80",
@@ -39,7 +39,7 @@ const menteeData = [
     password: "password456",
     location: "Reading",
     availability: "weekdays",
-    learningFormat: "in person",
+    collaborationFormat: "in person",
     personalGoal: "learn more about coding in general",
     profileImageUrl:
       "https://images.unsplash.com/photo-1491609154219-ffd3ffafd992?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
