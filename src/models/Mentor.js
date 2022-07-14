@@ -15,7 +15,7 @@ class Mentor extends Model {
       email: this.email,
       location: this.location,
       availability: this.availability,
-      teachingFormat: this.teachingFormat,
+      collaborationFormat: this.collaborationFormat,
       personalGoal: this.personalGoal,
       profileImageUrl: this.profileImageUrl,
       gitHubUrl: this.gitHubUrl,
@@ -79,7 +79,7 @@ Mentor.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    teachingFormat: {
+    collaborationFormat: {
       type: DataTypes.STRING,
       allowNull: false,
     },

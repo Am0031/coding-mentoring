@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand text-uppercase" href="/">Codify</a>
+      <a class="navbar-brand" href="/">MentorMe</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -22,20 +22,21 @@
             <a class="nav-link {{#if (isEqualTo currentPage "home")}} active{{/if}}" href="/">Home </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/info">How It Works</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/search/mentors">Our Mentors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/contact">Contact Us</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link{{#if (isEqualTo currentPage "login")}} active{{/if}}" href="/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link{{#if (isEqualTo currentPage "signup")}} active{{/if}}" href="/signup">Sign Up</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/info">How it works</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/search/mentors">Our mentors</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link{{#if (isEqualTo currentPage "dashboard")}} active{{/if}}" href="/contact">Contact Us</a>
-          </li>
+
         </ul>
       </div>
     </div>
