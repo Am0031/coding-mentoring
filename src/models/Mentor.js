@@ -90,16 +90,10 @@ Mentor.init(
     profileImageUrl: {
       type: DataTypes.TEXT,
       allowNull: true,
-      validate: {
-        isUrl: true,
-      },
     },
     gitHubUrl: {
       type: DataTypes.TEXT,
       allowNull: true,
-      validate: {
-        isUrl: true,
-      },
     },
     xp: {
       type: DataTypes.INTEGER,

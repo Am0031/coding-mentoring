@@ -47,7 +47,7 @@ const generateMentorCards = (response) => {
 const handleSignUpSubmit = async (e) => {
   e.preventDefault();
 
-  const userTypeSelected = $("input[type=radio]:checked").attr("name");
+  const userTypeSelected = $("input[type=radio]:checked").attr("id");
   const userType = userTypeSelected;
 
   const firstName = $("#firstName").val().trim();
@@ -129,7 +129,7 @@ const handleSignUpSubmit = async (e) => {
 const handleLoginSubmit = async (e) => {
   e.preventDefault();
 
-  const userType = $("input[type=radio]:checked").attr("name");
+  const userType = $("input[type=radio]:checked").attr("id");
 
   const email = $("#email").val().trim();
   const password = $("#password").val();
