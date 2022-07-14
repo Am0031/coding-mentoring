@@ -49,7 +49,6 @@ const handleSignUpSubmit = async (e) => {
 
   const userTypeSelected = $("input[type=radio]:checked").attr("name");
   const userType = userTypeSelected;
-  console.log(userType);
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();
@@ -128,9 +127,9 @@ const handleSignUpSubmit = async (e) => {
 };
 
 const handleLoginSubmit = async (e) => {
-  console.log("handling login");
-
   e.preventDefault();
+
+  const userType = $("input[type=radio]:checked").attr("name");
 
   const email = $("#email").val().trim();
   const password = $("#password").val();
@@ -138,6 +137,7 @@ const handleLoginSubmit = async (e) => {
   if (email && password) {
     try {
       const payload = {
+        userType,
         email,
         password,
       };
@@ -162,6 +162,23 @@ const handleLoginSubmit = async (e) => {
     }
   } else {
     renderError("login-error", "Please complete all fields.");
+  }
+};
+
+const handleLogout = async () => {
+  try {
+    const response = await fetch("/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      window.location.assign("/home");
+    }
+  } catch (error) {
+    console.log("Failed to logout");
   }
 };
 
@@ -259,7 +276,6 @@ const handleMentorSearch = async (e) => {
 
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
-// $("#signup-btn").click(handleSignupClick);
-// $("#login-btn").click(handleLoginClick);
+logoutBtn.click(handleLogout);
 $("#mentorSearch").submit(handleMentorSearch);
 $("#menteeSearch").submit(handleMenteeSearch);
