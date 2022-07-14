@@ -175,7 +175,7 @@ const handleLogout = async () => {
     });
 
     if (response.ok) {
-      window.location.assign("/home");
+      window.location.assign("/");
     }
   } catch (error) {
     console.log("Failed to logout");
