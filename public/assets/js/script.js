@@ -1,4 +1,3 @@
-//frontend js
 const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
 const logoutBtn = $("#logout-btn");
@@ -49,19 +48,27 @@ const handleSignUpSubmit = async (e) => {
   e.preventDefault();
   console.log("handling signup");
 
-  // TODO trim once working
-  const firstName = $("#firstName").val();
-  const lastName = $("#lastName").val();
-  const username = $("#lastName").val();
-  const email = $("#email").val();
-  const password = $("#password").val();
-  const confirmPassword = $("#confirmPassword").val();
-  const location = $("#location").val();
-  const availability = $("#availability").val();
-  const collaborationFormat = $("#collaborationFormat").val();
-  const personalGoal = $("#personalGoal").val();
-  const profileImageUrl = $("#profileImageUrl").val();
-  const gitHubUrl = $("#gitHubUrl").val();
+  const userType = $("input[type=radio]:checked");
+  console.log(userType);
+
+  const firstName = $("#firstName").val().trim();
+  const lastName = $("#lastName").val().trim();
+  const username = $("#lastName").val().trim();
+  const email = $("#email").val().trim();
+  const password = $("#password").val().trim();
+  const confirmPassword = $("#confirmPassword").val().trim();
+  const location = $("#location").val().trim();
+  // const availability = $("#availability").val().trim();
+  const availabilitySelected = $("input[type=checkbox]:checked");
+  console.log(availabilitySelected);
+  const availabilityAll = Array.from(availabilitySelected).map((checkbox) =>
+    parseInt(checkbox.id)
+  );
+
+  const collaborationFormat = $("#collaborationFormat").val().trim();
+  const personalGoal = $("#personalGoal").val().trim();
+  const profileImageUrl = $("#profileImageUrl").val().trim();
+  const gitHubUrl = $("#gitHubUrl").val().trim();
 
   if (
     firstName &&
@@ -71,12 +78,13 @@ const handleSignUpSubmit = async (e) => {
     password &&
     confirmPassword &&
     location &&
-    availability &&
+    availabilityAll &&
     collaborationFormat
   ) {
     if (password === confirmPassword) {
       try {
         const payload = {
+          userType,
           firstName,
           lastName,
           username,
@@ -84,12 +92,14 @@ const handleSignUpSubmit = async (e) => {
           password,
           confirmPassword,
           location,
-          availability,
+          availability: availabilityAll,
           collaborationFormat,
           personalGoal,
           profileImageUrl,
           gitHubUrl,
         };
+
+        console.log(payload);
 
         const response = await fetch("/auth/signup", {
           method: "POST",
@@ -122,7 +132,7 @@ const handleLoginSubmit = async (e) => {
 
   e.preventDefault();
 
-  const email = $("#email").val();
+  const email = $("#email").val().trim();
   const password = $("#password").val();
 
   if (email && password) {

@@ -4,13 +4,17 @@
   <section class="mt-4 border p-3 rounded-2 bg-light">
     <h2 class="text-center">Sign Up</h2>
     <hr />
-    <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-      <label class="btn border-0 mt-2 mr-5" for="btnradio1" data-user-type="mentee">Mentee</label>
-
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-      <label class="btn border-0  mt-2 mr-5" for="btnradio2" data-user-type="mentor">Mentor</label>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="flexRadioDefault mentee" id="mentee" checked>
+      <label class="form-check-label mr-5" for="flexRadioDefault2">
+        Mentee
+      </label>
+      <input class="form-check-input" type="radio" name="flexRadioDefault mentee" id="mentor">
+      <label class="form-check-label mr-5" for="flexRadioDefault2">
+        Mentor
+      </label>
     </div>
+
     <hr />
 
     <form class="mt-4" id="signup-form">
@@ -65,36 +69,64 @@
         />
       </div>
 
+      {{!-- <div class="mb-3">
+        <input
+          type="input"
+          class="form-control"
+          id="availability"
+          placeholder="Enter availability*"
+        />
+      </div> --}}
+
+      <div class="mb-3">
+        <input
+          type="input"
+          class="form-control"
+          id="collaborationFormat"
+          placeholder="Select collaboration format*"
+        />
+      </div>
+
+      <div class="mb-3">
+        <input
+          type="input"
+          class="form-control"
+          id="location"
+          placeholder="Select location*"
+        />
+      </div>
+
+{{!-- checkbox and dropdown formats --}}
       <div class="ml-1 mb-3">
         <p id="availability">Select availability*</p>
       </div>
 
 {{!-- TODO fix bug when clicking on words instead of boxes --}}
       <div class="form-check ml-2 mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <input class="form-check-input" type="checkbox" value="" id="weekdays">
         <label class="form-check-label mr-5" for="flexCheckDefault">
           Weekdays
         </label>
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <input class="form-check-input" type="checkbox" value="" id="weekends">
         <label class="form-check-label mr-5" for="flexCheckDefault">
           Weekends
         </label>
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <input class="form-check-input" type="checkbox" value="" id="mornings">
         <label class="form-check-label mr-5" for="flexCheckDefault">
           Mornings
         </label>
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <input class="form-check-input" type="checkbox" value="" id="afternoons">
         <label class="form-check-label mr-5" for="flexCheckDefault">
           Afternoons
         </label>
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <input class="form-check-input" type="checkbox" value="" id="evenings">
         <label class="form-check-label mr-5" for="flexCheckDefault">
           Evenings
         </label>
       </div>
 
 {{!-- TODO fix styling and dropdown functionality --}}
-      <div class="dropdown mb-3 bg-light">
+      {{!-- <div class="dropdown mb-3 bg-light">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2 collaborationFormat" data-bs-toggle="dropdown" aria-expanded="false">
             Select collaboration format*
           </button>
@@ -114,7 +146,7 @@
             <li><button class="dropdown-item" type="button">London</button></li>
             <li><button class="dropdown-item" type="button">Manchester</button></li>
           </ul>
-      </div>
+      </div> --}}
 
 
       <div class="mb-3">
