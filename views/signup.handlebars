@@ -4,13 +4,27 @@
   <section class="mt-4 border p-3 rounded-2 bg-light">
     <h2 class="text-center">Sign Up</h2>
     <hr />
+    
+    <div class="form-check" id="user-type">
+      <input class="form-check-input" type="radio" name="mentee" id="mentee" checked>
+      <label class="form-check-label mr-5" for="mentee">
+        Mentee
+      </label>
+      <input class="form-check-input" type="radio" name="mentor" id="mentor">
+      <label class="form-check-label mr-5" for="mentor">
+        Mentor
+      </label>
+    </div>
+
+    <hr />
+
     <form class="mt-4" id="signup-form">
       <div class="mb-3">
         <input
           type="text"
           class="form-control"
           id="firstName"
-          placeholder="Enter first name"
+          placeholder="Enter first name*"
         />
       </div>
       <div class="mb-3">
@@ -18,7 +32,7 @@
           type="text"
           class="form-control"
           id="lastName"
-          placeholder="Enter last name"
+          placeholder="Enter last name*"
         />
       </div>
        
@@ -27,7 +41,7 @@
           type="username"
           class="form-control"
           id="username"
-          placeholder="Enter username"
+          placeholder="Enter username*"
         />
       </div>
       <div class="mb-3">
@@ -35,7 +49,7 @@
           type="email"
           class="form-control"
           id="email"
-          placeholder="Enter email address"
+          placeholder="Enter email address*"
         />
       </div>
       
@@ -44,7 +58,7 @@
           type="password"
           class="form-control"
           id="password"
-          placeholder="Enter password"
+          placeholder="Enter password*"
         />
       </div>
       <div class="mb-3">
@@ -52,54 +66,97 @@
           type="password"
           class="form-control"
           id="confirmPassword"
-          placeholder="Confirm password"
+          placeholder="Confirm password*"
         />
       </div>
+
       <div class="mb-3">
         <input
-          type="text"
+          type="input"
+          class="form-control"
+          id="collaborationFormat"
+          placeholder="Select collaboration format*"
+        />
+      </div>
+
+      <div class="mb-3">
+        <input
+          type="input"
           class="form-control"
           id="location"
-          placeholder="Enter location"
+          placeholder="Select location*"
         />
       </div>
+
       <div class="mb-3">
         <input
-          type="text"
+          type="input"
           class="form-control"
           id="availability"
-          placeholder="Select availability"
+          placeholder="Select availability*"
         />
       </div>
 
-      {{#if (isEqualTo userType "mentor")}}
-      <div class="mb-3">
-        <input
-          type="text"
-          class="form-control"
-          id="teachingFormat"
-          placeholder="Select teaching format"
-        />
-      </div>
-      {{/if}}
 
-      {{#if (isEqualTo userType "mentee")}}
-      <div class="mb-3">
-        <input
-          type="text"
-          class="form-control"
-          id="learningFormat"
-          placeholder="Select learning format"
-        />
+{{!-- checkbox and dropdown formats --}}
+      {{!-- <div class="ml-1 mb-3">
+        <p id="availability">Select availability*</p>
+      </div> --}}
+
+{{!-- TODO fix bug when clicking on words instead of boxes --}}
+      {{!-- <div class="form-check ml-2 mb-3">
+        <input class="form-check-input" type="checkbox" id="weekdays">
+        <label class="form-check-label mr-5" for="flexCheckDefault">
+          Weekdays
+        </label>
+        <input class="form-check-input" type="checkbox" id="weekends">
+        <label class="form-check-label mr-5" for="flexCheckDefault">
+          Weekends
+        </label>
+        <input class="form-check-input" type="checkbox" id="mornings">
+        <label class="form-check-label mr-5" for="flexCheckDefault">
+          Mornings
+        </label>
+        <input class="form-check-input" type="checkbox" id="afternoons">
+        <label class="form-check-label mr-5" for="flexCheckDefault">
+          Afternoons
+        </label>
+        <input class="form-check-input" type="checkbox" id="evenings">
+        <label class="form-check-label mr-5" for="flexCheckDefault">
+          Evenings
+        </label>
+      </div> --}}
+
+{{!-- TODO fix styling and dropdown functionality --}}
+      {{!-- <div class="dropdown mb-3 bg-light">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2 collaborationFormat" data-bs-toggle="dropdown" aria-expanded="false">
+            Select collaboration format*
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li><button class="dropdown-item" type="button">Online</button></li>
+            <li><button class="dropdown-item" type="button">In-Person</button></li>
+            <li><button class="dropdown-item" type="button">Hybrid</button></li>
+          </ul>
       </div>
-      {{/if}}
+
+      <div class="dropdown mb-3 bg-light">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2 location" data-bs-toggle="dropdown" aria-expanded="false">
+            Select location*
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li><button class="dropdown-item" type="button">Birmingham</button></li>
+            <li><button class="dropdown-item" type="button">London</button></li>
+            <li><button class="dropdown-item" type="button">Manchester</button></li>
+          </ul>
+      </div> --}}
+
 
       <div class="mb-3">
         <input
           type="text"
           class="form-control"
           id="personalGoal"
-          placeholder="Enter personal goal"
+          placeholder="Enter personal goal*"
         />
       </div>
       <div class="mb-3">
@@ -107,7 +164,7 @@
           type="text"
           class="form-control"
           id="profileImageUrl"
-          placeholder="Enter profile image URL"
+          placeholder="Enter profile image URL (optional)"
         />
       </div>
       <div class="mb-3">
@@ -115,7 +172,7 @@
           type="text"
           class="form-control"
           id="gitHubUrl"
-          placeholder="Enter GitHub URL"
+          placeholder="Enter GitHub URL (optional)"
         />
       </div>
       <div id="signup-error"></div>

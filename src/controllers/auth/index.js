@@ -3,6 +3,7 @@ const { Mentor, Mentee } = require("../../models");
 const login = async (req, res) => {
   try {
     let user;
+
     const { email, password, userType } = req.body;
 
     if (userType === "mentor") {
@@ -38,6 +39,9 @@ const login = async (req, res) => {
         return res.json({ success: true });
       });
     } else {
+      console.log(
+        `[ERROR]: Failed to login | Incorrect password for email: ${email}`
+      );
       return res.status(500).json({ success: false });
     }
   } catch (error) {
