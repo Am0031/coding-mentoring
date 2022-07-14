@@ -17,6 +17,10 @@ const renderInfoPage = (req, res) => {
   return res.render("info", { currentPage: "info" });
 };
 
+const renderContactPage = (req, res) => {
+  return res.render("contact", { currentPage: "contact" });
+};
+
 const renderMentorSearch = async (req, res) => {
   try {
     const frameworks = await Framework.findAll();
@@ -24,7 +28,7 @@ const renderMentorSearch = async (req, res) => {
       return res.status(500).json({ message: "Frameworks not found" });
     }
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("mentor-search", { data: data });
+    return res.render("mentor-search", { data: data, currentPage: "mentors" });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
@@ -43,6 +47,7 @@ module.exports = {
   renderLoginPage,
   renderSignupPage,
   renderInfoPage,
+  renderContactPage,
   renderMentorSearch,
   renderMentorProfile,
 };
