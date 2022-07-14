@@ -49,10 +49,27 @@ const renderTaskDetails = async (req, res) => {
   return res.render("task-details", { user: chosenTask });
 };
 
+const renderCreateTask = async (req, res) => {
+  try {
+    const { id } = req.session.user;
+    const frameworks = await Framework.findAll();
+    if (!frameworks) {
+      return res.status(500).json({ message: "Frameworks not found" });
+    } else {
+      const data = frameworks.map((d) => d.dataValues);
+      return res.render("createTask", { user: id, data: data });
+    }
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
+};
+
 module.exports = {
   renderDashboard,
   renderMenteeSearch,
   renderMenteeProfile,
   renderTaskSearch,
   renderTaskDetails,
+  renderCreateTask,
 };

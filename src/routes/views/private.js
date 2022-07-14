@@ -5,6 +5,7 @@ const {
   renderMenteeSearch,
   renderMenteeProfile,
   renderTaskDetails,
+  renderCreateTask,
 } = require("../../controllers/views/private");
 
 const router = Router();
@@ -14,5 +15,6 @@ router.get("/search/tasks", renderTaskSearch);
 router.get("/search/tasks/:id", renderTaskDetails);
 router.get("/search/mentees", renderMenteeSearch);
 router.get("/search/mentees/:id", renderMenteeProfile);
+router.get("/tasks", renderCreateTask);
 
 module.exports = router;
