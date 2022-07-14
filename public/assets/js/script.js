@@ -46,9 +46,9 @@ const generateMentorCards = (response) => {
 
 const handleSignUpSubmit = async (e) => {
   e.preventDefault();
-  console.log("handling signup");
 
-  const userType = $("input[type=radio]:checked");
+  const userTypeSelected = $("input[type=radio]:checked").attr("name");
+  const userType = userTypeSelected;
   console.log(userType);
 
   const firstName = $("#firstName").val().trim();
@@ -58,12 +58,12 @@ const handleSignUpSubmit = async (e) => {
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
   const location = $("#location").val().trim();
-  // const availability = $("#availability").val().trim();
-  const availabilitySelected = $("input[type=checkbox]:checked");
-  console.log(availabilitySelected);
-  const availabilityAll = Array.from(availabilitySelected).map((checkbox) =>
-    parseInt(checkbox.id)
-  );
+  const availability = $("#availability").val().trim();
+
+  // const availabilitySelected = $("input[type=checkbox]:checked");
+  // const availabilityAll = Array.from(availabilitySelected).map(
+  //   (selected) => selected.id
+  // );
 
   const collaborationFormat = $("#collaborationFormat").val().trim();
   const personalGoal = $("#personalGoal").val().trim();
@@ -78,7 +78,7 @@ const handleSignUpSubmit = async (e) => {
     password &&
     confirmPassword &&
     location &&
-    availabilityAll &&
+    availability &&
     collaborationFormat
   ) {
     if (password === confirmPassword) {
@@ -92,7 +92,7 @@ const handleSignUpSubmit = async (e) => {
           password,
           confirmPassword,
           location,
-          availability: availabilityAll,
+          availability,
           collaborationFormat,
           personalGoal,
           profileImageUrl,
