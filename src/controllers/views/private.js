@@ -49,10 +49,20 @@ const renderTaskDetails = async (req, res) => {
   return res.render("task-details", { user: chosenTask });
 };
 
+const renderCreateTask = async (req, res) => {
+  try {
+    const frameworks = await Framework.findAll();
+    if (!frameworks) {
+      return res.status(500).json({ message: "Frameworks not found" });
+    }
+  } catch {}
+};
+
 module.exports = {
   renderDashboard,
   renderMenteeSearch,
   renderMenteeProfile,
   renderTaskSearch,
   renderTaskDetails,
+  renderCreateTask,
 };
