@@ -1,3 +1,4 @@
+// const Country = require("country-state-city").Country;
 const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
 const logoutBtn = $("#logout-btn");
@@ -272,6 +273,12 @@ const handleMentorSearch = async (e) => {
     const mentorCards = generateMentorCards(data);
     $("#mentor-card-container").append(mentorCards);
   }
+};
+
+const cities = () => {
+  getCitiesOfCountry(UK);
+
+  console.log(cities);
 };
 
 signupForm.submit(handleSignUpSubmit);
