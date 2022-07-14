@@ -17,43 +17,25 @@ const frameworkData = [
     frameworkName: "Node",
   },
   {
-    frameworkName: "Inquirer",
-  },
-  {
     frameworkName: "Handlebars",
   },
   {
-    frameworkName: "Web API",
-  },
-  {
-    frameworkName: "3rd party API",
-  },
-  {
-    frameworkName: "Server side API",
+    frameworkName: "API",
   },
   {
     frameworkName: "React",
   },
   {
-    frameworkName: "Vue",
-  },
-  {
-    frameworkName: "Angular",
-  },
-  {
-    frameworkName: "C#",
-  },
-  {
-    frameworkName: "C++",
-  },
-  {
     frameworkName: "Git",
   },
   {
-    frameworkName: "Bash",
+    frameworkName: "MySQL",
   },
   {
-    frameworkName: "Java",
+    frameworkName: "NoSQL",
+  },
+  {
+    frameworkName: "jQuery",
   },
 ];
 
