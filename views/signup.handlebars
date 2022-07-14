@@ -27,6 +27,7 @@
           placeholder="Enter first name*"
         />
       </div>
+
       <div class="mb-3">
         <input
           type="text"
@@ -44,6 +45,7 @@
           placeholder="Enter username*"
         />
       </div>
+
       <div class="mb-3">
         <input
           type="email"
@@ -61,6 +63,7 @@
           placeholder="Enter password*"
         />
       </div>
+
       <div class="mb-3">
         <input
           type="password"
@@ -69,34 +72,6 @@
           placeholder="Confirm password*"
         />
       </div>
-
-      <div class="mb-3">
-        <input
-          type="input"
-          class="form-control"
-          id="collaborationFormat"
-          placeholder="Select collaboration format*"
-        />
-      </div>
-
-      <div class="mb-3">
-        <input
-          type="input"
-          class="form-control"
-          id="location"
-          placeholder="Select location*"
-        />
-      </div>
-
-      <div class="mb-3">
-        <input
-          type="input"
-          class="form-control"
-          id="availability"
-          placeholder="Select availability*"
-        />
-      </div>
-
 
 {{!-- checkbox and dropdown formats --}}
       {{!-- <div class="ml-1 mb-3">
@@ -128,28 +103,32 @@
       </div> --}}
 
 {{!-- TODO fix styling and dropdown functionality --}}
-      {{!-- <div class="dropdown mb-3 bg-light">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2 collaborationFormat" data-bs-toggle="dropdown" aria-expanded="false">
-            Select collaboration format*
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><button class="dropdown-item" type="button">Online</button></li>
-            <li><button class="dropdown-item" type="button">In-Person</button></li>
-            <li><button class="dropdown-item" type="button">Hybrid</button></li>
-          </ul>
+      <div>
+        <select class="form-select mb-3" id="availability" aria-label="availability">
+          <option selected>Select availability*</option>
+          <option value="weekdays">Weekdays</option>
+          <option value="weekends">Weekends</option>
+          <option value="both">Both</option>
+        </select>
       </div>
 
-      <div class="dropdown mb-3 bg-light">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2 location" data-bs-toggle="dropdown" aria-expanded="false">
-            Select location*
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><button class="dropdown-item" type="button">Birmingham</button></li>
-            <li><button class="dropdown-item" type="button">London</button></li>
-            <li><button class="dropdown-item" type="button">Manchester</button></li>
-          </ul>
-      </div> --}}
-
+      <div>
+        <select class="form-select mb-3" id="collaborationFormat" aria-label="collaborationFormat">
+          <option selected>Select collaboration format*</option>
+          <option value="online">Online</option>
+          <option value="in-person">In-Person</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+      </div>
+      
+      <div>
+        <select class="form-select mb-3" id="location" aria-label="location">
+          <option selected>Select location*</option>
+          <option value="weekdays">Birmingham</option>
+          <option value="weekends">London</option>
+          <option value="both">Manchester</option>
+        </select>
+      </div>
 
       <div class="mb-3">
         <input
@@ -159,6 +138,7 @@
           placeholder="Enter personal goal*"
         />
       </div>
+
       <div class="mb-3">
         <input
           type="text"
@@ -167,6 +147,7 @@
           placeholder="Enter profile image URL (optional)"
         />
       </div>
+
       <div class="mb-3">
         <input
           type="text"
@@ -175,7 +156,9 @@
           placeholder="Enter GitHub URL (optional)"
         />
       </div>
+
       <div id="signup-error"></div>
+
       <div class="mb-3 text-center">
         <button type="submit" class="btn btn-primary">Sign Up</button>
       </div>
@@ -183,6 +166,7 @@
         Already have an account?
         <a href="/login">Login here.</a>
       </div>
+
     </form>
   </section>
 </main>
