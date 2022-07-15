@@ -1,2 +1,35 @@
 {{> privateNavBar}}
 
+<div class="container">
+      <div style="margin-top: 20px" class="text-center card-header">
+        <h1 class="display-4 mb-4">Search our database of learning tasks</h1>
+        <form class="text-left" id="taskSearch">
+          <fieldset>
+            <div class="form-group">
+              <label for="inputFormat" class="form-label">Filter by level</label>
+              <select class="form-select" aria-label="Default select" id="levelSelect">
+                <option selected>All</option>
+                <option value="beginner">beginner</option>
+                <option value="intermediate">intermediate</option>
+                <option value="advanced">advanced</option>
+            </select>
+            </div>
+            <div class="form-group">
+              <p class="form-label">Filter by framework (default all)</p>
+              <div class="d-flex flex-row flex-wrap">
+                {{>frameworks}}
+                
+                </div>
+            </div>
+            
+            <div class="form-group d-flex flex-column align-items-center">
+              <button type="submit" class="btn btn-primary" id="task-search-btn">Submit</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="container card-container d-flex flex-column mt-3" id="task-card-container">
+
+      </div>
+    </div>

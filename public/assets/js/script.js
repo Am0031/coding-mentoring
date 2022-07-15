@@ -4,6 +4,7 @@ const logoutBtn = $("#logout-btn");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
+const taskSearchForm = $("#taskSearch");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -78,6 +79,21 @@ const generateMentorCards = (data, partnerships) => {
       .join("");
   }
 
+  return responseHtml;
+};
+
+const generateTaskCards = (data) => {
+  const createCard = (each) => {
+    return `<div class="card mb-3">
+  <div class="card-header d-flex flex-row justify-content-between">
+    <div class="d-flex flex-row"><h4 class="card-title mr-2">${each.taskName}</h4>
+    <p class="btn btn-dark mr-2">${each.framework}</p>
+    <p class="btn btn-dark mr-2">${each.level}</p></div>
+    <a class="btn btn-primary" href="/tasks/${each.id}" data-id=${each.id} id="view-task-btn">View task details</a>
+  </div>
+</div>`;
+  };
+  const responseHtml = data.map(createCard).join("");
   return responseHtml;
 };
 
@@ -259,6 +275,7 @@ const handleMenteeSearch = async (e) => {
   if (response.status !== 200) {
     console.error("Search for mentees failed");
   } else {
+    $("#mentee-card-container").empty();
     const data = await response.json();
     const menteeCards = generateMenteeCards(data);
     $("#mentee-card-container").append(menteeCards);
@@ -305,7 +322,6 @@ const handleMentorSearch = async (e) => {
   if (response.status !== 200) {
     console.error("Search for mentors failed");
   } else {
-    debugger;
     const data = await response.json();
     const options = {
       method: "GET",
@@ -327,8 +343,7 @@ const handleMentorSearch = async (e) => {
 const handleMentorSelection = async (e) => {
   e.preventDefault();
   e.stopPropagation();
-  console.log("starting partnership process");
-  debugger;
+
   const target = $(e.target);
   const mentorId = target.attr("data-id");
   const mentorName = target.attr("data-name");
@@ -358,9 +373,52 @@ const handleMentorSelection = async (e) => {
   }
 };
 
+const handleTaskSearch = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+
+  const levelSelect = $("#levelSelect").find(":selected").text();
+  let level;
+  levelSelect === "All" ? (level = "") : (level = levelSelect);
+
+  const allChecked = $("input[type=checkbox]:checked");
+  const checkboxes = Array.from(allChecked).map((checkbox) =>
+    parseInt(checkbox.id)
+  );
+
+  //passing checkboxes array, collaboration format string and city string into our body object
+  const searchBody = {
+    framework: checkboxes,
+    collaborationFormat,
+    location,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(searchBody),
+  };
+  const response = await fetch("/api/tasks", options);
+
+  if (response.status !== 200) {
+    console.error("Search for tasks failed");
+  } else {
+    $("#task-card-container").empty();
+    const data = await response.json();
+    const taskCards = generateTaskCards(data);
+    $("#task-card-container").append(taskCards);
+  }
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
+taskSearchForm.submit(handleTaskSearch);
