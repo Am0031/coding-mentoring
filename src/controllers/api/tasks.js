@@ -4,7 +4,7 @@ const getTasks = async (req, res) => {
   try {
     const temptasks = await Task.findAll({
       attributes: ["id", "taskName", "taskDescription", "taskLevel", "points"],
-      include: Framework,
+      include: [{ model: Framework }],
     });
     const tasks = temptasks.map((i) => i.dataValues);
 

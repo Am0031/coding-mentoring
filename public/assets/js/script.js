@@ -85,11 +85,11 @@ const generateMentorCards = (data, partnerships) => {
 const generateTaskCards = (data) => {
   const createCard = (each) => {
     return `<div class="card mb-3">
-  <div class="card-header d-flex flex-row justify-content-between">
-    <div class="d-flex flex-row"><h4 class="card-title mr-2">${each.taskName}</h4>
-    <p class="btn btn-dark mr-2">${each.framework}</p>
-    <p class="btn btn-dark mr-2">${each.level}</p></div>
-    <a class="btn btn-primary" href="/tasks/${each.id}" data-id=${each.id} id="view-task-btn">View task details</a>
+  <div class="card-header d-flex flex-row justify-content-between align-items-center">
+    <div class="d-flex flex-row align-items-center"><h4 class="card-title mr-2">${each.taskName}</h4>
+    <p class="btn btn-dark mr-2 mb-0">${each.frameworkName}</p>
+    <p class="btn btn-dark mr-2 mb-0">${each.taskLevel}</p></div>
+    <a class="btn btn-primary" href="/search/tasks/${each.id}" data-id=${each.id} id="view-task-btn">View details</a>
   </div>
 </div>`;
   };
@@ -380,8 +380,8 @@ const handleTaskSearch = async (e) => {
   const target = $(e.target);
 
   const levelSelect = $("#levelSelect").find(":selected").text();
-  let level;
-  levelSelect === "All" ? (level = "") : (level = levelSelect);
+  let taskLevel;
+  levelSelect === "All" ? (taskLevel = "") : (taskLevel = levelSelect);
 
   const allChecked = $("input[type=checkbox]:checked");
   const checkboxes = Array.from(allChecked).map((checkbox) =>
@@ -391,8 +391,7 @@ const handleTaskSearch = async (e) => {
   //passing checkboxes array, collaboration format string and city string into our body object
   const searchBody = {
     framework: checkboxes,
-    collaborationFormat,
-    location,
+    taskLevel,
   };
 
   const options = {
