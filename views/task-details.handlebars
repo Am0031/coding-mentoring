@@ -1,65 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--bootstrap-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
-    crossorigin="anonymous">
-    <!--font awesome-->
-    <link rel="stylesheet" 
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
-    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
-    crossorigin="anonymous" 
-    referrerpolicy="no-referrer" />
-    <!--google fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,800;1,400;1,800&display=swap" rel="stylesheet">
-    <!--CSS style sheet-->
-    <link rel="stylesheet" href="/public/assets/css/style.css">
-     
-    <title>Tasks</title>
+{{> privateNavBar}}
 
-</head>
-
-<body>
-    <header>
-        <!-- page logo-->
-    <div>
-  <img src="" alt="">
-    </div>
-
-    <nav>
-        <ul>
-            <li><a href="">Login</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Resources</a></li>
-            <li><a href="">Community</a></li>
-            <li><a href="">Contact</a></li>
-        </ul>
-    </nav>
-    </header>
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p>&copy; 2022</p>
+<div class="container">
+      <div style="margin-top: 20px" class="text-center card-header">
+        <h1 class="display-4 mb-4">Search our database of learning tasks</h1>
+        <form class="text-left" id="taskSearch">
+          <fieldset>
+            <div class="form-group">
+              <label for="inputFormat" class="form-label">Filter by level</label>
+              <select class="form-select" aria-label="Default select" id="formatSelect">
+                <option selected>All</option>
+                <option value="beginner">beginner</option>
+                <option value="intermediate">intermediate</option>
+                <option value="advanced">advanced</option>
+            </select>
+            </div>
+            <div class="form-group">
+              <p class="form-label">Filter by framework (default all)</p>
+              <div class="d-flex flex-row flex-wrap">
+                {{>frameworks}}
+                
                 </div>
             </div>
-        </div>
+            
+            <div class="form-group d-flex flex-column align-items-center">
+              <button type="submit" class="btn btn-primary" id="task-search-btn">Submit</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
 
-<!--JQuery-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" 
-integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" 
-crossorigin="anonymous" 
-referrerpolicy="no-referrer">
-</script>
+      <div class="container card-container d-flex flex-column mt-3" id="task-card-container">
 
-<!--JS-->
-<script src="/public/assets/js/script.js"></script>
-</body>
-</html>
+      </div>
+    </div>
