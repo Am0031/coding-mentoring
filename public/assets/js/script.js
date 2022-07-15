@@ -36,7 +36,7 @@ const generateMentorCards = (data, partnerships) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <div>
+    <div class="add-partnership-div-${each.id}">
     <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div>
   </div>
   <div class="card-body">
@@ -350,11 +350,11 @@ const handleMentorSelection = async (e) => {
     if (response.status !== 200) {
       console.error("Partnership could not be created");
     } else {
-      $(e.target).val("Added");
+      target.removeClass("btn-primary");
+      target.addClass("btn-success");
+      target.text("Added");
+      target.attr("disabled", "true");
     }
-  }
-  if (target.attr("name") === "email-link-btn") {
-    window.location.replace(`${target.href}`);
   }
 };
 
