@@ -15,6 +15,7 @@ const generateMenteeCards = (response) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
+    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank">Email Mentee</a>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -32,6 +33,9 @@ const generateMentorCards = (response) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
+    <div>
+    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank">Email Mentor</a>
+    <button class="btn btn-primary" id="add-partnership-btn" data-id=${each.id}>Add Mentor</button></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
