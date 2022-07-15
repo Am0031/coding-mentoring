@@ -9,6 +9,7 @@ const {
   renderInfoPage,
   renderMentorSearch,
   renderMentorProfile,
+  renderFAQPage,
 } = require("../../controllers/views/public");
 
 router.get("/", renderHomePage);
@@ -17,5 +18,6 @@ router.get("/signup", renderSignupPage);
 router.get("/info", renderInfoPage);
 router.get("/search/mentors", renderMentorSearch);
 router.get("/search/mentors/:id", renderMentorProfile);
+router.get("/faq", renderFAQPage);
 
 module.exports = router;
