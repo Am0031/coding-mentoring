@@ -40,7 +40,9 @@ const renderMentorProfile = async (req, res) => {
 const renderFAQPage = (req, res) => {
   return res.render("faq", { currentPage: "faq" });
 };
-
+const renderResetPasswordPage = (req, res) => {
+  return res.render("resetPassword", { currentPage: "resetPassword" });
+};
 module.exports = {
   renderHomePage,
   renderLoginPage,
@@ -49,4 +51,5 @@ module.exports = {
   renderMentorSearch,
   renderMentorProfile,
   renderFAQPage,
+  renderResetPasswordPage,
 };
