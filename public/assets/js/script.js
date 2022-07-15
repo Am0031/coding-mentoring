@@ -1,6 +1,6 @@
-// const Country = require("country-state-city").Country;
 const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
+const updateInfoForm = $("update-form");
 const logoutBtn = $("#logout-btn");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
@@ -83,14 +83,15 @@ const generateMentorCards = (data, partnerships) => {
 };
 
 const handleSignUpSubmit = async (e) => {
+  console.log("signup");
+
   e.preventDefault();
 
-  const userTypeSelected = $("input[type=radio]:checked").attr("id");
-  const userType = userTypeSelected;
+  const userType = $("input[type=radio]:checked").attr("id");
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();
-  const username = $("#lastName").val().trim();
+  const username = $("#username").val().trim();
   const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
@@ -166,6 +167,7 @@ const handleSignUpSubmit = async (e) => {
 
 const handleLoginSubmit = async (e) => {
   e.preventDefault();
+  console.log("login");
 
   const userType = $("input[type=radio]:checked").attr("id");
 
@@ -199,7 +201,88 @@ const handleLoginSubmit = async (e) => {
       renderError("login-error", "Failed to login. Try again.");
     }
   } else {
+    console.log("fields");
     renderError("login-error", "Please complete all fields.");
+  }
+};
+
+const handleEditSubmit = async (e) => {
+  e.preventDefault();
+
+  // const userType = req.session.user;
+
+  const firstName = $("#firstName").val().trim();
+  const lastName = $("#lastName").val().trim();
+  const username = $("#username").val().trim();
+  const email = $("#email").val().trim();
+  const password = $("#password").val().trim();
+  const confirmPassword = $("#confirmPassword").val().trim();
+  const location = $("#location").val().trim();
+  const availability = $("#availability").val().trim();
+
+  // const availabilitySelected = $("input[type=checkbox]:checked");
+  // const availabilityAll = Array.from(availabilitySelected).map(
+  //   (selected) => selected.id
+  // );
+
+  const collaborationFormat = $("#collaborationFormat").val().trim();
+  const personalGoal = $("#personalGoal").val().trim();
+  const profileImageUrl = $("#profileImageUrl").val().trim();
+  const gitHubUrl = $("#gitHubUrl").val().trim();
+
+  if (
+    firstName &&
+    lastName &&
+    username &&
+    email &&
+    password &&
+    confirmPassword &&
+    location &&
+    availability &&
+    collaborationFormat
+  ) {
+    if (password === confirmPassword) {
+      try {
+        const payload = {
+          firstName,
+          lastName,
+          username,
+          email,
+          password,
+          confirmPassword,
+          location,
+          availability,
+          collaborationFormat,
+          personalGoal,
+          profileImageUrl,
+          gitHubUrl,
+        };
+
+        console.log(payload);
+
+        const response = await fetch(`/api/${userType}s/`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.assign("/dashboard");
+        } else {
+          renderError("edit-error", "Failed to update account. Try again.");
+        }
+      } catch (error) {
+        renderError("edit-error", "Failed to update account. Try again.");
+      }
+    } else {
+      renderError("edit-error", "Passwords do not match. Try again.");
+    }
+  } else {
+    renderError("edit-error", "*Please complete all required fields.");
   }
 };
 
@@ -325,12 +408,6 @@ const handleMentorSearch = async (e) => {
   }
 };
 
-// const cities = () => {
-//   getCitiesOfCountry(UK);
-
-//   console.log(cities);
-// }
-
 const handleMentorSelection = async (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -367,6 +444,7 @@ const handleMentorSelection = async (e) => {
 
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
+updateInfoForm.submit(handleEditSubmit);
 logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);

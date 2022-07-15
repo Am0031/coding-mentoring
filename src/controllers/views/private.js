@@ -65,6 +65,27 @@ const renderCreateTask = async (req, res) => {
   }
 };
 
+const renderEditInfo = async (req, res) => {
+  const { email } = req.session.user.email;
+
+  const mentor = await Mentor.findOne({ where: email });
+  const mentee = await Mentee.findOne({ where: email });
+
+  if (mentor) {
+    const currentUser = mentor.getUser();
+    const userType = "mentor";
+    return { currentUser, userType };
+  }
+
+  if (mentee) {
+    const currentUser = mentee.getUser();
+    const userType = "mentee";
+    return { currentUser, userType };
+  }
+
+  return res.render("editInfo", { user: currentUser, userType });
+};
+
 module.exports = {
   renderDashboard,
   renderMenteeSearch,
@@ -72,4 +93,5 @@ module.exports = {
   renderTaskSearch,
   renderTaskDetails,
   renderCreateTask,
+  renderEditInfo,
 };

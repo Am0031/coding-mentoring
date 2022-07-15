@@ -1,30 +1,17 @@
-{{> publicNavBar}}
+{{> privateNavBar}}
 
 <main class="container">
   <section class="mt-4 border p-3 rounded-2 bg-light">
-    <h2 class="text-center">Sign Up</h2>
+    <h2 class="text-center">Edit Your Information</h2>
     <hr />
     
-    <div class="form-check" id="user-type">
-      <input class="form-check-input" type="radio" name="user" id="mentee" checked>
-      <label class="form-check-label mr-5" for="mentee">
-        Mentee
-      </label>
-      <input class="form-check-input" type="radio" name="user" id="mentor">
-      <label class="form-check-label mr-5" for="mentor">
-        Mentor
-      </label>
-    </div>
-
-    <hr />
-
-    <form class="mt-4" id="signup-form">
+    <form class="mt-4" id="update-form">
       <div class="mb-3">
         <input
           type="text"
           class="form-control"
           id="firstName"
-          placeholder="Enter first name*"
+          placeholder={{user.firstName}}
         />
       </div>
 
@@ -33,7 +20,7 @@
           type="text"
           class="form-control"
           id="lastName"
-          placeholder="Enter last name*"
+          placeholder={{user.lastName}}
         />
       </div>
        
@@ -42,7 +29,7 @@
           type="username"
           class="form-control"
           id="username"
-          placeholder="Enter username*"
+          placeholder={{user.username}}
         />
       </div>
 
@@ -51,7 +38,7 @@
           type="email"
           class="form-control"
           id="email"
-          placeholder="Enter email address*"
+          placeholder={{user.email}}
         />
       </div>
       
@@ -60,7 +47,7 @@
           type="password"
           class="form-control"
           id="password"
-          placeholder="Enter password between 6-18 characters long and containing at least one number*"
+          placeholder={{user.password}}
           pattern="^(?=.*\d).{6,18}$"
         />
       </div>
@@ -70,7 +57,7 @@
           type="password"
           class="form-control"
           id="confirmPassword"
-          placeholder="Confirm password*"
+          placeholder={{user.password}}
         />
       </div>
 
@@ -106,28 +93,28 @@
 {{!-- TODO fix styling and dropdown functionality --}}
       <div>
         <select class="form-select mb-3" id="availability" aria-label="availability">
-          <option selected>Select availability*</option>
-          <option value="weekdays">Weekdays</option>
-          <option value="weekends">Weekends</option>
-          <option value="both">Both</option>
+          <option>Select availability*</option>
+          <option {{#if (isEqualTo user.availability)}} selected {{/if}}value="weekdays">Weekdays</option>
+          <option {{#if (isEqualTo user.availability)}} selected {{/if}}value="weekends">Weekends</option>
+          <option {{#if (isEqualTo user.availability)}} selected {{/if}}value="both">Both</option>
         </select>
       </div>
 
       <div>
         <select class="form-select mb-3" id="collaborationFormat" aria-label="collaborationFormat">
-          <option selected>Select collaboration format*</option>
-          <option value="online">Online</option>
-          <option value="in-person">In-Person</option>
-          <option value="hybrid">Hybrid</option>
+          <option>Select collaboration format*</option>
+          <option {{#if (isEqualTo user.collaborationFormat)}} selected {{/if}} value="online">Online</option>
+          <option {{#if (isEqualTo user.collaborationFormat)}} selected {{/if}} value="in-person">In-Person</option>
+          <option {{#if (isEqualTo user.collaborationFormat)}} selected {{/if}} value="hybrid">Hybrid</option>
         </select>
       </div>
       
       <div>
         <select class="form-select mb-3" id="location" aria-label="location">
-          <option selected>Select location*</option>
-          <option value="birmingham">Birmingham</option>
-          <option value="london">London</option>
-          <option value="manchester">Manchester</option>
+          <option>Select location*</option>
+          <option {{#if (isEqualTo user.location)}} selected {{/if}} value="birmingham">Birmingham</option>
+          <option {{#if (isEqualTo user.location)}} selected {{/if}} value="london">London</option>
+          <option {{#if (isEqualTo user.location)}} selected {{/if}} value="manchester">Manchester</option>
         </select>
       </div>
 
@@ -136,7 +123,7 @@
           type="text"
           class="form-control"
           id="personalGoal"
-          placeholder="Enter personal goal*"
+          placeholder={{user.personalGoal}}
         />
       </div>
 
@@ -145,7 +132,7 @@
           type="text"
           class="form-control"
           id="profileImageUrl"
-          placeholder="Enter profile image URL (optional)"
+          placeholder={{#if (user.gitHubUrl)}} user.profileImageUrl {{else}}"Enter profile image URL (optional)"{{/if}}
         />
       </div>
 
@@ -154,18 +141,17 @@
           type="text"
           class="form-control"
           id="gitHubUrl"
-          placeholder="Enter GitHub URL (optional)"
+          placeholder={{#if (user.gitHubUrl)}} user.gitHubUrl {{else}}"Enter GitHub URL (optional)"{{/if}}
         />
       </div>
 
-      <div id="signup-error"></div>
+      <div id="edit-error"></div>
 
       <div class="mb-3 text-center">
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </div>
       <div class="mb-3 text-center error-text">
-        Already have an account?
-        <a href="/login">Login here.</a>
+        <a href="/dashboard">Cancel</a>
       </div>
 
     </form>
