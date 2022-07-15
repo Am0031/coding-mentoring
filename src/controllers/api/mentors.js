@@ -10,7 +10,14 @@ const {
 const getMentors = async (req, res) => {
   try {
     const mentors = await Mentor.findAll({
-      attributes: ["id", "username", "collaborationFormat", "location"],
+      attributes: [
+        "id",
+        "username",
+        "collaborationFormat",
+        "location",
+        "email",
+        "availability",
+      ],
       include: [
         {
           model: Framework,
@@ -29,6 +36,7 @@ const getMentors = async (req, res) => {
       const collaborationFormat = each.collaborationFormat;
       const location = each.location;
       const email = each.email;
+      const availability = each.availability;
       const frameworks = each.frameworks.map((i) => {
         const id = i.id;
         const name = i.frameworkName;
@@ -42,6 +50,7 @@ const getMentors = async (req, res) => {
         collaborationFormat,
         location,
         email,
+        availability,
         frameworks,
       };
       return response;

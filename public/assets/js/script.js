@@ -2,6 +2,9 @@
 const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
 const logoutBtn = $("#logout-btn");
+const mentorSearchForm = $("#mentorSearch");
+const menteeSearchForm = $("#menteeSearch");
+const mentorCardsContainer = $("#mentor-card-container");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -16,6 +19,7 @@ const generateMenteeCards = (response) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
+    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -28,11 +32,13 @@ const generateMenteeCards = (response) => {
   return responseHtml;
 };
 
-const generateMentorCards = (response) => {
+const generateMentorCards = (data, partnerships) => {
   const createCard = (each) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
+    <div class="add-partnership-div-${each.id}">
+    <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -41,7 +47,38 @@ const generateMentorCards = (response) => {
   </div>
 </div>`;
   };
-  const responseHtml = response.map(createCard).join("");
+  const createDisabledCard = (each) => {
+    return `<div class="card border-success mb-3">
+  <div class="card-header d-flex flex-row justify-content-between">
+    <h4 class="card-title">${each.username}</h4>
+    <div>
+    <p class="partnership-comment" data-id=${each.id} data-name=${each.username}>You're already working with this mentor!</p></div>
+  </div>
+  <div class="card-body">
+    <p class="postText">${each.collaborationFormat}</p>
+    <p class="postText">${each.location}</p>
+    <p class="postText">${each.availability}</p>
+  </div>
+</div>`;
+  };
+
+  const partnerMentors = partnerships.map((i) => i.mentorId);
+  let responseHtml;
+  if (!partnerships) {
+    responseHtml = data.map(createCard).join("");
+  } else {
+    responseHtml = data
+      .map((each) => {
+        const isPartner = partnerMentors.includes(each.id);
+        if (isPartner) {
+          return createDisabledCard(each);
+        } else {
+          return createCard(each);
+        }
+      })
+      .join("");
+  }
+
   return responseHtml;
 };
 
@@ -269,20 +306,68 @@ const handleMentorSearch = async (e) => {
   if (response.status !== 200) {
     console.error("Search for mentors failed");
   } else {
+    debugger;
     const data = await response.json();
-    const mentorCards = generateMentorCards(data);
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const partnerships = await (
+      await fetch("/api/partnerships/mentee", options)
+    ).json();
+
+    const mentorCards = generateMentorCards(data, partnerships);
+    $("#mentor-card-container").empty();
     $("#mentor-card-container").append(mentorCards);
   }
 };
 
-const cities = () => {
-  getCitiesOfCountry(UK);
+// const cities = () => {
+//   getCitiesOfCountry(UK);
 
-  console.log(cities);
+//   console.log(cities);
+// }
+
+const handleMentorSelection = async (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  console.log("starting partnership process");
+  debugger;
+  const target = $(e.target);
+  const mentorId = target.attr("data-id");
+  const mentorName = target.attr("data-name");
+  const projectName = `Coding practice with ${mentorName}`;
+
+  const partnershipBody = { mentorId, projectName };
+
+  if (target.is("button") && target.attr("name") === "add-partnership-btn") {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      body: JSON.stringify(partnershipBody),
+    };
+    const response = await fetch("/api/partnerships", options);
+
+    if (response.status !== 200) {
+      console.error("Partnership could not be created");
+    } else {
+      target.removeClass("btn-primary");
+      target.addClass("btn-success");
+      target.text("Added");
+      target.attr("disabled", "true");
+    }
+  }
 };
 
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 logoutBtn.click(handleLogout);
-$("#mentorSearch").submit(handleMentorSearch);
-$("#menteeSearch").submit(handleMenteeSearch);
+mentorSearchForm.submit(handleMentorSearch);
+menteeSearchForm.submit(handleMenteeSearch);
+mentorCardsContainer.click(handleMentorSelection);
