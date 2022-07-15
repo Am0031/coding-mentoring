@@ -209,7 +209,8 @@ const handleLoginSubmit = async (e) => {
 const handleEditSubmit = async (e) => {
   e.preventDefault();
 
-  // const userType = req.session.user;
+  // TODO check syntax
+  const userType = $("#save-edit-btn").value();
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();

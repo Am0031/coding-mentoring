@@ -30,6 +30,7 @@
           class="form-control"
           id="username"
           placeholder={{user.username}}
+          disabled="disabled"
         />
       </div>
 
@@ -39,6 +40,7 @@
           class="form-control"
           id="email"
           placeholder={{user.email}}
+          disabled="disabled"
         />
       </div>
       
@@ -132,7 +134,7 @@
           type="text"
           class="form-control"
           id="profileImageUrl"
-          placeholder={{#if (user.gitHubUrl)}} user.profileImageUrl {{else}}"Enter profile image URL (optional)"{{/if}}
+          placeholder={{#if (user.profileImageUrl)}} user.profileImageUrl {{else}}"Enter profile image URL (optional)"{{/if}}
         />
       </div>
 
@@ -148,7 +150,7 @@
       <div id="edit-error"></div>
 
       <div class="mb-3 text-center">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" id="save-edit-btn" value={{userType}}>Save</button>
       </div>
       <div class="mb-3 text-center error-text">
         <a href="/dashboard">Cancel</a>
