@@ -56,7 +56,14 @@ const getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
     const temptask = await Task.findByPk(id, {
-      attributes: ["id", "taskName", "taskDescription", "taskLevel", "points"],
+      attributes: [
+        "id",
+        "taskName",
+        "taskDescription",
+        "taskLevel",
+        "points",
+        "resourceURL",
+      ],
       include: Framework,
     });
     const task = temptask.dataValues;
@@ -71,6 +78,7 @@ const getTaskById = async (req, res) => {
       const taskDescription = each.taskDescription;
       const taskLevel = each.taskLevel;
       const points = each.points;
+      const resourceURL = each.resourceURL;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
 
@@ -80,6 +88,7 @@ const getTaskById = async (req, res) => {
         taskDescription,
         taskLevel,
         points,
+        resourceURL,
         frameworkId,
         frameworkName,
       };
@@ -87,8 +96,6 @@ const getTaskById = async (req, res) => {
     };
 
     const formattedTask = formatTask(task);
-
-    console.log(formattedTask);
     return res.json(formattedTask);
   } catch (error) {
     console.error(`ERROR | ${error.message}`);

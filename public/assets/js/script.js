@@ -5,6 +5,7 @@ const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
 const taskSearchForm = $("#taskSearch");
+const taskCardsContainer = $("#task-card-container");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -84,12 +85,12 @@ const generateMentorCards = (data, partnerships) => {
 
 const generateTaskCards = (data) => {
   const createCard = (each) => {
-    return `<div class="card mb-3">
+    return `<div class="card mb-3" id="task-container-${each.id}">
   <div class="card-header d-flex flex-row justify-content-between align-items-center">
     <div class="d-flex flex-row align-items-center"><h4 class="card-title mr-2">${each.taskName}</h4>
     <p class="btn btn-dark mr-2 mb-0">${each.frameworkName}</p>
     <p class="btn btn-dark mr-2 mb-0">${each.taskLevel}</p></div>
-    <a class="btn btn-primary" href="/search/tasks/${each.id}" data-id=${each.id} id="view-task-btn">View details</a>
+    <button class="btn btn-primary" name="view-task-btn" data-id=${each.id} id="view-task-${each.id}">View details</a>
   </div>
 </div>`;
   };
@@ -414,6 +415,44 @@ const handleTaskSearch = async (e) => {
   }
 };
 
+const handleTaskSelection = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  debugger;
+  const target = $(e.target);
+  const id = target.attr("data-id");
+
+  if (target.is("button") && target.attr("name") === "view-task-btn") {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const response = await fetch(`/api/tasks/${id}`, options);
+
+    if (response.status !== 200) {
+      console.error("Task not found");
+    } else {
+      const data = await response.json();
+      $(`#task-container-${id}`).append(`<div class="card mb-3">
+      <div class="card-body d-flex flex-column justify-content-center">
+        <div class="d-flex flex-column">
+        <p class="task-detail">Points: ${data.points}</p>
+        <p class="task-detail">Description: ${data.taskDescription}</p>
+        <p class="task-detail">Useful resources: ${data.resourceURL}</p>
+        </div>
+        <button class="btn btn-primary" data-id=${data.id} name="assign-task-btn">Assign task to a mentee</button>
+      </div>
+    </div>`);
+      $(`#view-task-${id}`).removeClass("btn-primary");
+      $(`#view-task-${id}`).addClass("btn-warning");
+    }
+  }
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 logoutBtn.click(handleLogout);
@@ -421,3 +460,4 @@ mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
 taskSearchForm.submit(handleTaskSearch);
+taskCardsContainer.click(handleTaskSelection);
