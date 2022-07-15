@@ -90,9 +90,23 @@ const generateTaskCards = (data) => {
     <div class="d-flex flex-row align-items-center"><h4 class="card-title mr-2">${each.taskName}</h4>
     <p class="btn btn-dark mr-2 mb-0">${each.frameworkName}</p>
     <p class="btn btn-dark mr-2 mb-0">${each.taskLevel}</p></div>
-    <button class="btn btn-primary" name="view-task-btn" data-id=${each.id} id="view-task-${each.id}">View details</a>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-${each.id}" role="button" aria-expanded="false" aria-controls="collapse-${each.id}" data-id=${each.id}>
+    View Details
+    </a>
+    </div>
+  <div class="collapse" id="collapse-${each.id}">
+    <div class="card card-body">
+        <div class="card-body d-flex flex-column justify-content-center">
+          <div class="d-flex flex-column">
+            <p class="task-detail">Points: ${each.points}</p>
+            <p class="task-detail">Description: ${each.taskDescription}</p>
+            <p class="task-detail">Useful resources: ${each.resourceURL}</p>
+          </div>
+          <button class="btn btn-primary" data-id=${each.id} name="assign-task-btn">Assign task to a mentee</button>
+        </div>
+    </div>
   </div>
-</div>`;
+  </div>`;
   };
   const responseHtml = data.map(createCard).join("");
   return responseHtml;
@@ -419,38 +433,10 @@ const handleTaskSelection = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
-  debugger;
   const target = $(e.target);
   const id = target.attr("data-id");
-
-  if (target.is("button") && target.attr("name") === "view-task-btn") {
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-    };
-    const response = await fetch(`/api/tasks/${id}`, options);
-
-    if (response.status !== 200) {
-      console.error("Task not found");
-    } else {
-      const data = await response.json();
-      $(`#task-container-${id}`).append(`<div class="card mb-3">
-      <div class="card-body d-flex flex-column justify-content-center">
-        <div class="d-flex flex-column">
-        <p class="task-detail">Points: ${data.points}</p>
-        <p class="task-detail">Description: ${data.taskDescription}</p>
-        <p class="task-detail">Useful resources: ${data.resourceURL}</p>
-        </div>
-        <button class="btn btn-primary" data-id=${data.id} name="assign-task-btn">Assign task to a mentee</button>
-      </div>
-    </div>`);
-      $(`#view-task-${id}`).removeClass("btn-primary");
-      $(`#view-task-${id}`).addClass("btn-warning");
-    }
-  }
+  //render form for assignment to a mentee
+  //bring list of current mentees in partnership from DB and render select list
 };
 
 signupForm.submit(handleSignUpSubmit);
@@ -460,4 +446,3 @@ mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
 taskSearchForm.submit(handleTaskSearch);
-taskCardsContainer.click(handleTaskSelection);

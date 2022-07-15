@@ -3,7 +3,14 @@ const { Task, Framework } = require("../../models");
 const getTasks = async (req, res) => {
   try {
     const temptasks = await Task.findAll({
-      attributes: ["id", "taskName", "taskDescription", "taskLevel", "points"],
+      attributes: [
+        "id",
+        "taskName",
+        "taskDescription",
+        "taskLevel",
+        "points",
+        "resourceURL",
+      ],
       include: [{ model: Framework }],
     });
     const tasks = temptasks.map((i) => i.dataValues);
@@ -18,6 +25,7 @@ const getTasks = async (req, res) => {
       const taskDescription = each.taskDescription;
       const taskLevel = each.taskLevel;
       const points = each.points;
+      const resourceURL = each.resourceURL;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
 
@@ -27,6 +35,7 @@ const getTasks = async (req, res) => {
         taskDescription,
         taskLevel,
         points,
+        resourceURL,
         frameworkId,
         frameworkName,
       };
