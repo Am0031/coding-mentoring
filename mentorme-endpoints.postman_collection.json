@@ -7,6 +7,98 @@
 	},
 	"item": [
 		{
+			"name": "Users connect",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userType\": \"mentee\",\r\n    \"email\": \"cherellesimpson@example.org\",\r\n    \"password\": \"password123\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Mentee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userType\": \"mentee\",\r\n    \"firstName\": \"Clara\",\r\n    \"lastName\": \"Foster\",\r\n    \"username\": \"clara456\",\r\n    \"email\": \"clarafoster@example.org\",\r\n    \"password\": \"password222\",\r\n    \"location\": \"York\",\r\n    \"availability\": \"weekends\",\r\n    \"collaborationFormat\": \"online\",\r\n    \"personalGoal\": \"learn enough to be able to create my own gaming website\",\r\n    \"profileImageUrl\":\r\n      \"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80\",\r\n    \"gitHubUrl\": \"https://github.com/Am0031\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Mentor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userType\": \"mentor\",\r\n    \"firstName\": \"Janet\",\r\n    \"lastName\": \"Brown\",\r\n    \"username\": \"janetbrown\",\r\n    \"email\": \"janetbrown@example.org\",\r\n    \"password\": \"password111\",\r\n    \"location\": \"London\",\r\n    \"availability\": \"weekends\",\r\n    \"collaborationFormat\": \"online\",\r\n    \"personalGoal\": \"become a coding teacher\",\r\n    \"profileImageUrl\":\r\n      \"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80\",\r\n    \"gitHubUrl\": \"https://github.com/Am0031\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "GET All Frameworks",
 			"request": {
 				"method": "GET",
@@ -171,13 +263,13 @@
 			"response": []
 		},
 		{
-			"name": "CREATE Mentor",
+			"name": "CREATE Partnership",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userType\": \"mentor\",\r\n    \"firstName\": \"Janet\",\r\n    \"lastName\": \"Brown\",\r\n    \"username\": \"janetbrown\",\r\n    \"email\": \"janetbrown@example.org\",\r\n    \"password\": \"password111\",\r\n    \"location\": \"London\",\r\n    \"availability\": \"weekends\",\r\n    \"collaborationFormat\": \"online\",\r\n    \"personalGoal\": \"become a coding teacher\",\r\n    \"profileImageUrl\":\r\n      \"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80\",\r\n    \"gitHubUrl\": \"https://github.com/Am0031\"\r\n  }",
+					"raw": "{\r\n    \"mentorId\": 3,\r\n    \"projectName\": \"Coding with Alice\"\r\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -185,44 +277,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/auth/signup",
+					"raw": "http://localhost:4000/api/partnerships",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4000",
 					"path": [
-						"auth",
-						"signup"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CREATE Mentee",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"userType\": \"mentee\",\r\n    \"firstName\": \"Clara\",\r\n    \"lastName\": \"Foster\",\r\n    \"username\": \"clara456\",\r\n    \"email\": \"clarafoster@example.org\",\r\n    \"password\": \"password222\",\r\n    \"location\": \"York\",\r\n    \"availability\": \"weekends\",\r\n    \"collaborationFormat\": \"online\",\r\n    \"personalGoal\": \"learn enough to be able to create my own gaming website\",\r\n    \"profileImageUrl\":\r\n      \"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80\",\r\n    \"gitHubUrl\": \"https://github.com/Am0031\"\r\n  }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/auth/signup",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"auth",
-						"signup"
+						"api",
+						"partnerships"
 					]
 				}
 			},
