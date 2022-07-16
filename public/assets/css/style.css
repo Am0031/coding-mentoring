@@ -25,3 +25,15 @@ body {
   background-color: var(--yale-blue);
   color: var(--alice-blue);
 }
+
+.collapse {
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.collapsing {
+  height: 0;
+  overflow: hidden;
+  @include transition($transition-collapse);
+}
