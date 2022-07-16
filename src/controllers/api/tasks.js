@@ -120,28 +120,42 @@ const getTaskById = async (req, res) => {
 
 const createTask = async (req, res) => {
   try {
-    const { taskName, taskDescription, taskLevel, frameworkId, points } =
-      req.body;
+    const {
+      taskName,
+      taskDescription,
+      taskLevel,
+      frameworkId,
+      points,
+      resourceURL,
+    } = req.body;
     const authorId = req.session.user.id;
     if (!taskName || !taskDescription || !taskLevel || !frameworkId) {
       return res.status(400).json({ message: "Unable to create task" });
     }
 
-    // let { points } = req.body;
-    // if (!points) {
-    //   points = 20;
-    // }
-    // we could add the userId to a task model, so mentors can filter on that and choose to view only their tasks
-    // const { id } = req.session.user;
+    let options;
+    if (!resourceURL) {
+      options = {
+        taskName,
+        taskDescription,
+        taskLevel,
+        points,
+        frameworkId,
+        authorId,
+      };
+    } else {
+      options = {
+        taskName,
+        taskDescription,
+        taskLevel,
+        points,
+        resourceURL,
+        frameworkId,
+        authorId,
+      };
+    }
 
-    const newTask = await Task.create({
-      taskName,
-      taskDescription,
-      taskLevel,
-      points,
-      frameworkId,
-      authorId,
-    });
+    const newTask = await Task.create(options);
 
     return res.status(200).json({ message: "Task created", newTask: newTask });
   } catch (error) {
