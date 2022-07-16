@@ -45,6 +45,14 @@ Task.belongsTo(Framework, {
   foreignKey: "frameworkId",
 });
 
+Mentor.hasMany(Task, {
+  foreignKey: "authorId",
+});
+
+Task.belongsTo(Mentor, {
+  foreignKey: "authorId",
+});
+
 Task.belongsToMany(Partnership, {
   through: AssignedTask,
   foreignKey: "taskId",
