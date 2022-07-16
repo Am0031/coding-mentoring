@@ -3,7 +3,7 @@ const { Framework, Mentee, Task } = require("../../models");
 const renderDashboard = async (req, res) => {
   const { userType, user } = req.session;
   //need to work out which api call to bring the right data here: their info and their partnerships and tasks etc
-  return res.render("dashboard", { user: user });
+  return res.render("dashboard", { user: user, currentPage: "dashboard" });
 };
 
 const renderMenteeSearch = async (req, res) => {

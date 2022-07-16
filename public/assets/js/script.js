@@ -115,8 +115,6 @@ const generateTaskCards = (data) => {
 };
 
 const handleSignUpSubmit = async (e) => {
-  console.log("signup");
-
   e.preventDefault();
 
   const userType = $("input[type=radio]:checked").attr("id");
@@ -199,7 +197,6 @@ const handleSignUpSubmit = async (e) => {
 
 const handleLoginSubmit = async (e) => {
   e.preventDefault();
-  console.log("login");
 
   const userType = $("input[type=radio]:checked").attr("id");
 
