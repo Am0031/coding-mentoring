@@ -6,6 +6,7 @@ const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
 const taskSearchForm = $("#taskSearch");
 const taskCardsContainer = $("#task-card-container");
+const taskCreateForm = $("#create-task-form");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -429,7 +430,7 @@ const handleTaskSearch = async (e) => {
   }
 };
 
-const handleTaskSelection = async (e) => {
+const handleTaskAssign = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
@@ -439,6 +440,73 @@ const handleTaskSelection = async (e) => {
   //bring list of current mentees in partnership from DB and render select list
 };
 
+const handleTaskCreate = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  debugger;
+  const target = $(e.target);
+
+  const taskName = $("#taskName").val().trim();
+  const taskDescription = $("#taskDescription").val();
+  const frameworkId = $("#framework").find(":selected").val();
+  const resourceURL = $("#resourceURL").val().trim();
+  const taskLevel = $("#taskLevel").find(":selected").val();
+  let points;
+  if (taskLevel === "beginner") {
+    points = 20;
+  } else if (taskLevel === "intermediate") {
+    points = 40;
+  } else {
+    points = 60;
+  }
+
+  let payload;
+  if (resourceURL) {
+    payload = {
+      taskName,
+      taskDescription,
+      taskLevel,
+      points,
+      frameworkId,
+      resourceURL,
+    };
+  } else {
+    payload = {
+      taskName,
+      taskDescription,
+      taskLevel,
+      points,
+      frameworkId,
+    };
+  }
+
+  try {
+    const response = await fetch("/api/tasks/create", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response) {
+      const data = await response.json();
+      const newTask = [];
+      newTask.push(data.newTask);
+      console.log(newTask);
+      $("#create-task-section").empty();
+      $("#create-task-section").append(
+        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div></div>`
+      );
+    } else {
+      console.log("error");
+    }
+  } catch (error) {
+    console.log("error");
+  }
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 logoutBtn.click(handleLogout);
@@ -446,3 +514,4 @@ mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
 taskSearchForm.submit(handleTaskSearch);
+taskCreateForm.submit(handleTaskCreate);
