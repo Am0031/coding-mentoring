@@ -536,6 +536,7 @@ const handleTaskCreate = async (e) => {
   const taskName = $("#taskName").val().trim();
   const taskDescription = $("#taskDescription").val();
   const frameworkId = $("#framework").find(":selected").val();
+  const frameworkName = $("#framework").find(":selected").text();
   const resourceURL = $("#resourceURL").val().trim();
   const taskLevel = $("#taskLevel").find(":selected").val();
   let points;
@@ -578,12 +579,11 @@ const handleTaskCreate = async (e) => {
 
     if (response) {
       const data = await response.json();
-      const newTask = [];
-      newTask.push(data.newTask);
+      const newTask = data.newTask;
 
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div><div>Assign to mentee button</div><div>Create another task button(href)</div><div>Go back to dashboard button(href)</div></div>`
+        `<div><h4>Your task was created successfully. See the details below.</h4><div id="newTaskContainer"><div><h4 id="task-name">Task Name: ${newTask.taskName}</h4><h4>Task Description: ${newTask.taskDescription}</h4><h4>Task Level: ${newTask.taskLevel}</h4><h4>Task Points: ${newTask.points}</h4><h4>Framework Name: ${frameworkName}</h4></div></div><div><button type="assign" class="btn btn-primary" id="assign-task-btn">Assign Task To Mentee</button></div><div> <button type="create" class="btn btn-primary" id="create-another-btn"><a href="/tasks">Create Another Task</a></button></div><div><button type="create" class="btn btn-primary" id="create-another-btn"><a href="/dashboard">Go Back To Dashboard</a></button></div></div>`
       );
     } else {
       console.log("error");
