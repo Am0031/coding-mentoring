@@ -2,11 +2,12 @@ const { AssignedTask } = require("../../models");
 
 const assignTask = async (req, res) => {
   try {
-    const { partnershipId, taskId } = req.body;
+    const { partnershipId, taskId, taskDeadline } = req.body;
 
     const assignedTask = await AssignedTask.create({
       taskId,
       partnershipId,
+      taskDeadline,
     });
 
     return res.json({
