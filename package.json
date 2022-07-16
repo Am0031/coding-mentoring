@@ -12,10 +12,7 @@
     "inquirer": "^9.0.0",
     "jest": "^28.1.2",
     "mysql2": "^2.3.3",
-    "path": "^0.12.7",
-    "sequelize": "^6.21.2",
-    "sqlite3": "^5.0.8",
-    "y": "^0.3.2"
+    "sequelize": "^6.21.2"
   },
   "name": "coding-mentoring",
   "description": "Platform to match coding mentors with coding mentees",
