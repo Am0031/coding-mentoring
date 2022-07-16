@@ -17,6 +17,6 @@ router.get("/search/tasks/:id", renderTaskDetails);
 router.get("/search/mentees", renderMenteeSearch);
 router.get("/search/mentees/:id", renderMenteeProfile);
 router.get("/tasks", renderCreateTask);
-router.put("/edit", renderEditInfo);
+router.get("/editInfo", renderEditInfo);
 
 module.exports = router;

@@ -11,7 +11,7 @@
           type="text"
           class="form-control"
           id="firstName"
-          placeholder={{user.firstName}}
+          value={{user.firstName}}
         />
       </div>
 
@@ -20,7 +20,7 @@
           type="text"
           class="form-control"
           id="lastName"
-          placeholder={{user.lastName}}
+          value={{user.lastName}}
         />
       </div>
        
@@ -29,7 +29,7 @@
           type="username"
           class="form-control"
           id="username"
-          placeholder={{user.username}}
+          value={{user.username}}
           disabled="disabled"
         />
       </div>
@@ -39,7 +39,7 @@
           type="email"
           class="form-control"
           id="email"
-          placeholder={{user.email}}
+          value={{user.email}}
           disabled="disabled"
         />
       </div>
@@ -49,7 +49,7 @@
           type="password"
           class="form-control"
           id="password"
-          placeholder={{user.password}}
+          value={{user.password}}
           pattern="^(?=.*\d).{6,18}$"
         />
       </div>
@@ -59,7 +59,7 @@
           type="password"
           class="form-control"
           id="confirmPassword"
-          placeholder={{user.password}}
+          value={{user.password}}
         />
       </div>
 
@@ -125,7 +125,7 @@
           type="text"
           class="form-control"
           id="personalGoal"
-          placeholder={{user.personalGoal}}
+          value={{user.personalGoal}}
         />
       </div>
 
@@ -134,7 +134,7 @@
           type="text"
           class="form-control"
           id="profileImageUrl"
-          placeholder={{#if (user.profileImageUrl)}} user.profileImageUrl {{else}}"Enter profile image URL (optional)"{{/if}}
+          value={{#if (user.profileImageUrl)}} user.profileImageUrl {{else}}"Enter profile image URL (optional)"{{/if}}
         />
       </div>
 
@@ -143,7 +143,7 @@
           type="text"
           class="form-control"
           id="gitHubUrl"
-          placeholder={{#if (user.gitHubUrl)}} user.gitHubUrl {{else}}"Enter GitHub URL (optional)"{{/if}}
+          value={{#if (user.gitHubUrl)}} user.gitHubUrl {{else}}"Enter GitHub URL (optional)"{{/if}}
         />
       </div>
 

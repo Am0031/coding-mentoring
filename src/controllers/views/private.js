@@ -1,4 +1,4 @@
-const { Framework, Mentee, Task } = require("../../models");
+const { Framework, Mentee, Mentor, Task } = require("../../models");
 
 const renderDashboard = async (req, res) => {
   const { userType, user } = req.session;
@@ -69,24 +69,26 @@ const renderCreateTask = async (req, res) => {
 };
 
 const renderEditInfo = async (req, res) => {
-  const { email } = req.session.user.email;
+  const email = req.session.user.email;
 
-  const mentor = await Mentor.findOne({ where: email });
-  const mentee = await Mentee.findOne({ where: email });
+  const mentor = await Mentor.findOne({ where: { email } });
+  const mentee = await Mentee.findOne({ where: { email } });
+
+  let currentUser;
+  let userType;
 
   if (mentor) {
-    const currentUser = mentor.getUser();
-    const userType = "mentor";
-    return { currentUser, userType };
+    currentUser = mentor.getUser();
+    userType = "mentor";
+  } else {
+    currentUser = mentee.getUser();
+    userType = "mentee";
   }
 
-  if (mentee) {
-    const currentUser = mentee.getUser();
-    const userType = "mentee";
-    return { currentUser, userType };
-  }
+  console.log(currentUser);
+  console.log(userType);
 
-  return res.render("editInfo", { user: currentUser, userType });
+  return res.render("editInfo", { currentUser, userType });
 };
 
 module.exports = {
