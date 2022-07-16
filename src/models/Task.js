@@ -2,6 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../config/connection");
 const Framework = require("./Framework");
+const Mentor = require("./Mentor");
 
 class Task extends Model {}
 
@@ -32,6 +33,14 @@ Task.init(
       allowNull: false,
       references: {
         model: Framework,
+        key: "id",
+      },
+    },
+    authorId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: Mentor,
         key: "id",
       },
     },

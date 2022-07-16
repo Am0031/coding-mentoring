@@ -1,7 +1,7 @@
   {{> privateNavBar}}
 
   <main class="container">
-      <section class="mt-4 border p-3 rounded-2 bg-light">
+      <section class="mt-4 border p-3 rounded-2 bg-light" id="create-task-section">
         <h2 class="text-center">Create Task</h2>
         <hr />
         <form class="mt-4" id="create-task-form">
@@ -9,8 +9,9 @@
             <input
               type="text"
               class="form-control"
-              id="title"
+              id="taskName"
               placeholder="Please Enter title of Task"
+              required
             />
           </div>
           <div class="mb-3">
@@ -19,22 +20,32 @@
               class="form-control"
               id="taskDescription"
               placeholder="Please enter description of task"
+              required
             />
           </div>
           <div class="mb-3">
             <input
-              type="text"
+              type="url"
               class="form-control"
-              id="taskLevel"
-              placeholder="Please enter level of task"
+              id="resourceURL"
+              placeholder="Please enter a resource URL (if applicable)"
             />
           </div>
           <div class="mb-3">
-            <label for="framework-selection"
+            <label for="taskLevel"
+              >Please select a level for your task:</label
+            >
+            <select id="taskLevel">
+              <option value="beginner">beginner</option>
+              <option value="intermediate">intermediate</option>
+              <option value="advanced">advanced</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="framework"
               >Please select a framework for your task:</label
             >
-            <select id="framework-selection">
-              <option value="">--Please choose an option--</option>
+            <select id="framework">
               {{#each data}}
               <option value={{id}}>{{frameworkName}}</option>
               {{/each}}
@@ -42,7 +53,7 @@
           </div>
           <div id="create-task-error"></div>
           <div class="text-center">
-            <button type="submit" class="btn btn-primary" data-id={{user}} id="create-task-btn">Create</button>
+            <button type="submit" class="btn btn-primary" id="create-task-btn">Create</button>
           </div>
         </form>
       </section>
