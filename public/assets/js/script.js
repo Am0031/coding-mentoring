@@ -439,7 +439,7 @@ const handleTaskAssign = async (e) => {
   //render form for assignment to a mentee
   if (target.attr("name") === "assign-task-btn") {
     $(`#task-details-container-${id}`).append(
-      `<div><p>Please select a mentee to assign this task to: list of mentees to generate</p><button class"btn btn-info" id="taskId">Button</button></div>`
+      `<div><p>Make a modal to select mentee and assign</p></div>`
     );
   }
   //bring list of current mentees in partnership from DB and render select list
@@ -501,7 +501,7 @@ const handleTaskCreate = async (e) => {
 
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div><div>Some button to go back</div></div>`
+        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div><div>Assign to mentee button</div><div>Create another task button(href)</div><div>Go back to dashboard button(href)</div></div>`
       );
     } else {
       console.log("error");
