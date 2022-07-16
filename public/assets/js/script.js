@@ -501,7 +501,7 @@ const handleTaskCreate = async (e) => {
 
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div id="newTaskContainer"><div><h4 id="task-name">Task Name: ${newTask.taskName}</h4><h4>Task Description: ${newTask.taskDescription}</h4><h4>Task Level: ${newTask.taskLevel}</h4><h4>Task Points: ${newTask.points}</h4><h4>Framework Name: ${frameworkName}</h4></div></div><div>Assign to mentee button</div><div>Create another task button(href)</div><div>Go back to dashboard button(href)</div></div>`
+        `<div><h4>Your task was created successfully. See the details below.</h4><div id="newTaskContainer"><div><h4 id="task-name">Task Name: ${newTask.taskName}</h4><h4>Task Description: ${newTask.taskDescription}</h4><h4>Task Level: ${newTask.taskLevel}</h4><h4>Task Points: ${newTask.points}</h4><h4>Framework Name: ${frameworkName}</h4></div></div><div>Assign to mentee button</div><div> <button type="create" class="btn btn-primary" id="create-another-btn">Create Another Task</button></div><div>Go back to dashboard button(href)</div></div>`
       );
     } else {
       console.log("error");
