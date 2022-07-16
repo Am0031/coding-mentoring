@@ -97,7 +97,7 @@ const generateTaskCards = (data) => {
     </div>
   <div class="collapse" id="collapse-${each.id}">
     <div class="card card-body">
-        <div class="card-body d-flex flex-column justify-content-center">
+        <div class="card-body d-flex flex-column justify-content-center" id="task-details-container-${each.id}">
           <div class="d-flex flex-column">
             <p class="task-detail">Points: ${each.points}</p>
             <p class="task-detail">Description: ${each.taskDescription}</p>
@@ -437,6 +437,11 @@ const handleTaskAssign = async (e) => {
   const target = $(e.target);
   const id = target.attr("data-id");
   //render form for assignment to a mentee
+  if (target.attr("name") === "assign-task-btn") {
+    $(`#task-details-container-${id}`).append(
+      `<div><p>Please select a mentee to assign this task to: list of mentees to generate</p><button class"btn btn-info" id="taskId">Button</button></div>`
+    );
+  }
   //bring list of current mentees in partnership from DB and render select list
 };
 
@@ -444,7 +449,6 @@ const handleTaskCreate = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
-  debugger;
   const target = $(e.target);
 
   const taskName = $("#taskName").val().trim();
@@ -494,10 +498,10 @@ const handleTaskCreate = async (e) => {
       const data = await response.json();
       const newTask = [];
       newTask.push(data.newTask);
-      console.log(newTask);
+
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div></div>`
+        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div><div>Some button to go back</div></div>`
       );
     } else {
       console.log("error");
@@ -514,4 +518,5 @@ mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
 taskSearchForm.submit(handleTaskSearch);
+taskCardsContainer.click(handleTaskAssign);
 taskCreateForm.submit(handleTaskCreate);
