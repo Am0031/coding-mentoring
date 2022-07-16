@@ -10,6 +10,7 @@ const getTasks = async (req, res) => {
         "taskLevel",
         "points",
         "resourceURL",
+        "authorId",
       ],
       include: [{ model: Framework }],
     });
@@ -26,6 +27,7 @@ const getTasks = async (req, res) => {
       const taskLevel = each.taskLevel;
       const points = each.points;
       const resourceURL = each.resourceURL;
+      const authorId = each.authorId;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
 
@@ -36,6 +38,7 @@ const getTasks = async (req, res) => {
         taskLevel,
         points,
         resourceURL,
+        authorId,
         frameworkId,
         frameworkName,
       };
@@ -72,6 +75,7 @@ const getTaskById = async (req, res) => {
         "taskLevel",
         "points",
         "resourceURL",
+        "authorId",
       ],
       include: Framework,
     });
@@ -88,6 +92,7 @@ const getTaskById = async (req, res) => {
       const taskLevel = each.taskLevel;
       const points = each.points;
       const resourceURL = each.resourceURL;
+      const authorId = each.authorId;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
 
@@ -98,6 +103,7 @@ const getTaskById = async (req, res) => {
         taskLevel,
         points,
         resourceURL,
+        authorId,
         frameworkId,
         frameworkName,
       };
