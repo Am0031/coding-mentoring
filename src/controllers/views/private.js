@@ -13,7 +13,10 @@ const renderMenteeSearch = async (req, res) => {
       return res.status(500).json({ message: "Frameworks not found" });
     }
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("mentee-search", { data: data });
+    return res.render("mentee-search", {
+      data: data,
+      currentPage: "mentees",
+    });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);

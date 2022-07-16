@@ -18,7 +18,8 @@ const renderInfoPage = (req, res) => {
 };
 
 const renderContactPage = (req, res) => {
-  return res.render("contact", { currentPage: "contact" });
+  const { isLoggedIn } = req.session;
+  return res.render("contact", { isLoggedIn, currentPage: "contact" });
 };
 
 const renderMentorSearch = async (req, res) => {
@@ -27,8 +28,13 @@ const renderMentorSearch = async (req, res) => {
     if (!frameworks) {
       return res.status(500).json({ message: "Frameworks not found" });
     }
+    const { isLoggedIn } = req.session;
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("mentor-search", { data: data, currentPage: "mentors" });
+    return res.render("mentor-search", {
+      isLoggedIn,
+      data: data,
+      currentPage: "mentors",
+    });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
