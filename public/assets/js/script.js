@@ -8,6 +8,9 @@ const mentorCardsContainer = $("#mentor-card-container");
 const taskSearchForm = $("#taskSearch");
 const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
+const assignTaskBtn = $("#assign-task-btn");
+
+let assignTaskModal;
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -517,12 +520,14 @@ const handleTaskAssign = async (e) => {
   e.preventDefault();
 
   const target = $(e.target);
-  const id = target.attr("data-id");
+  const taskId = target.attr("data-id");
   //render form for assignment to a mentee
   if (target.attr("name") === "assign-task-btn") {
-    $(`#task-details-container-${id}`).append(
-      `<div><p>Make a modal to select mentee and assign</p></div>`
+    assignTaskModal = new bootstrap.Modal(
+      document.getElementById("assign-task-modal")
     );
+
+    assignTaskModal.show();
   }
   //bring list of current mentees in partnership from DB and render select list
 };
@@ -595,8 +600,8 @@ const handleTaskCreate = async (e) => {
         </div>
         <div class="text-center">
         <div><button type="assign" class="btn btn-primary mt-3" id="assign-task-btn">Assign Task to Mentee</button></div>
-        <div><button type="create" class="btn btn-primary mt-3" id="create-another-btn"href="/tasks">Create Another Task</button></div>
-        <div><button type="create" class="btn btn-primary mt-3" id="create-another-btn"href="/dashboard">Return to Dashboard</button></div>
+        <div><a class="btn btn-primary mt-3" id="create-another-btn" href="/tasks">Create Another Task</a></div>
+        <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
         </div>`
       );
     } else {
