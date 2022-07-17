@@ -1,5 +1,10 @@
 const { Mentor } = require("../models");
+const { faker } = require("@faker-js/faker");
 
+//function to generate mentors programmatically, using the faker package and assigning the remaining fields randomly
+const prepareMentorData = () => {};
+
+//static set of seeds - starter set
 const mentorData = [
   {
     firstName: "Bob",
