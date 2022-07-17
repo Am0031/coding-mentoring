@@ -21,11 +21,11 @@ const seedAll = async () => {
   //await seedFrameworks();
   // console.log("\n----- FRAMEWORKS SEEDED -----\n");
 
-  await seedMentorFrameworks();
-  console.log("\n----- MENTOR FRAMEWORKS SEEDED -----\n");
+  // await seedMentorFrameworks();
+  // console.log("\n----- MENTOR FRAMEWORKS SEEDED -----\n");
 
-  // await seedMenteeFrameworks();
-  // console.log("\n----- MENTEE FRAMEWORKS SEEDED -----\n");
+  await seedMenteeFrameworks();
+  console.log("\n----- MENTEE FRAMEWORKS SEEDED -----\n");
 
   // await seedPartnerships();
   // console.log("\n----- PARTNERSHIPS SEEDED -----\n");
