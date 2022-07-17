@@ -1,5 +1,6 @@
 const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
+const updateInfoForm = $("update-form");
 const logoutBtn = $("#logout-btn");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
@@ -116,12 +117,11 @@ const generateTaskCards = (data) => {
 const handleSignUpSubmit = async (e) => {
   e.preventDefault();
 
-  const userTypeSelected = $("input[type=radio]:checked").attr("id");
-  const userType = userTypeSelected;
+  const userType = $("input[type=radio]:checked").attr("id");
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();
-  const username = $("#lastName").val().trim();
+  const username = $("#username").val().trim();
   const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
@@ -230,7 +230,89 @@ const handleLoginSubmit = async (e) => {
       renderError("login-error", "Failed to login. Try again.");
     }
   } else {
+    console.log("fields");
     renderError("login-error", "Please complete all fields.");
+  }
+};
+
+const handleEditSubmit = async (e) => {
+  e.preventDefault();
+
+  // TODO check syntax
+  const userType = $("#save-edit-btn").value();
+
+  const firstName = $("#firstName").val().trim();
+  const lastName = $("#lastName").val().trim();
+  const username = $("#username").val().trim();
+  const email = $("#email").val().trim();
+  const password = $("#password").val().trim();
+  const confirmPassword = $("#confirmPassword").val().trim();
+  const location = $("#location").val().trim();
+  const availability = $("#availability").val().trim();
+
+  // const availabilitySelected = $("input[type=checkbox]:checked");
+  // const availabilityAll = Array.from(availabilitySelected).map(
+  //   (selected) => selected.id
+  // );
+
+  const collaborationFormat = $("#collaborationFormat").val().trim();
+  const personalGoal = $("#personalGoal").val().trim();
+  const profileImageUrl = $("#profileImageUrl").val().trim();
+  const gitHubUrl = $("#gitHubUrl").val().trim();
+
+  if (
+    firstName &&
+    lastName &&
+    username &&
+    email &&
+    password &&
+    confirmPassword &&
+    location &&
+    availability &&
+    collaborationFormat
+  ) {
+    if (password === confirmPassword) {
+      try {
+        const payload = {
+          firstName,
+          lastName,
+          username,
+          email,
+          password,
+          confirmPassword,
+          location,
+          availability,
+          collaborationFormat,
+          personalGoal,
+          profileImageUrl,
+          gitHubUrl,
+        };
+
+        console.log(payload);
+
+        const response = await fetch(`/api/${userType}s/`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.assign("/dashboard");
+        } else {
+          renderError("edit-error", "Failed to update account. Try again.");
+        }
+      } catch (error) {
+        renderError("edit-error", "Failed to update account. Try again.");
+      }
+    } else {
+      renderError("edit-error", "Passwords do not match. Try again.");
+    }
+  } else {
+    renderError("edit-error", "*Please complete all required fields.");
   }
 };
 
@@ -454,6 +536,7 @@ const handleTaskCreate = async (e) => {
   const taskName = $("#taskName").val().trim();
   const taskDescription = $("#taskDescription").val();
   const frameworkId = $("#framework").find(":selected").val();
+  const frameworkName = $("#framework").find(":selected").text();
   const resourceURL = $("#resourceURL").val().trim();
   const taskLevel = $("#taskLevel").find(":selected").val();
   let points;
@@ -496,12 +579,11 @@ const handleTaskCreate = async (e) => {
 
     if (response) {
       const data = await response.json();
-      const newTask = [];
-      newTask.push(data.newTask);
+      const newTask = data.newTask;
 
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div><div>Assign to mentee button</div><div>Create another task button(href)</div><div>Go back to dashboard button(href)</div></div>`
+        `<div><h4>Your task was created successfully. See the details below.</h4><div id="newTaskContainer"><div><h4 id="task-name">Task Name: ${newTask.taskName}</h4><h4>Task Description: ${newTask.taskDescription}</h4><h4>Task Level: ${newTask.taskLevel}</h4><h4>Task Points: ${newTask.points}</h4><h4>Framework Name: ${frameworkName}</h4></div></div><div><button type="assign" class="btn btn-primary" id="assign-task-btn">Assign Task To Mentee</button></div><div> <button type="create" class="btn btn-primary" id="create-another-btn"><a href="/tasks">Create Another Task</a></button></div><div><button type="create" class="btn btn-primary" id="create-another-btn"><a href="/dashboard">Go Back To Dashboard</a></button></div></div>`
       );
     } else {
       console.log("error");
@@ -513,6 +595,7 @@ const handleTaskCreate = async (e) => {
 
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
+updateInfoForm.submit(handleEditSubmit);
 logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);

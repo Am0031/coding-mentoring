@@ -124,27 +124,46 @@ const getMentorById = async (req, res) => {
   }
 };
 
-//maybe - if we have an edit option on the front end
 const updateMentorById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const mentor = await Mentor.findByPk(id);
+    const { id } = req.session.user;
+    // await Mentor.findByPk(id);
 
-    if (!mentor) {
-      return res.status(404).json({ message: "Mentor not found" });
-    }
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      location,
+      availability,
+      collaborationFormat,
+      personalGoal,
+      profileImageUrl,
+      gitHubUrl,
+    } = req.body;
 
-    const passedInfo = req.body;
-    if (!passedInfo) {
-      return res.status(500).json({ message: "Unable to update mentor" });
-    }
+    await Mentor.update(
+      {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        location,
+        availability,
+        collaborationFormat,
+        personalGoal,
+        profileImageUrl,
+        gitHubUrl,
+      },
+      { where: { id } }
+    );
 
-    await Mentor.update(passedInfo, { where: { id } });
-
-    return res.status(200).json({ message: "Mentor updated" });
+    return res.status(200).json({ success: true });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    console.error(`[ERROR]: Failed to update mentor | ${error.message}`);
+    return res.status(500).json({ success: false });
   }
 };
 
