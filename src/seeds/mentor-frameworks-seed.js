@@ -1,11 +1,9 @@
 const { MentorFramework, Framework, Mentor } = require("../models");
 
 const prepareMentorFrameworkData = async () => {
-  const frameworksRawData = await Framework.findAll();
-  const frameworksArray = frameworksRawData.map((f) => f.dataValues);
-  console.log(frameworksArray);
+  const frameworksArray = (await Framework.findAll()).map((f) => f.dataValues);
+
   const mentorsArray = (await Mentor.findAll()).map((m) => m.dataValues);
-  console.log(mentorsArray);
 
   const levelArray = ["guide", "master", "guru"];
   const mentorFrameworkData = [];
