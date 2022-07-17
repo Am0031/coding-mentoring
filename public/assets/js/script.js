@@ -583,7 +583,21 @@ const handleTaskCreate = async (e) => {
 
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div id="newTaskContainer"><div><h4 id="task-name">Task Name: ${newTask.taskName}</h4><h4>Task Description: ${newTask.taskDescription}</h4><h4>Task Level: ${newTask.taskLevel}</h4><h4>Task Points: ${newTask.points}</h4><h4>Framework Name: ${frameworkName}</h4></div></div><div><button type="assign" class="btn btn-primary" id="assign-task-btn">Assign Task To Mentee</button></div><div> <button type="create" class="btn btn-primary" id="create-another-btn"><a href="/tasks">Create Another Task</a></button></div><div><button type="create" class="btn btn-primary" id="create-another-btn"><a href="/dashboard">Go Back To Dashboard</a></button></div></div>`
+        `<div>
+        <h2 class="text-center">Your task was created successfully.</h2>
+        <div id="newTaskContainer">
+        <h4 id="task-name">Task Name: ${newTask.taskName}</h4>
+        <h4>Task Description: ${newTask.taskDescription}</h4>
+        <h4>Task Level: ${newTask.taskLevel}</h4>
+        <h4>Task Points: ${newTask.points}</h4>
+        <h4>Framework Name: ${frameworkName}</h4>
+        </div>
+        </div>
+        <div class="text-center">
+        <div><button type="assign" class="btn btn-primary mt-3" id="assign-task-btn">Assign Task to Mentee</button></div>
+        <div><button type="create" class="btn btn-primary mt-3" id="create-another-btn"href="/tasks">Create Another Task</button></div>
+        <div><button type="create" class="btn btn-primary mt-3" id="create-another-btn"href="/dashboard">Return to Dashboard</button></div>
+        </div>`
       );
     } else {
       console.log("error");
