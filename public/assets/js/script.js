@@ -9,6 +9,7 @@ const taskSearchForm = $("#taskSearch");
 const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
 const assignTaskBtn = $("#assign-task-btn");
+const assignTaskForm = $("#assign-task-form");
 
 let assignTaskModal;
 
@@ -512,24 +513,75 @@ const handleTaskSearch = async (e) => {
     const data = await response.json();
     const taskCards = generateTaskCards(data);
     $("#task-card-container").append(taskCards);
+    // localStorage.setItem("searchResults", JSON.stringify(data.data));
   }
 };
 
-const handleTaskAssign = async (e) => {
+const handleTaskAssign = async (e, req, res) => {
   e.stopPropagation();
   e.preventDefault();
 
   const target = $(e.target);
+
   const taskId = target.attr("data-id");
-  //render form for assignment to a mentee
+
+  //render modal for assignment to a mentee
   if (target.attr("name") === "assign-task-btn") {
+    // const tasksFromLS = JSON.parse(localStorage.getItem("searchResults")) || [];
+
+    // const task = tasksFromLS.find((task) => {
+    //   return task.taskId === taskId;
+    // });
+
+    // localStorage.setItem("currentTask", JSON.stringify(task));
+
     assignTaskModal = new bootstrap.Modal(
       document.getElementById("assign-task-modal")
     );
 
+    //bring list of current mentees in partnership from DB and render select list
+
     assignTaskModal.show();
   }
-  //bring list of current mentees in partnership from DB and render select list
+};
+
+const handleAssignTaskToMentee = async (e) => {
+  try {
+    e.preventDefault();
+
+    const menteeId = $("#mentee-select").val();
+    const { taskId, partnershipId } =
+      JSON.parse(localStorage.getItem("currentTask")) || {};
+
+    const payload = {
+      taskId,
+      partnershipId,
+    };
+
+    const response = await fetch(`/api/partnerships/${menteeId}/tasks`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      assignTaskModal.hide();
+    } else {
+      renderError(
+        "assign-task-error",
+        "Failed to assign task to mentee. Please try again."
+      );
+    }
+  } catch {
+    renderError(
+      "assign-task-error",
+      "Failed to assign task to mentee. Please try again."
+    );
+  }
 };
 
 const handleTaskCreate = async (e) => {
@@ -621,4 +673,6 @@ menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
+assignTaskForm.submit(handleAssignTaskToMentee);
 taskCreateForm.submit(handleTaskCreate);
+assignTaskBtn.click(handleTaskAssign);

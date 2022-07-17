@@ -1,4 +1,10 @@
-const { Framework, Mentee, Mentor, Task } = require("../../models");
+const {
+  Framework,
+  Mentee,
+  Mentor,
+  Task,
+  Partnership,
+} = require("../../models");
 
 const renderDashboard = async (req, res) => {
   const { userType, user } = req.session;
@@ -32,12 +38,30 @@ const renderMenteeProfile = async (req, res) => {
 
 const renderTaskSearch = async (req, res) => {
   try {
+    const partnershipsFromDb = await Partnership.findAll({
+      where: { mentorId: req.session.user.id },
+      include: [
+        {
+          model: Mentee,
+          attributes: ["id", "username"],
+        },
+      ],
+    });
+
+    console.log(partnershipsFromDb);
+
+    const mentees = partnershipsFromDb.map(
+      (partnership) => partnership.mentee.dataValues
+    );
+
+    console.log(mentees);
+
     const frameworks = await Framework.findAll();
     if (!frameworks) {
       return res.status(500).json({ message: "Frameworks not found" });
     }
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("task-search", { data: data });
+    return res.render("task-search", { data: data, mentees: mentees });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
