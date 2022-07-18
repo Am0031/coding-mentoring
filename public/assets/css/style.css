@@ -16,8 +16,28 @@
 }
 
 body {
+  background-color: var(--cerulean-frost);
   margin: 0;
   padding: 0;
+}
+
+section {
+  margin: 1rem;
+}
+
+.card {
+  background-color: var(--alice-blue);
+}
+
+.how-btn {
+width: 150px;
+height: 150px;
+
+}
+
+footer {
+  background-color: var(--battleship-grey);
+  text-align: center;
 }
 
 .navbar,
