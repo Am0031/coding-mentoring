@@ -525,7 +525,6 @@ const handleTaskAssign = async (e, req, res) => {
 
   const taskId = target.attr("data-id");
 
-  //render modal for assignment to a mentee
   if (target.attr("name") === "assign-task-btn") {
     // const tasksFromLS = JSON.parse(localStorage.getItem("searchResults")) || [];
 
@@ -533,32 +532,31 @@ const handleTaskAssign = async (e, req, res) => {
     //   return task.taskId === taskId;
     // });
 
-    // localStorage.setItem("currentTask", JSON.stringify(task));
+    localStorage.setItem("currentTask", JSON.stringify(taskId));
 
     assignTaskModal = new bootstrap.Modal(
       document.getElementById("assign-task-modal")
     );
 
-    //bring list of current mentees in partnership from DB and render select list
-
     assignTaskModal.show();
   }
 };
 
-const handleAssignTaskToMentee = async (e) => {
+const handleAssignTaskToPartnership = async (e) => {
   try {
     e.preventDefault();
 
     const menteeId = $("#mentee-select").val();
-    const { taskId, partnershipId } =
-      JSON.parse(localStorage.getItem("currentTask")) || {};
+    console.log(menteeId);
+
+    const taskId = JSON.parse(localStorage.getItem("currentTask")) || {};
 
     const payload = {
       taskId,
-      partnershipId,
+      menteeId,
     };
 
-    const response = await fetch(`/api/partnerships/${menteeId}/tasks`, {
+    const response = await fetch(`/api/assign`, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
@@ -673,6 +671,6 @@ menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
-assignTaskForm.submit(handleAssignTaskToMentee);
+assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
 assignTaskBtn.click(handleTaskAssign);

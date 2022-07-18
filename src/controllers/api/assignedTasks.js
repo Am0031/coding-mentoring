@@ -1,10 +1,19 @@
-const { AssignedTask } = require("../../models");
+const { AssignedTask, Partnership } = require("../../models");
 
 const moment = require("moment");
 
 const assignTask = async (req, res) => {
   try {
-    const { partnershipId, taskId } = req.body;
+    const { taskId, menteeId } = req.body;
+
+    const partnership = await Partnership.findOne({
+      where: { mentorId: req.session.user.id, menteeId: menteeId },
+    });
+
+    console.log(taskId);
+
+    const partnershipId = partnership.id;
+    console.log(partnershipId);
 
     const taskDeadline = moment().add(14, "days").format("YYYY-MM-DD");
 

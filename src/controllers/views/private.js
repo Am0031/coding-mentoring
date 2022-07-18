@@ -48,13 +48,13 @@ const renderTaskSearch = async (req, res) => {
       ],
     });
 
-    console.log(partnershipsFromDb);
+    const partnerships = partnershipsFromDb.map(
+      (partnership) => partnership.dataValues
+    );
 
     const mentees = partnershipsFromDb.map(
       (partnership) => partnership.mentee.dataValues
     );
-
-    console.log(mentees);
 
     const frameworks = await Framework.findAll();
     if (!frameworks) {
