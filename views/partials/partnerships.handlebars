@@ -1,6 +1,9 @@
 <div class="container ml-3 mr-3">
   <h1>My partnerships</h1>
-  <div class="container partnership-card-container">
+  <div
+    class="container partnership-card-container"
+    id="partnership-card-container"
+  >
     {{#each userData}}
       <div class="card mb-3" id="partnership-container-{{id}}">
         <div
@@ -36,7 +39,9 @@
               >
                 <div class="d-flex flex-column">
                   {{#each tasks}}
-                    <div class="d-flex flex-row">
+                    <div
+                      class="d-flex flex-row justify-content-center align-items-center"
+                    >
                       <p class="task-detail">{{taskName}}
                         -
                         {{taskLevel}}
@@ -48,13 +53,15 @@
                       <p>
                         Status:
                         <span
-                          class="status-span"
+                          class="status-span
+                            {{assignedTask.taskComplete}}-status"
                           id="span-task-{{assignedTask.id}}"
                         >{{formatStatus assignedTask.taskComplete}}</span></p>
                       <button
-                        class="btn btn-primary"
+                        class="btn btn-primary m-2"
                         name="change-status-btn"
                         id="status-btn-{{assignedTask.id}}"
+                        data-status="{{assignedTask.taskComplete}}"
                         data-id="{{assignedTask.id}}"
                       >Change status</button>
                     </div>

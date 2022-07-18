@@ -633,8 +633,60 @@ const handleMyTasksSearch = async (e) => {
 const handleChangeTaskStatus = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
+  debugger;
   const target = $(e.target);
+
+  if (target.is("button") && target.attr("name") === "change-status-btn") {
+    const id = target.attr("data-id");
+    const currentStatus = target.attr("data-status");
+
+    if (currentStatus === "true") {
+      const newStatus = false;
+      const body = { newStatus };
+
+      const options = {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/assign/update/${id}`, options);
+
+      if (response.status !== 200) {
+        console.error("Task status update failed");
+      } else {
+        $(`#status-btn-${id}`).attr("data-status", newStatus);
+        $(`#span-task-${id}`).removeClass("true-status");
+        $(`#span-task-${id}`).addClass("false-status");
+        $(`#span-task-${id}`).text("In Progress");
+      }
+    } else {
+      const newStatus = true;
+      const body = { newStatus };
+
+      const options = {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/assign/update/${id}`, options);
+
+      if (response.status !== 200) {
+        console.error("Task status update failed");
+      } else {
+        $(`#status-btn-${id}`).attr("data-status", newStatus);
+        $(`#span-task-${id}`).removeClass("false-status");
+        $(`#span-task-${id}`).addClass("true-status");
+        $(`#span-task-${id}`).text("Completed");
+      }
+    }
+  }
+
   console.log("status changed");
 };
 

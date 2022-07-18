@@ -30,9 +30,8 @@ section {
 }
 
 .how-btn {
-width: 150px;
-height: 150px;
-
+  width: 150px;
+  height: 150px;
 }
 
 footer {
@@ -63,4 +62,13 @@ footer {
 #mentee-card-container {
   max-height: 800px;
   overflow-y: auto;
+}
+
+.false-status {
+  color: red;
+  font-weight: bold;
+}
+.true-status {
+  color: green;
+  font-weight: bold;
 }
