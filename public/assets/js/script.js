@@ -244,7 +244,7 @@ const handleEditSubmit = async (e) => {
   e.stopPropagation();
 
   // TODO check syntax
-  const userType = $("#save-edit-btn").value();
+  const userType = target.attr("data-user-type");
   console.log(userType);
 
   const firstName = $("#firstName").val().trim();
