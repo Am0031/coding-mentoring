@@ -29,6 +29,12 @@ section {
   background-color: var(--alice-blue);
 }
 
+.how-btn {
+width: 150px;
+height: 150px;
+
+}
+
 footer {
   background-color: var(--battleship-grey);
   text-align: center;
