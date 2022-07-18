@@ -2,7 +2,7 @@ const { Task, Framework } = require("../../models");
 
 const getTasks = async (req, res) => {
   try {
-    const temptasks = await Task.findAll({
+    const tempTasks = await Task.findAll({
       attributes: [
         "id",
         "taskName",
@@ -14,7 +14,7 @@ const getTasks = async (req, res) => {
       ],
       include: [{ model: Framework }],
     });
-    const tasks = temptasks.map((i) => i.dataValues);
+    const tasks = tempTasks.map((i) => i.dataValues);
 
     if (!tasks) {
       return res.status(500).json({ message: "Tasks not found" });

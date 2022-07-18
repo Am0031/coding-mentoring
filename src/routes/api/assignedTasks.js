@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 const {
   assignTask,

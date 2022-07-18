@@ -9,6 +9,10 @@ const taskSearchForm = $("#taskSearch");
 const myTasksSearch = $("#my-tasks-btn");
 const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
+const assignTaskBtn = $("#assign-task-btn");
+const assignTaskForm = $("#assign-task-form");
+
+let assignTaskModal;
 const partnershipsContainer = $("#partnership-card-container");
 
 const renderError = (id, message) => {
@@ -241,24 +245,20 @@ const handleLoginSubmit = async (e) => {
 
 const handleEditSubmit = async (e) => {
   e.preventDefault();
+  e.stopPropagation();
 
   // TODO check syntax
-  const userType = $("#save-edit-btn").value();
+  const userType = target.attr("data-user-type");
+  console.log(userType);
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();
-  const username = $("#username").val().trim();
-  const email = $("#email").val().trim();
+  // const username = $("#username").val().trim();
+  // const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
   const location = $("#location").val().trim();
   const availability = $("#availability").val().trim();
-
-  // const availabilitySelected = $("input[type=checkbox]:checked");
-  // const availabilityAll = Array.from(availabilitySelected).map(
-  //   (selected) => selected.id
-  // );
-
   const collaborationFormat = $("#collaborationFormat").val().trim();
   const personalGoal = $("#personalGoal").val().trim();
   const profileImageUrl = $("#profileImageUrl").val().trim();
@@ -267,30 +267,47 @@ const handleEditSubmit = async (e) => {
   if (
     firstName &&
     lastName &&
-    username &&
-    email &&
-    password &&
-    confirmPassword &&
+    // username &&
+    // email &&
+    // password &&
+    // confirmPassword &&
     location &&
     availability &&
     collaborationFormat
   ) {
     if (password === confirmPassword) {
       try {
-        const payload = {
-          firstName,
-          lastName,
-          username,
-          email,
-          password,
-          confirmPassword,
-          location,
-          availability,
-          collaborationFormat,
-          personalGoal,
-          profileImageUrl,
-          gitHubUrl,
-        };
+        let payload;
+
+        if (password) {
+          payload = {
+            firstName,
+            lastName,
+            // username,
+            // email,
+            password,
+            location,
+            availability,
+            collaborationFormat,
+            personalGoal,
+            profileImageUrl,
+            gitHubUrl,
+          };
+        } else {
+          payload = {
+            firstName,
+            lastName,
+            // username,
+            // email,
+            // password,
+            location,
+            availability,
+            collaborationFormat,
+            personalGoal,
+            profileImageUrl,
+            gitHubUrl,
+          };
+        }
 
         console.log(payload);
 
@@ -521,19 +538,62 @@ const handleTaskSearch = async (e) => {
   }
 };
 
-const handleTaskAssign = async (e) => {
+const handleTaskAssign = async (e, req, res) => {
   e.stopPropagation();
   e.preventDefault();
 
   const target = $(e.target);
-  const id = target.attr("data-id");
-  //render form for assignment to a mentee
+
+  const taskId = target.attr("data-id");
+
   if (target.attr("name") === "assign-task-btn") {
-    $(`#task-details-container-${id}`).append(
-      `<div><p>Make a modal to select mentee and assign</p></div>`
+    localStorage.setItem("currentTask", JSON.stringify(taskId));
+
+    assignTaskModal = new bootstrap.Modal(
+      document.getElementById("assign-task-modal")
+    );
+
+    $("#assign-task-error").empty();
+
+    assignTaskModal.show();
+  }
+};
+
+const handleAssignTaskToPartnership = async (e) => {
+  try {
+    e.preventDefault();
+
+    const menteeId = $("#mentee-select").val();
+    console.log(menteeId);
+
+    const taskId = JSON.parse(localStorage.getItem("currentTask")) || {};
+
+    const payload = {
+      taskId,
+      menteeId,
+    };
+
+    const response = await fetch(`/api/assign`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      assignTaskModal.hide();
+    } else {
+      renderError("assign-task-error", "Task already assigned to this mentee.");
+    }
+  } catch {
+    renderError(
+      "assign-task-error",
+      "Failed to assign task to mentee. Please try again."
     );
   }
-  //bring list of current mentees in partnership from DB and render select list
 };
 
 const handleTaskCreate = async (e) => {
@@ -592,7 +652,47 @@ const handleTaskCreate = async (e) => {
 
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div id="newTaskContainer"><div><h4 id="task-name">Task Name: ${newTask.taskName}</h4><h4>Task Description: ${newTask.taskDescription}</h4><h4>Task Level: ${newTask.taskLevel}</h4><h4>Task Points: ${newTask.points}</h4><h4>Framework Name: ${frameworkName}</h4></div></div><div><button type="assign" class="btn btn-primary" id="assign-task-btn">Assign Task To Mentee</button></div><div> <button type="create" class="btn btn-primary" id="create-another-btn"><a href="/tasks">Create Another Task</a></button></div><div><button type="create" class="btn btn-primary" id="create-another-btn"><a href="/dashboard">Go Back To Dashboard</a></button></div></div>`
+        `<div class="modal" tabindex="-1" id="assign-task-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Assign to Mentee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="assign-task-form">
+                  <div class="mb-3">
+                    <select class="form-select" id="mentee-select">
+                      {{#each mentees as |mentee|}}
+                        <option value={{id}}>{{username}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  <div id="assign-task-error"></div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+        <h2 class="text-center">Your task was created successfully.</h2>
+        <div id="newTaskContainer">
+        <h4 id="task-name">Task Name: ${newTask.taskName}</h4>
+        <h4>Task Description: ${newTask.taskDescription}</h4>
+        <h4>Task Level: ${newTask.taskLevel}</h4>
+        <h4>Task Points: ${newTask.points}</h4>
+        <h4>Framework Name: ${frameworkName}</h4>
+        </div>
+        </div>
+        <div class="text-center">
+        <div><button type="assign" class="btn btn-primary mt-3" id="assign-task-btn">Assign Task to Mentee</button></div>
+        <div><a class="btn btn-primary mt-3" id="create-another-btn" href="/tasks">Create Another Task</a></div>
+        <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
+        </div>`
       );
     } else {
       console.log("error");
@@ -700,5 +800,7 @@ mentorCardsContainer.click(handleMentorSelection);
 myTasksSearch.click(handleMyTasksSearch);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
+assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
+assignTaskBtn.click(console.log("click"));
 partnershipsContainer.click(handleChangeTaskStatus);
