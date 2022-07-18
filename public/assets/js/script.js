@@ -2,6 +2,7 @@ const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
 const updateInfoForm = $("update-form");
 const logoutBtn = $("#logout-btn");
+const resetPasswordForm = $("#reset-password-form");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
@@ -458,7 +459,45 @@ const handleMentorSearch = async (e) => {
     $("#mentor-card-container").append(mentorCards);
   }
 };
+const handelResetPasswordSubmit = async (e) => {
+  e.preventDefault();
 
+  const email = $("#email").val().trim();
+
+  if (email) {
+    try {
+      const payload = {
+        email,
+      };
+
+      const response = await fetch("/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        window.location.assign("/login");
+      } else {
+        renderError("login-error", "Email address does not exist.");
+      }
+    } catch (error) {
+      renderError("login-error", "Failed to reset password.");
+    }
+  } else {
+    renderError("login-error", "Please complete all fields.");
+  }
+};
+signupForm.submit(handleSignUpSubmit);
+loginForm.submit(handleLoginSubmit);
+logoutBtn.click(handleLogout);
+resetPasswordForm.submit(handelResetPasswordSubmit);
+$("#mentorSearch").submit(handleMentorSearch);
+$("#menteeSearch").submit(handleMenteeSearch);
 const handleMentorSelection = async (e) => {
   e.preventDefault();
   e.stopPropagation();

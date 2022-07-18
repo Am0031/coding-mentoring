@@ -47,7 +47,12 @@ const renderMentorProfile = async (req, res) => {
   const chosenMentor = mentor.getUser();
   return res.render("mentor-profile", { user: chosenMentor });
 };
-
+const renderFAQPage = (req, res) => {
+  return res.render("faq", { currentPage: "faq" });
+};
+const renderResetPasswordPage = (req, res) => {
+  return res.render("resetPassword", { currentPage: "resetPassword" });
+};
 module.exports = {
   renderHomePage,
   renderLoginPage,
@@ -56,4 +61,6 @@ module.exports = {
   renderContactPage,
   renderMentorSearch,
   renderMentorProfile,
+  renderFAQPage,
+  renderResetPasswordPage,
 };
