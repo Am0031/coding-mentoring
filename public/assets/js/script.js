@@ -24,7 +24,8 @@ const generateMenteeCards = (response) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a>
+    <div><a class="btn btn-secondary" href="/search/mentees/${each.id}" target="_blank" id="profile-btn">View profile</a>
+    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -43,7 +44,8 @@ const generateMentorCards = (data, partnerships) => {
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
-    <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div>
+    <div><button class="btn btn-secondary" name="view-profile-btn" href="/search/mentors/${each.id}" target="_blank" id=${each.id}>View profile</button>
+    <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -470,6 +472,10 @@ const handleMentorSelection = async (e) => {
       target.text("Added");
       target.attr("disabled", "true");
     }
+  }
+  if (target.attr("name") === "view-profile-btn") {
+    const id = target.attr("id");
+    window.open(`http://localhost:4000/search/mentors/${id}`);
   }
 };
 
