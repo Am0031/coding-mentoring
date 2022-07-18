@@ -544,6 +544,8 @@ const handleTaskAssign = async (e, req, res) => {
       document.getElementById("assign-task-modal")
     );
 
+    $("#assign-task-error").empty()
+
     assignTaskModal.show();
   }
 };
