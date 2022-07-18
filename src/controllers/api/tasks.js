@@ -2,7 +2,73 @@ const { Task, Framework } = require("../../models");
 
 const getTasks = async (req, res) => {
   try {
+    const tempTasks = await Task.findAll({
+      attributes: [
+        "id",
+        "taskName",
+        "taskDescription",
+        "taskLevel",
+        "points",
+        "resourceURL",
+        "authorId",
+      ],
+      include: [{ model: Framework }],
+    });
+    const tasks = tempTasks.map((i) => i.dataValues);
+
+    if (!tasks) {
+      return res.status(500).json({ message: "Tasks not found" });
+    }
+
+    const formatTasks = (each) => {
+      const id = each.id;
+      const taskName = each.taskName;
+      const taskDescription = each.taskDescription;
+      const taskLevel = each.taskLevel;
+      const points = each.points;
+      const resourceURL = each.resourceURL;
+      const authorId = each.authorId;
+      const frameworkId = each.framework.id;
+      const frameworkName = each.framework.frameworkName;
+
+      const response = {
+        id,
+        taskName,
+        taskDescription,
+        taskLevel,
+        points,
+        resourceURL,
+        authorId,
+        frameworkId,
+        frameworkName,
+      };
+      return response;
+    };
+
+    const formattedTasks = tasks.map(formatTasks);
+
+    const { framework, taskLevel } = req.body;
+
+    const filteredTasks = formattedTasks
+      .filter((item) => !taskLevel || item.taskLevel === taskLevel)
+      .filter(
+        (item) =>
+          framework.length === 0 ||
+          framework.some((element) => element === item.frameworkId)
+      );
+
+    return res.json(filteredTasks);
+  } catch (error) {
+    console.error(`ERROR | ${error.message}`);
+    return res.status(500).json(error);
+  }
+};
+
+const getTasksByMentor = async (req, res) => {
+  try {
+    const { id } = req.session.user;
     const temptasks = await Task.findAll({
+      where: { authorId: id },
       attributes: [
         "id",
         "taskName",
@@ -47,17 +113,7 @@ const getTasks = async (req, res) => {
 
     const formattedTasks = tasks.map(formatTasks);
 
-    const { framework, taskLevel } = req.body;
-
-    const filteredTasks = formattedTasks
-      .filter((item) => !taskLevel || item.taskLevel === taskLevel)
-      .filter(
-        (item) =>
-          framework.length === 0 ||
-          framework.some((element) => element === item.frameworkId)
-      );
-
-    return res.json(filteredTasks);
+    return res.json(formattedTasks);
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
@@ -210,4 +266,5 @@ module.exports = {
   createTask,
   updateTaskById,
   deleteTaskById,
+  getTasksByMentor,
 };

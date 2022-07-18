@@ -1,13 +1,20 @@
 const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
+const updateInfoForm = $("update-form");
 const logoutBtn = $("#logout-btn");
 const resetPasswordForm = $("#reset-password-form");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
 const taskSearchForm = $("#taskSearch");
+const myTasksSearch = $("#my-tasks-btn");
 const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
+const assignTaskBtn = $("#assign-task-btn");
+const assignTaskForm = $("#assign-task-form");
+
+let assignTaskModal;
+const partnershipsContainer = $("#partnership-card-container");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -22,7 +29,8 @@ const generateMenteeCards = (response) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a>
+    <div><a class="btn btn-secondary" href="/search/mentees/${each.id}" target="_blank" id="profile-btn">View profile</a>
+    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -41,7 +49,8 @@ const generateMentorCards = (data, partnerships) => {
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
-    <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div>
+    <div><button class="btn btn-secondary" name="view-profile-btn" href="/search/mentors/${each.id}" target="_blank" id=${each.id}>View profile</button>
+    <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -117,12 +126,11 @@ const generateTaskCards = (data) => {
 const handleSignUpSubmit = async (e) => {
   e.preventDefault();
 
-  const userTypeSelected = $("input[type=radio]:checked").attr("id");
-  const userType = userTypeSelected;
+  const userType = $("input[type=radio]:checked").attr("id");
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();
-  const username = $("#lastName").val().trim();
+  const username = $("#username").val().trim();
   const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
@@ -231,7 +239,102 @@ const handleLoginSubmit = async (e) => {
       renderError("login-error", "Failed to login. Try again.");
     }
   } else {
+    console.log("fields");
     renderError("login-error", "Please complete all fields.");
+  }
+};
+
+const handleEditSubmit = async (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  // TODO check syntax
+  const userType = target.attr("data-user-type");
+  console.log(userType);
+
+  const firstName = $("#firstName").val().trim();
+  const lastName = $("#lastName").val().trim();
+  // const username = $("#username").val().trim();
+  // const email = $("#email").val().trim();
+  const password = $("#password").val().trim();
+  const confirmPassword = $("#confirmPassword").val().trim();
+  const location = $("#location").val().trim();
+  const availability = $("#availability").val().trim();
+  const collaborationFormat = $("#collaborationFormat").val().trim();
+  const personalGoal = $("#personalGoal").val().trim();
+  const profileImageUrl = $("#profileImageUrl").val().trim();
+  const gitHubUrl = $("#gitHubUrl").val().trim();
+
+  if (
+    firstName &&
+    lastName &&
+    // username &&
+    // email &&
+    // password &&
+    // confirmPassword &&
+    location &&
+    availability &&
+    collaborationFormat
+  ) {
+    if (password === confirmPassword) {
+      try {
+        let payload;
+
+        if (password) {
+          payload = {
+            firstName,
+            lastName,
+            // username,
+            // email,
+            password,
+            location,
+            availability,
+            collaborationFormat,
+            personalGoal,
+            profileImageUrl,
+            gitHubUrl,
+          };
+        } else {
+          payload = {
+            firstName,
+            lastName,
+            // username,
+            // email,
+            // password,
+            location,
+            availability,
+            collaborationFormat,
+            personalGoal,
+            profileImageUrl,
+            gitHubUrl,
+          };
+        }
+
+        console.log(payload);
+
+        const response = await fetch(`/api/${userType}s/`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.assign("/dashboard");
+        } else {
+          renderError("edit-error", "Failed to update account. Try again.");
+        }
+      } catch (error) {
+        renderError("edit-error", "Failed to update account. Try again.");
+      }
+    } else {
+      renderError("edit-error", "Passwords do not match. Try again.");
+    }
+  } else {
+    renderError("edit-error", "*Please complete all required fields.");
   }
 };
 
@@ -426,6 +529,10 @@ const handleMentorSelection = async (e) => {
       target.attr("disabled", "true");
     }
   }
+  if (target.attr("name") === "view-profile-btn") {
+    const id = target.attr("id");
+    window.open(`http://localhost:4000/search/mentors/${id}`);
+  }
 };
 
 const handleTaskSearch = async (e) => {
@@ -465,23 +572,67 @@ const handleTaskSearch = async (e) => {
     $("#task-card-container").empty();
     const data = await response.json();
     const taskCards = generateTaskCards(data);
+    $("#task-card-container").append(`<h2>My search results: </h2>`);
     $("#task-card-container").append(taskCards);
   }
 };
 
-const handleTaskAssign = async (e) => {
+const handleTaskAssign = async (e, req, res) => {
   e.stopPropagation();
   e.preventDefault();
 
   const target = $(e.target);
-  const id = target.attr("data-id");
-  //render form for assignment to a mentee
+
+  const taskId = target.attr("data-id");
+
   if (target.attr("name") === "assign-task-btn") {
-    $(`#task-details-container-${id}`).append(
-      `<div><p>Make a modal to select mentee and assign</p></div>`
+    localStorage.setItem("currentTask", JSON.stringify(taskId));
+
+    assignTaskModal = new bootstrap.Modal(
+      document.getElementById("assign-task-modal")
+    );
+
+    $("#assign-task-error").empty();
+
+    assignTaskModal.show();
+  }
+};
+
+const handleAssignTaskToPartnership = async (e) => {
+  try {
+    e.preventDefault();
+
+    const menteeId = $("#mentee-select").val();
+    console.log(menteeId);
+
+    const taskId = JSON.parse(localStorage.getItem("currentTask")) || {};
+
+    const payload = {
+      taskId,
+      menteeId,
+    };
+
+    const response = await fetch(`/api/assign`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      assignTaskModal.hide();
+    } else {
+      renderError("assign-task-error", "Task already assigned to this mentee.");
+    }
+  } catch {
+    renderError(
+      "assign-task-error",
+      "Failed to assign task to mentee. Please try again."
     );
   }
-  //bring list of current mentees in partnership from DB and render select list
 };
 
 const handleTaskCreate = async (e) => {
@@ -493,6 +644,7 @@ const handleTaskCreate = async (e) => {
   const taskName = $("#taskName").val().trim();
   const taskDescription = $("#taskDescription").val();
   const frameworkId = $("#framework").find(":selected").val();
+  const frameworkName = $("#framework").find(":selected").text();
   const resourceURL = $("#resourceURL").val().trim();
   const taskLevel = $("#taskLevel").find(":selected").val();
   let points;
@@ -535,12 +687,51 @@ const handleTaskCreate = async (e) => {
 
     if (response) {
       const data = await response.json();
-      const newTask = [];
-      newTask.push(data.newTask);
+      const newTask = data.newTask;
 
       $("#create-task-section").empty();
       $("#create-task-section").append(
-        `<div><h4>Your task was created successfully. See the details below.</h4><div>The newly created task card</div><div>Assign to mentee button</div><div>Create another task button(href)</div><div>Go back to dashboard button(href)</div></div>`
+        `<div class="modal" tabindex="-1" id="assign-task-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Assign to Mentee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="assign-task-form">
+                  <div class="mb-3">
+                    <select class="form-select" id="mentee-select">
+                      {{#each mentees as |mentee|}}
+                        <option value={{id}}>{{username}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  <div id="assign-task-error"></div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+        <h2 class="text-center">Your task was created successfully.</h2>
+        <div id="newTaskContainer">
+        <h4 id="task-name">Task Name: ${newTask.taskName}</h4>
+        <h4>Task Description: ${newTask.taskDescription}</h4>
+        <h4>Task Level: ${newTask.taskLevel}</h4>
+        <h4>Task Points: ${newTask.points}</h4>
+        <h4>Framework Name: ${frameworkName}</h4>
+        </div>
+        </div>
+        <div class="text-center">
+        <div><button type="assign" class="btn btn-primary mt-3" id="assign-task-btn">Assign Task to Mentee</button></div>
+        <div><a class="btn btn-primary mt-3" id="create-another-btn" href="/tasks">Create Another Task</a></div>
+        <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
+        </div>`
       );
     } else {
       console.log("error");
@@ -550,12 +741,105 @@ const handleTaskCreate = async (e) => {
   }
 };
 
+const handleMyTasksSearch = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+
+  if (target.attr("id") === "my-tasks-btn") {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const response = await fetch("/api/tasks/mentor", options);
+
+    if (response.status !== 200) {
+      console.error("Search for tasks failed");
+    } else {
+      $("#task-card-container").empty();
+      const data = await response.json();
+      const taskCards = generateTaskCards(data);
+      $("#task-card-container").append(`<h2>My tasks</h2>`);
+      $("#task-card-container").append(taskCards);
+    }
+  }
+};
+
+const handleChangeTaskStatus = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+
+  if (target.is("button") && target.attr("name") === "change-status-btn") {
+    const id = target.attr("data-id");
+    const currentStatus = target.attr("data-status");
+
+    if (currentStatus === "true") {
+      const newStatus = false;
+      const body = { newStatus };
+
+      const options = {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/assign/update/${id}`, options);
+
+      if (response.status !== 200) {
+        console.error("Task status update failed");
+      } else {
+        $(`#status-btn-${id}`).attr("data-status", newStatus);
+        $(`#span-task-${id}`).removeClass("true-status");
+        $(`#span-task-${id}`).addClass("false-status");
+        $(`#span-task-${id}`).text("In Progress");
+      }
+    } else {
+      const newStatus = true;
+      const body = { newStatus };
+
+      const options = {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/assign/update/${id}`, options);
+
+      if (response.status !== 200) {
+        console.error("Task status update failed");
+      } else {
+        $(`#status-btn-${id}`).attr("data-status", newStatus);
+        $(`#span-task-${id}`).removeClass("false-status");
+        $(`#span-task-${id}`).addClass("true-status");
+        $(`#span-task-${id}`).text("Completed");
+      }
+    }
+  }
+
+  console.log("status changed");
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
+updateInfoForm.submit(handleEditSubmit);
 logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
+myTasksSearch.click(handleMyTasksSearch);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
+assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
+assignTaskBtn.click(console.log("click"));
+partnershipsContainer.click(handleChangeTaskStatus);

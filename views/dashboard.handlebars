@@ -1,1 +1,32 @@
 {{> privateNavBar}}
+
+<main>
+    <aside class="container">
+        <div class="container" id="stats-container">
+            <p>User: {{username}}</p>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/editInfo" role="button">Edit your personal information</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/search/tasks" role="button">Search for tasks</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/tasks" role="button">Create a task</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/search/mentors" role="button">Search mentors</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/search/mentees" role="button">Search mentees</a>
+        </div>
+    </aside>
+    <section>
+        <div class="container" id="stats-container">
+            {{>stats}}
+        </div>
+        <div class="container" id="partnerships-container">
+            {{>partnerships}}
+        </div>
+    </section>
+</main>

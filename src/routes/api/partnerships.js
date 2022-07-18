@@ -9,6 +9,5 @@ const {
 
 router.post("/", createPartnership);
 router.get("/mentee", getPartnershipsByMenteeId);
-// router.get("/mentors/:id", getPartnershipByMentorId);
 
 module.exports = router;
