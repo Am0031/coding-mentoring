@@ -9,6 +9,7 @@ const taskSearchForm = $("#taskSearch");
 const myTasksSearch = $("#my-tasks-btn");
 const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
+const partnershipsContainer = $("#partnership-card-container");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -623,6 +624,14 @@ const handleMyTasksSearch = async (e) => {
   }
 };
 
+const handleChangeTaskStatus = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+  console.log("status changed");
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 updateInfoForm.submit(handleEditSubmit);
@@ -634,3 +643,4 @@ myTasksSearch.click(handleMyTasksSearch);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
 taskCreateForm.submit(handleTaskCreate);
+partnershipsContainer.click(handleChangeTaskStatus);
