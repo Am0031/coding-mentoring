@@ -1,4 +1,5 @@
-const { Task, Framework } = require("../models");
+const { Task, Framework, MentorFramework, Mentor } = require("../models");
+const { faker } = require("@faker-js/faker");
 
 const prepareTaskData = async () => {
   const frameworksArray = (await Framework.findAll()).map((f) => f.dataValues);
@@ -10,6 +11,10 @@ const prepareTaskData = async () => {
     const framework = frameworksArray[i];
     const frameworkId = framework.id;
     const frameworkName = framework.frameworkName;
+
+    const matchingMentorsArray = (
+      await MentorFramework.findAll({ where: { frameworkId: frameworkId } })
+    ).map((m) => m.dataValues);
 
     for (let t = 1; t < 21; t += 1) {
       const taskName = `${frameworkName} practice - Activity #${t}`;
@@ -35,6 +40,43 @@ const prepareTaskData = async () => {
         points,
       };
       taskData.push(task);
+    }
+
+    for (let n = 0; n < matchingMentorsArray.length; n += 1) {
+      const extractMentor = matchingMentorsArray[n];
+      const authorId = extractMentor.mentorId;
+      const mentorLevel = extractMentor.level;
+
+      let taskLevel;
+      if (mentorLevel === "guide") {
+        taskLevel = "beginner";
+      } else if (mentorLevel === "master") {
+        taskLevel = "intermediate";
+      } else {
+        taskLevel = "advanced";
+      }
+      let points;
+      if (taskLevel === "beginner") {
+        points = 20;
+      } else if (taskLevel === "intermediate") {
+        points = 40;
+      } else {
+        points = 60;
+      }
+      for (let t = 1; t < 6; t += 1) {
+        const taskName = `${frameworkName} exercise #${t} - ${taskLevel}`;
+        const taskDescription = faker.lorem.paragraph();
+
+        const task = {
+          taskName,
+          taskDescription,
+          taskLevel,
+          frameworkId,
+          points,
+          authorId,
+        };
+        taskData.push(task);
+      }
     }
   }
 

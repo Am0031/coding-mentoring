@@ -7,6 +7,7 @@ const {
 } = require("../models");
 const { faker } = require("@faker-js/faker");
 
+//function to create relevant partnerships between mentees and mentors that have the same framework - assigning some to all mentees that have a framework
 const preparePartnershipData = async () => {
   const menteeFrameworksArray = (await MenteeFramework.findAll()).map(
     (m) => m.dataValues
@@ -58,6 +59,7 @@ const preparePartnershipData = async () => {
   return partnershipData;
 };
 
+//static set of partnership seeds - starter set
 // const partnershipData = [
 //   {
 //     mentorId: 1,

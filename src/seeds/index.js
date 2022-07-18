@@ -27,14 +27,14 @@ const seedAll = async () => {
   // await seedMenteeFrameworks();
   // console.log("\n----- MENTEE FRAMEWORKS SEEDED -----\n");
 
-  // await seedTasks();
-  // console.log("\n----- TASKS SEEDED -----\n");
+  await seedTasks();
+  console.log("\n----- TASKS SEEDED -----\n");
 
   // await seedPartnerships();
   // console.log("\n----- PARTNERSHIPS SEEDED -----\n");
 
-  await seedAssignedTasks();
-  console.log("\n----- ASSIGNED TASKS SEEDED -----\n");
+  // await seedAssignedTasks();
+  // console.log("\n----- ASSIGNED TASKS SEEDED -----\n");
 
   process.exit(0);
 };
