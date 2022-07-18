@@ -6,6 +6,7 @@ const {
   Framework,
   Task,
 } = require("../models");
+const moment = require("moment");
 
 const prepareAssignedTasksData = async () => {
   const assignedTaskData = [];
@@ -65,19 +66,22 @@ const prepareAssignedTasksData = async () => {
       );
       const thisFrameworkLevel = Object.values(thisFramework[0]);
       const menteeLevel = Object.values(thisFrameworkLevel[1]).toString();
-      const numberOfTasks = Math.floor(Math.random() * 3);
+
       const relevantTasks = tasks
         .filter((i) => i.taskLevel === menteeLevel)
         .filter((i) => i.frameworkId === frameworkId);
 
-      for (let t = 0; t < numberOfTasks; t += 1) {
-        const taskId =
-          relevantTasks[Math.floor(Math.random() * relevantTasks.length)].id;
-        const taskDeadline = "2022-08-31";
-        const assignedTask = { taskId, partnershipId, taskDeadline };
+      relevantTasks.forEach((t) => {
+        if (Math.random() > 0.7) {
+          const taskId = t.id;
+          const taskDeadline = moment()
+            .add(Math.floor(Math.random() * 14), "days")
+            .format("YYYY-MM-DD");
+          const assignedTask = { taskId, partnershipId, taskDeadline };
 
-        assignedTaskData.push(assignedTask);
-      }
+          assignedTaskData.push(assignedTask);
+        }
+      });
     }
   }
 
