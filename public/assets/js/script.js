@@ -513,7 +513,6 @@ const handleTaskSearch = async (e) => {
     const data = await response.json();
     const taskCards = generateTaskCards(data);
     $("#task-card-container").append(taskCards);
-    // localStorage.setItem("searchResults", JSON.stringify(data.data));
   }
 };
 
@@ -526,12 +525,6 @@ const handleTaskAssign = async (e, req, res) => {
   const taskId = target.attr("data-id");
 
   if (target.attr("name") === "assign-task-btn") {
-    // const tasksFromLS = JSON.parse(localStorage.getItem("searchResults")) || [];
-
-    // const task = tasksFromLS.find((task) => {
-    //   return task.taskId === taskId;
-    // });
-
     localStorage.setItem("currentTask", JSON.stringify(taskId));
 
     assignTaskModal = new bootstrap.Modal(

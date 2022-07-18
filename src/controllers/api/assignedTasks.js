@@ -10,10 +10,7 @@ const assignTask = async (req, res) => {
       where: { mentorId: req.session.user.id, menteeId: menteeId },
     });
 
-    console.log(taskId);
-
     const partnershipId = partnership.id;
-    console.log(partnershipId);
 
     const taskDeadline = moment().add(14, "days").format("YYYY-MM-DD");
 
