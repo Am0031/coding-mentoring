@@ -2,6 +2,8 @@
 
 Platform to match coding mentors with coding mentees
 
+[Deployed URL](...)
+
 ## Team members
 
 [Katarzyna Jaromin-Kaliciak](https://github.com/katarzynajk)
