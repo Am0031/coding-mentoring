@@ -16,7 +16,17 @@ const renderDashboard = async (req, res) => {
       attributes: ["id", "projectName"],
       where: { mentorId: id },
       include: [
-        { model: Mentee, attributes: ["id", "username"], as: "mentee" },
+        {
+          model: Mentee,
+          attributes: ["id", "username"],
+          as: "mentee",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
         { model: Mentor, attributes: ["id", "username"], as: "mentor" },
         {
           model: Task,
@@ -36,8 +46,22 @@ const renderDashboard = async (req, res) => {
       attributes: ["id", "projectName"],
       where: { menteeId: id },
       include: [
-        { model: Mentee, attributes: ["id", "username"], as: "mentee" },
-        { model: Mentor, attributes: ["id", "username"], as: "mentor" },
+        {
+          model: Mentee,
+          attributes: ["id", "username"],
+          as: "mentee",
+        },
+        {
+          model: Mentor,
+          attributes: ["id", "username"],
+          as: "mentor",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
         {
           model: Task,
           through: { attributes: ["taskDeadline", "taskComplete"] },
