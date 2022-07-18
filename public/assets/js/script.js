@@ -6,6 +6,7 @@ const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
 const taskSearchForm = $("#taskSearch");
+const myTasksSearch = $("#my-tasks-btn");
 const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
 
@@ -508,6 +509,7 @@ const handleTaskSearch = async (e) => {
     $("#task-card-container").empty();
     const data = await response.json();
     const taskCards = generateTaskCards(data);
+    $("#task-card-container").append(`<h2>My search results: </h2>`);
     $("#task-card-container").append(taskCards);
   }
 };
@@ -593,6 +595,34 @@ const handleTaskCreate = async (e) => {
   }
 };
 
+const handleMyTasksSearch = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+
+  if (target.attr("id") === "my-tasks-btn") {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const response = await fetch("/api/tasks/mentor", options);
+
+    if (response.status !== 200) {
+      console.error("Search for tasks failed");
+    } else {
+      $("#task-card-container").empty();
+      const data = await response.json();
+      const taskCards = generateTaskCards(data);
+      $("#task-card-container").append(`<h2>My tasks</h2>`);
+      $("#task-card-container").append(taskCards);
+    }
+  }
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 updateInfoForm.submit(handleEditSubmit);
@@ -600,6 +630,7 @@ logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
+myTasksSearch.click(handleMyTasksSearch);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
 taskCreateForm.submit(handleTaskCreate);

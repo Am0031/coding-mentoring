@@ -37,3 +37,10 @@ body {
   overflow: hidden;
   @include transition($transition-collapse);
 }
+
+#task-card-container,
+#mentor-card-container,
+#mentee-card-container {
+  max-height: 800px;
+  overflow-y: auto;
+}
