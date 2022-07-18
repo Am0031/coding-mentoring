@@ -109,8 +109,8 @@ const renderEditInfo = async (req, res) => {
     userType = "mentee";
   }
 
-  console.log(currentUser);
-  console.log(userType);
+  // console.log(currentUser);
+  // console.log(userType);
 
   return res.render("editInfo", { currentUser, userType });
 };

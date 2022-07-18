@@ -241,14 +241,16 @@ const handleLoginSubmit = async (e) => {
 
 const handleEditSubmit = async (e) => {
   e.preventDefault();
+  e.stopPropagation();
 
   // TODO check syntax
   const userType = $("#save-edit-btn").value();
+  console.log(userType);
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();
-  const username = $("#username").val().trim();
-  const email = $("#email").val().trim();
+  // const username = $("#username").val().trim();
+  // const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
   const location = $("#location").val().trim();
