@@ -3,8 +3,16 @@ const { Task, Framework } = require("../../models");
 const getTasks = async (req, res) => {
   try {
     const temptasks = await Task.findAll({
-      attributes: ["id", "taskName", "taskDescription", "taskLevel", "points"],
-      include: Framework,
+      attributes: [
+        "id",
+        "taskName",
+        "taskDescription",
+        "taskLevel",
+        "points",
+        "resourceURL",
+        "authorId",
+      ],
+      include: [{ model: Framework }],
     });
     const tasks = temptasks.map((i) => i.dataValues);
 
@@ -18,6 +26,8 @@ const getTasks = async (req, res) => {
       const taskDescription = each.taskDescription;
       const taskLevel = each.taskLevel;
       const points = each.points;
+      const resourceURL = each.resourceURL;
+      const authorId = each.authorId;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
 
@@ -27,6 +37,8 @@ const getTasks = async (req, res) => {
         taskDescription,
         taskLevel,
         points,
+        resourceURL,
+        authorId,
         frameworkId,
         frameworkName,
       };
@@ -56,7 +68,15 @@ const getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
     const temptask = await Task.findByPk(id, {
-      attributes: ["id", "taskName", "taskDescription", "taskLevel", "points"],
+      attributes: [
+        "id",
+        "taskName",
+        "taskDescription",
+        "taskLevel",
+        "points",
+        "resourceURL",
+        "authorId",
+      ],
       include: Framework,
     });
     const task = temptask.dataValues;
@@ -71,6 +91,8 @@ const getTaskById = async (req, res) => {
       const taskDescription = each.taskDescription;
       const taskLevel = each.taskLevel;
       const points = each.points;
+      const resourceURL = each.resourceURL;
+      const authorId = each.authorId;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
 
@@ -80,6 +102,8 @@ const getTaskById = async (req, res) => {
         taskDescription,
         taskLevel,
         points,
+        resourceURL,
+        authorId,
         frameworkId,
         frameworkName,
       };
@@ -87,8 +111,6 @@ const getTaskById = async (req, res) => {
     };
 
     const formattedTask = formatTask(task);
-
-    console.log(formattedTask);
     return res.json(formattedTask);
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
@@ -98,26 +120,42 @@ const getTaskById = async (req, res) => {
 
 const createTask = async (req, res) => {
   try {
-    const { taskName, taskDescription, taskLevel, frameworkId } = req.body;
-
+    const {
+      taskName,
+      taskDescription,
+      taskLevel,
+      frameworkId,
+      points,
+      resourceURL,
+    } = req.body;
+    const authorId = req.session.user.id;
     if (!taskName || !taskDescription || !taskLevel || !frameworkId) {
       return res.status(400).json({ message: "Unable to create task" });
     }
 
-    let { points } = req.body;
-    if (!points) {
-      points = 20;
+    let options;
+    if (!resourceURL) {
+      options = {
+        taskName,
+        taskDescription,
+        taskLevel,
+        points,
+        frameworkId,
+        authorId,
+      };
+    } else {
+      options = {
+        taskName,
+        taskDescription,
+        taskLevel,
+        points,
+        resourceURL,
+        frameworkId,
+        authorId,
+      };
     }
-    // we could add the userId to a task model, so mentors can filter on that and choose to view only their tasks
-    // const { id } = req.session.user;
 
-    const newTask = await Task.create({
-      taskName,
-      taskDescription,
-      taskLevel,
-      points,
-      frameworkId,
-    });
+    const newTask = await Task.create(options);
 
     return res.status(200).json({ message: "Task created", newTask: newTask });
   } catch (error) {
