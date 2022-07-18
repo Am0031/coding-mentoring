@@ -633,7 +633,7 @@ const handleMyTasksSearch = async (e) => {
 const handleChangeTaskStatus = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-  debugger;
+
   const target = $(e.target);
 
   if (target.is("button") && target.attr("name") === "change-status-btn") {
