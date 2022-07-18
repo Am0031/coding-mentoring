@@ -10,7 +10,6 @@
     "express-session": "^1.17.3",
     "handlebars": "^4.7.7",
     "inquirer": "^9.0.0",
-    "jest": "^28.1.2",
     "moment": "^2.29.4",
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.2"
