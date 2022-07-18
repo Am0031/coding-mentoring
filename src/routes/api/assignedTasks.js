@@ -2,8 +2,12 @@ const { Router } = require("express");
 
 const router = Router({ mergeParams: true });
 
-const { assignTask } = require("../../controllers/api/assignedTasks");
+const {
+  assignTask,
+  updateAssignedTaskStatus,
+} = require("../../controllers/api/assignedTasks");
 
 router.post("/", assignTask);
+router.put("/update/:id", updateAssignedTaskStatus);
 
 module.exports = router;

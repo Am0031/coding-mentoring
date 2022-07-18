@@ -6,12 +6,14 @@ const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
 const taskSearchForm = $("#taskSearch");
+const myTasksSearch = $("#my-tasks-btn");
 const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
 const assignTaskBtn = $("#assign-task-btn");
 const assignTaskForm = $("#assign-task-form");
 
 let assignTaskModal;
+const partnershipsContainer = $("#partnership-card-container");
 
 const renderError = (id, message) => {
   const errorDiv = $(`#${id}`);
@@ -26,7 +28,8 @@ const generateMenteeCards = (response) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a>
+    <div><a class="btn btn-secondary" href="/search/mentees/${each.id}" target="_blank" id="profile-btn">View profile</a>
+    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -45,7 +48,8 @@ const generateMentorCards = (data, partnerships) => {
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
-    <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div>
+    <div><button class="btn btn-secondary" name="view-profile-btn" href="/search/mentors/${each.id}" target="_blank" id=${each.id}>View profile</button>
+    <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -486,6 +490,10 @@ const handleMentorSelection = async (e) => {
       target.attr("disabled", "true");
     }
   }
+  if (target.attr("name") === "view-profile-btn") {
+    const id = target.attr("id");
+    window.open(`http://localhost:4000/search/mentors/${id}`);
+  }
 };
 
 const handleTaskSearch = async (e) => {
@@ -525,6 +533,7 @@ const handleTaskSearch = async (e) => {
     $("#task-card-container").empty();
     const data = await response.json();
     const taskCards = generateTaskCards(data);
+    $("#task-card-container").append(`<h2>My search results: </h2>`);
     $("#task-card-container").append(taskCards);
   }
 };
@@ -577,10 +586,7 @@ const handleAssignTaskToPartnership = async (e) => {
     if (data.success) {
       assignTaskModal.hide();
     } else {
-      renderError(
-        "assign-task-error",
-        "Task already assigned to this mentee."
-      );
+      renderError("assign-task-error", "Task already assigned to this mentee.");
     }
   } catch {
     renderError(
@@ -696,6 +702,94 @@ const handleTaskCreate = async (e) => {
   }
 };
 
+const handleMyTasksSearch = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+
+  if (target.attr("id") === "my-tasks-btn") {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const response = await fetch("/api/tasks/mentor", options);
+
+    if (response.status !== 200) {
+      console.error("Search for tasks failed");
+    } else {
+      $("#task-card-container").empty();
+      const data = await response.json();
+      const taskCards = generateTaskCards(data);
+      $("#task-card-container").append(`<h2>My tasks</h2>`);
+      $("#task-card-container").append(taskCards);
+    }
+  }
+};
+
+const handleChangeTaskStatus = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+
+  if (target.is("button") && target.attr("name") === "change-status-btn") {
+    const id = target.attr("data-id");
+    const currentStatus = target.attr("data-status");
+
+    if (currentStatus === "true") {
+      const newStatus = false;
+      const body = { newStatus };
+
+      const options = {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/assign/update/${id}`, options);
+
+      if (response.status !== 200) {
+        console.error("Task status update failed");
+      } else {
+        $(`#status-btn-${id}`).attr("data-status", newStatus);
+        $(`#span-task-${id}`).removeClass("true-status");
+        $(`#span-task-${id}`).addClass("false-status");
+        $(`#span-task-${id}`).text("In Progress");
+      }
+    } else {
+      const newStatus = true;
+      const body = { newStatus };
+
+      const options = {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/assign/update/${id}`, options);
+
+      if (response.status !== 200) {
+        console.error("Task status update failed");
+      } else {
+        $(`#status-btn-${id}`).attr("data-status", newStatus);
+        $(`#span-task-${id}`).removeClass("false-status");
+        $(`#span-task-${id}`).addClass("true-status");
+        $(`#span-task-${id}`).text("Completed");
+      }
+    }
+  }
+
+  console.log("status changed");
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 updateInfoForm.submit(handleEditSubmit);
@@ -703,8 +797,10 @@ logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
+myTasksSearch.click(handleMyTasksSearch);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
 assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
 assignTaskBtn.click(console.log("click"));
+partnershipsContainer.click(handleChangeTaskStatus);
