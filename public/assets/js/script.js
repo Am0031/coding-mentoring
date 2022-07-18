@@ -544,7 +544,7 @@ const handleTaskAssign = async (e, req, res) => {
       document.getElementById("assign-task-modal")
     );
 
-    $("#assign-task-error").empty()
+    $("#assign-task-error").empty();
 
     assignTaskModal.show();
   }
@@ -579,7 +579,7 @@ const handleAssignTaskToPartnership = async (e) => {
     } else {
       renderError(
         "assign-task-error",
-        "Failed to assign task to mentee. Please try again."
+        "Task already assigned to this mentee."
       );
     }
   } catch {

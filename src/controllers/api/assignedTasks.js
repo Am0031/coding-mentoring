@@ -14,17 +14,32 @@ const assignTask = async (req, res) => {
 
     const taskDeadline = moment().add(14, "days").format("YYYY-MM-DD");
 
-    const assignedTask = await AssignedTask.create({
-      taskId,
-      partnershipId,
-      taskDeadline,
+    const existingTask = await AssignedTask.findOne({
+      where: { taskId: taskId, partnershipId: partnershipId },
     });
 
-    return res.json({
-      success: true,
-      message: "Task successfully assigned",
-      assignedTask: assignedTask,
-    });
+    if (!existingTask) {
+      const assignedTask = await AssignedTask.create({
+        taskId,
+        partnershipId,
+        taskDeadline,
+      });
+
+      return res.json({
+        success: true,
+        message: "Task successfully assigned",
+        assignedTask: assignedTask,
+      });
+    } else {
+      console.log(`[ERROR]: Failed to assign task | Task already assigned`);
+
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Task already assigned to this mentee",
+        });
+    }
   } catch (error) {
     console.log(`[ERROR]: Failed to assign task | ${error.message}`);
 
