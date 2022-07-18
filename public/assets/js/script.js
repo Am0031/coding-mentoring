@@ -253,12 +253,6 @@ const handleEditSubmit = async (e) => {
   const confirmPassword = $("#confirmPassword").val().trim();
   const location = $("#location").val().trim();
   const availability = $("#availability").val().trim();
-
-  // const availabilitySelected = $("input[type=checkbox]:checked");
-  // const availabilityAll = Array.from(availabilitySelected).map(
-  //   (selected) => selected.id
-  // );
-
   const collaborationFormat = $("#collaborationFormat").val().trim();
   const personalGoal = $("#personalGoal").val().trim();
   const profileImageUrl = $("#profileImageUrl").val().trim();
@@ -267,30 +261,47 @@ const handleEditSubmit = async (e) => {
   if (
     firstName &&
     lastName &&
-    username &&
-    email &&
-    password &&
-    confirmPassword &&
+    // username &&
+    // email &&
+    // password &&
+    // confirmPassword &&
     location &&
     availability &&
     collaborationFormat
   ) {
     if (password === confirmPassword) {
       try {
-        const payload = {
-          firstName,
-          lastName,
-          username,
-          email,
-          password,
-          confirmPassword,
-          location,
-          availability,
-          collaborationFormat,
-          personalGoal,
-          profileImageUrl,
-          gitHubUrl,
-        };
+        let payload;
+
+        if (password) {
+          payload = {
+            firstName,
+            lastName,
+            // username,
+            // email,
+            password,
+            location,
+            availability,
+            collaborationFormat,
+            personalGoal,
+            profileImageUrl,
+            gitHubUrl,
+          };
+        } else {
+          payload = {
+            firstName,
+            lastName,
+            // username,
+            // email,
+            // password,
+            location,
+            availability,
+            collaborationFormat,
+            personalGoal,
+            profileImageUrl,
+            gitHubUrl,
+          };
+        }
 
         console.log(payload);
 
