@@ -36,6 +36,7 @@ const login = async (req, res) => {
       req.session.save(() => {
         req.session.isLoggedIn = true;
         req.session.user = user.getUser();
+        req.session.userType = userType;
         return res.json({ success: true });
       });
     } else {

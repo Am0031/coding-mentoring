@@ -1,9 +1,88 @@
-const { Framework, Mentee, Mentor, Task } = require("../../models");
+const {
+  Framework,
+  Mentee,
+  Mentor,
+  Task,
+  Partnership,
+} = require("../../models");
 
 const renderDashboard = async (req, res) => {
   const { userType, user } = req.session;
+  const id = user.id;
   //need to work out which api call to bring the right data here: their info and their partnerships and tasks etc
-  return res.render("dashboard", { user: user, currentPage: "dashboard" });
+  let userData;
+  if (userType === "mentor") {
+    const data = await Partnership.findAll({
+      attributes: ["id", "projectName"],
+      where: { mentorId: id },
+      include: [
+        {
+          model: Mentee,
+          attributes: ["id", "username"],
+          as: "mentee",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
+        { model: Mentor, attributes: ["id", "username"], as: "mentor" },
+        {
+          model: Task,
+          through: { attributes: ["id", "taskDeadline", "taskComplete"] },
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
+      ],
+    });
+    userData = data.map((i) => i.get({ plain: true }));
+  } else {
+    const data = await Partnership.findAll({
+      attributes: ["id", "projectName"],
+      where: { menteeId: id },
+      include: [
+        {
+          model: Mentee,
+          attributes: ["id", "username"],
+          as: "mentee",
+        },
+        {
+          model: Mentor,
+          attributes: ["id", "username"],
+          as: "mentor",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
+        {
+          model: Task,
+          through: { attributes: ["taskDeadline", "taskComplete"] },
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
+      ],
+    });
+    userData = data.map((i) => i.get({ plain: true }));
+  }
+
+  return res.render("dashboard", {
+    user: user,
+    userData: userData,
+    userType: userType,
+    currentPage: "dashboard",
+  });
 };
 
 const renderMenteeSearch = async (req, res) => {

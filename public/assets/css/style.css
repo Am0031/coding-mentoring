@@ -30,9 +30,8 @@ section {
 }
 
 .how-btn {
-width: 150px;
-height: 150px;
-
+  width: 150px;
+  height: 150px;
 }
 
 footer {
@@ -56,4 +55,20 @@ footer {
   height: 0;
   overflow: hidden;
   @include transition($transition-collapse);
+}
+
+#task-card-container,
+#mentor-card-container,
+#mentee-card-container {
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+.false-status {
+  color: red;
+  font-weight: bold;
+}
+.true-status {
+  color: green;
+  font-weight: bold;
 }
