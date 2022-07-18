@@ -36,15 +36,28 @@
               >
                 <div class="d-flex flex-column">
                   {{#each tasks}}
-                    <p class="task-detail">{{taskName}}
-                      -
-                      {{taskLevel}}
-                      -
-                      {{points}}
-                      XP - Deadline:
-                      {{formatDate assignedTask.taskDeadline}}
-                      -
-                      {{formatStatus assignedTask.taskComplete}}</p>
+                    <div class="d-flex flex-row">
+                      <p class="task-detail">{{taskName}}
+                        -
+                        {{taskLevel}}
+                        -
+                        {{points}}
+                        XP - Deadline:
+                        {{formatDate assignedTask.taskDeadline}}
+                      </p>
+                      <p>
+                        Status:
+                        <span
+                          class="status-span"
+                          id="span-task-{{assignedTask.id}}"
+                        >{{formatStatus assignedTask.taskComplete}}</span></p>
+                      <button
+                        class="btn btn-primary"
+                        name="change-status-btn"
+                        id="status-btn-{{assignedTask.id}}"
+                        data-id="{{assignedTask.id}}"
+                      >Change status</button>
+                    </div>
                   {{/each}}
                 </div>
               </div>
