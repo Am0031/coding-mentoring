@@ -30,7 +30,7 @@ const renderDashboard = async (req, res) => {
         { model: Mentor, attributes: ["id", "username"], as: "mentor" },
         {
           model: Task,
-          through: { attributes: ["taskDeadline", "taskComplete"] },
+          through: { attributes: ["id", "taskDeadline", "taskComplete"] },
           include: [
             {
               model: Framework,
