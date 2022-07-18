@@ -4,8 +4,8 @@ const { faker } = require("@faker-js/faker");
 //function to generate mentors programmatically, using the faker package and assigning the remaining fields randomly
 const prepareMentorData = () => {
   const gitHubUrlExample = "https://github.com/Am0031";
-  const availabilityArray = ["weekdays", "weekend"];
-  const collaborationFormatArray = ["online", "in person", "hybrid"];
+  const availabilityArray = ["weekdays", "weekend", "both"];
+  const collaborationFormatArray = ["online", "in-person", "hybrid"];
 
   const mentorData = [];
 
