@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: "Bitter", serif;
+  --fw-reg: 400;
+  --fw-reg-italic: 400;
+  --fw-bold: 800;
+  --fw-bold-italic: 800;
+  --alice-blue: #e7ecefff;
+  --yale-blue: #274c77ff;
+  --cerulean-frost: #6096baff;
+  --baby-blue-eyes: #a3cef1ff;
+  --battleship-grey: #8b8c89ff;
+  --persimmon: #e85d04ff;
+  --tangerine: #f48c06ff;
+  --orange-web: #faa307ff;
+  --selective-yellow: #ffba08ff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* background-color: var(--battleship-grey); */
+}
+
+.main-container {
+  width: 100%;
+  display: block;
+}
+
+.offer-full {
+  padding: 30px 30px 50px 23px;
+  margin-bottom: 35px;
+  position: relative;
+  display: flex;
+}
+
+.offer {
+  background-color: var(--alice-blue);
+}
+
+.inner-sidebar {
+  display: inline-block;
+  vertical-align: top;
+  width: 180px;
+  margin-right: 40px;
+  position: relative;
+}
+
+.offer-content {
+  vertical-align: top;
+  background-color: var(--alice-blue);
+  width: 760px;
+  float: right;
+}
+
+.offer-title {
+  padding-bottom: 20px;
+  font-weight: 700;
+}
+.frameworks {
+  width: 200px;
+  float: right;
+}
+
+.profile {
+  margin-right: 15px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.avatar-wrapper img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 23px;
+  text-align: center;
+  display: block;
+}
+
+img {
+  vertical-align: middle;
+  border: 0;
+}
+
+.inner-sidebar .btn {
+  border: 1px solid var(--orange-web);
+  background-color: var(--orange-web);
+}
+
+.btn a {
+  color: var(--alice-blue);
+  text-decoration: none;
+}
+
+.week-days {
+  margin-left: 18px;
+  margin-top: 10px;
+  margin-left: 18px;
+  margin-top: 10px;
+}
+
+.day-active {
+  float: left;
+  padding: 1px 3px;
+  color: var(--orange-web);
+  text-decoration: underline var(--orange-web);
+}
+
+.contact-data {
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+.fr-title {
+  text-align: right;
+  padding-bottom: 20px;
+  font-weight: 700;
+}
+
+.framework-example {
+  text-align: center;
+  border-radius: 1px;
+  padding: 10px 15px;
+  background-color: var(--orange-web);
+  width: 100px;
+  height: 50px;
+  font-size: 1rem;
+  color: var(--alice-blue);
+  margin: 5px;
+  float: right;
+}
+
+.about-title {
+  font-size: 1rem;
+  color: var(--alice-blue);
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+}

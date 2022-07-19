@@ -11,7 +11,7 @@ class Mentee extends Model {
       id: this.id,
       firstName: this.firstName,
       lastName: this.lastName,
-      userName: this.userName,
+      username: this.username,
       email: this.email,
       location: this.location,
       availability: this.availability,

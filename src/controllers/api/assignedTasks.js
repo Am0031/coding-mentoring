@@ -1,22 +1,45 @@
-const { AssignedTask } = require("../../models");
+const { AssignedTask, Partnership } = require("../../models");
+
 const moment = require("moment");
 
 const assignTask = async (req, res) => {
   try {
-    const { partnershipId, taskId } = req.body;
+    const { taskId, menteeId } = req.body;
+
+    const partnership = await Partnership.findOne({
+      where: { mentorId: req.session.user.id, menteeId: menteeId },
+    });
+
+    const partnershipId = partnership.id;
 
     const taskDeadline = moment().add(14, "days").format("YYYY-MM-DD");
 
-    const assignedTask = await AssignedTask.create({
-      taskId,
-      partnershipId,
-      taskDeadline,
+    const existingTask = await AssignedTask.findOne({
+      where: { taskId: taskId, partnershipId: partnershipId },
     });
 
-    return res.json({
-      message: "Task successfully assigned",
-      assignedTask: assignedTask,
-    });
+    if (!existingTask) {
+      const assignedTask = await AssignedTask.create({
+        taskId,
+        partnershipId,
+        taskDeadline,
+      });
+
+      return res.json({
+        success: true,
+        message: "Task successfully assigned",
+        assignedTask: assignedTask,
+      });
+    } else {
+      console.log(`[ERROR]: Failed to assign task | Task already assigned`);
+
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Task already assigned to this mentee",
+        });
+    }
   } catch (error) {
     console.log(`[ERROR]: Failed to assign task | ${error.message}`);
 
@@ -24,6 +47,29 @@ const assignTask = async (req, res) => {
   }
 };
 
+const updateAssignedTaskStatus = async (req, res) => {
+  try {
+    const { newStatus } = req.body;
+    const { id } = req.params;
+
+    const assignedTaskStatus = await AssignedTask.update(
+      {
+        taskComplete: newStatus,
+      },
+      { where: { id: id } }
+    );
+
+    return res.json({
+      message: "Task status successfully updated",
+    });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to update task status | ${error.message}`);
+
+    return res.status(500).json({ success: false });
+  }
+};
+
 module.exports = {
   assignTask,
+  updateAssignedTaskStatus,
 };

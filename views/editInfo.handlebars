@@ -11,7 +11,7 @@
           type="text"
           class="form-control"
           id="firstName"
-          value={{user.firstName}}
+          value="{{currentUser.firstName}}"
         />
       </div>
 
@@ -20,7 +20,7 @@
           type="text"
           class="form-control"
           id="lastName"
-          value={{user.lastName}}
+          value="{{currentUser.lastName}}"
         />
       </div>
        
@@ -29,17 +29,17 @@
           type="username"
           class="form-control"
           id="username"
-          value={{user.username}}
+          value="{{currentUser.username}}"
           disabled="disabled"
         />
       </div>
 
       <div class="mb-3">
         <input
-          type="email"
+          type="emailAddress"
           class="form-control"
           id="email"
-          value={{user.email}}
+          value="{{currentUser.email}}"
           disabled="disabled"
         />
       </div>
@@ -49,8 +49,9 @@
           type="password"
           class="form-control"
           id="password"
-          value={{user.password}}
+          value="{{currentUser.password}}"
           pattern="^(?=.*\d).{6,18}$"
+          placeholder="Enter new password"
         />
       </div>
 
@@ -59,7 +60,8 @@
           type="password"
           class="form-control"
           id="confirmPassword"
-          value={{user.password}}
+          value="{{currentUser.password}}"
+          placeholder="Confirm new password"
         />
       </div>
 
@@ -96,28 +98,37 @@
       <div>
         <select class="form-select mb-3" id="availability" aria-label="availability">
           <option>Select availability*</option>
-          <option {{#if (isEqualTo user.availability)}} selected {{/if}}value="weekdays">Weekdays</option>
-          <option {{#if (isEqualTo user.availability)}} selected {{/if}}value="weekends">Weekends</option>
-          <option {{#if (isEqualTo user.availability)}} selected {{/if}}value="both">Both</option>
+          <option {{#if (isEqualTo currentUser.availability "weekdays")}} selected {{/if}}value="weekdays">Weekdays</option>
+          <option {{#if (isEqualTo currentUser.availability "weekends")}} selected {{/if}}value="weekends">Weekends</option>
+          <option {{#if (isEqualTo currentUser.availability "both")}} selected {{/if}}value="both">Both</option>
         </select>
       </div>
 
       <div>
         <select class="form-select mb-3" id="collaborationFormat" aria-label="collaborationFormat">
           <option>Select collaboration format*</option>
-          <option {{#if (isEqualTo user.collaborationFormat)}} selected {{/if}} value="online">Online</option>
-          <option {{#if (isEqualTo user.collaborationFormat)}} selected {{/if}} value="in-person">In-Person</option>
-          <option {{#if (isEqualTo user.collaborationFormat)}} selected {{/if}} value="hybrid">Hybrid</option>
+          <option {{#if (isEqualTo currentUser.collaborationFormat "online")}} selected {{/if}} value="online">Online</option>
+          <option {{#if (isEqualTo currentUser.collaborationFormat "in-person")}} selected {{/if}} value="in-person">In-Person</option>
+          <option {{#if (isEqualTo currentUser.collaborationFormat "hybrid")}} selected {{/if}} value="hybrid">Hybrid</option>
         </select>
       </div>
       
-      <div>
+      {{!-- <div>
         <select class="form-select mb-3" id="location" aria-label="location">
           <option>Select location*</option>
-          <option {{#if (isEqualTo user.location)}} selected {{/if}} value="birmingham">Birmingham</option>
-          <option {{#if (isEqualTo user.location)}} selected {{/if}} value="london">London</option>
-          <option {{#if (isEqualTo user.location)}} selected {{/if}} value="manchester">Manchester</option>
+          <option {{#if (isEqualTo currentUser.location "birmingham")}} selected {{/if}} value="birmingham">Birmingham</option>
+          <option {{#if (isEqualTo currentUser.location "london")}} selected {{/if}} value="london">London</option>
+          <option {{#if (isEqualTo currentUser.location "manchester")}} selected {{/if}} value="manchester">Manchester</option>
         </select>
+      </div> --}}
+
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="location"
+          value="{{currentUser.location}}"
+        />
       </div>
 
       <div class="mb-3">
@@ -125,7 +136,7 @@
           type="text"
           class="form-control"
           id="personalGoal"
-          value={{user.personalGoal}}
+          value="{{currentUser.personalGoal}}"
         />
       </div>
 
@@ -134,7 +145,7 @@
           type="text"
           class="form-control"
           id="profileImageUrl"
-          value={{#if (user.profileImageUrl)}} user.profileImageUrl {{else}}"Enter profile image URL (optional)"{{/if}}
+          value={{#if currentUser.profileImageUrl}} "{{currentUser.profileImageUrl}}" {{else}}"Enter profile image URL (optional)"{{/if}}
         />
       </div>
 
@@ -143,14 +154,14 @@
           type="text"
           class="form-control"
           id="gitHubUrl"
-          value={{#if (user.gitHubUrl)}} user.gitHubUrl {{else}}"Enter GitHub URL (optional)"{{/if}}
+          value={{#if currentUser.gitHubUrl}} "{{currentUser.gitHubUrl}}" {{else}}"Enter GitHub URL (optional)"{{/if}}
         />
       </div>
 
       <div id="edit-error"></div>
 
       <div class="mb-3 text-center">
-        <button type="submit" class="btn btn-primary" id="save-edit-btn" value={{userType}}>Save</button>
+        <button type="submit" class="btn btn-primary" id="save-edit-btn" data-user-type="{{userType}}">Save</button>
       </div>
       <div class="mb-3 text-center error-text">
         <a href="/dashboard">Cancel</a>

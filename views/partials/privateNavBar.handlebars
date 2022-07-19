@@ -26,15 +26,14 @@
             <a class="nav-link {{#if (isEqualTo currentPage "dashboard")}} active {{/if}}" href="/dashboard">Dashboard</a>
           </li>
 
-          {{!-- {{#if (isEqualTo user.userType "mentor")}}
-          <li class="nav-item">
-            <a class="nav-link {{#if (isEqualTo currentPage "mentees")}} active {{/if}}" href="/search/mentees">Our Mentees</a>
-          </li>
-          {{else}} --}}
+          
           <li class="nav-item">
             <a class="nav-link {{#if (isEqualTo currentPage "mentors")}} active {{/if}}" href="/search/mentors">Our Mentors</a>
           </li>
-          {{!-- {{/if}}  --}}
+          <li class="nav-item">
+            <a class="nav-link {{#if (isEqualTo currentPage "mentees")}} active {{/if}}" href="/search/mentees">Our Mentees</a>
+          </li>
+          
 
           <li class="nav-item">
             <a class="nav-link {{#if (isEqualTo currentPage "contact")}} active {{/if}}" href="/contact">Contact Us</a>

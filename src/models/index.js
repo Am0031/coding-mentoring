@@ -79,6 +79,13 @@ Partnership.belongsTo(Mentee, {
   foreignKey: "menteeId",
 });
 
+MentorFramework.belongsTo(Framework, { foreignKey: "frameworkId" });
+
+MenteeFramework.belongsTo(Framework, { foreignKey: "frameworkId" });
+
+Framework.hasMany(MentorFramework, { foreignKey: "frameworkId" });
+Framework.hasMany(MenteeFramework, { foreignKey: "frameworkId" });
+
 module.exports = {
   AssignedTask,
   Framework,

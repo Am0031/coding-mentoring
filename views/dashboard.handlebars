@@ -1,7 +1,41 @@
 {{> privateNavBar}}
 
-<main>
-    <div>
-        <a class="btn btn-primary btn-lg mt-4" href="/editInfo" role="button">Edit your personal information</a>
+<main class="d-flex flex-row">
+    <aside class="container d-flex flex-column aside-info">
+        <div class="container" id="stats-container">
+            <div class="profile-pic-div"><div class="profile-pic-box"><img class="profile-pic" src="{{user.profileImageUrl}}"></div></div>
+            <p>User: {{user.username}}</p>
+            <p>Email: {{user.email}}</p>
+            <p>Location: {{user.location}}</p>
+            <p>Availability: {{user.availability}}</p>
+            <p>Collaboration format: {{user.collaborationFormat}}</p>
+            <p>Github: {{user.gitHubUrl}}</p>
+            <p>XP: {{user.xp}}</p>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/editInfo" role="button">Edit your personal information</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/search/tasks" role="button">Search for tasks</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/tasks" role="button">Create a task</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/search/mentors" role="button">Search mentors</a>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-lg mt-4" href="/search/mentees" role="button">Search mentees</a>
+        </div>
+    </aside>
+    <div class="d-flex flex-column main-info">
+        <section class="d-flex flex-column frameworks-info">
+            <div class="container" id="my-frameworks-container">
+                {{>myFrameworks}}
+            </div>
+            <div class="container partnerships-info" id="partnerships-container">
+                {{>partnerships}}
+            </div>
+        </section>
     </div>
 </main>

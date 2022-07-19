@@ -26,15 +26,30 @@ section {
   height: 500px;
   margin: 1rem;
 }
+.aside-info {
+  width: 20%;
+  margin: 0;
+}
+.main-info {
+  width: 80%;
+}
+.profile-pic-div {
+  height: 200px;
+}
+.profile-pic-box {
+  width: 100%;
+}
+.profile-pic {
+  height: 200px;
+}
 
 .card {
   background-color: var(--alice-blue);
 }
 
 .how-btn {
-width: 150px;
-height: 150px;
-
+  width: 150px;
+  height: 150px;
 }
 
 footer {
@@ -58,4 +73,29 @@ footer {
   height: 0;
   overflow: hidden;
   @include transition($transition-collapse);
+}
+
+#task-card-container,
+#mentor-card-container,
+#mentee-browse-container,
+#mentor-browse-container {
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+.empty-search-message {
+  min-height: 450px;
+}
+.false-status {
+  color: red;
+  font-weight: bold;
+}
+.true-status {
+  color: green;
+  font-weight: bold;
+}
+
+.added-status {
+  color: green;
+  font-weight: bold;
 }
