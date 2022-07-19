@@ -39,15 +39,9 @@
                 <div class="framework-item ml-3 mr-3">
                   <p class="framework-name{{#if addedId}} added-status{{/if}}" id="framework-selection-name-{{id}}">{{frameworkName}}</p>
                     <select id="framework-level-selection-{{id}}">
-                      
                       <option value="guide">Guide</option>
                       <option value="master">Master</option>
                       <option value="guru">Guru</option>
-                      
-                      <option value="beginner">Beginner</option>
-                      <option value="intermediate">Intermediate</option>
-                      <option value="advanced">Advanced</option>
-                    
                     </select>
                   <button class="btn btn-secondary" id="framework-selection-btn-{{id}}" data-framework={{id}} name="framework-selection-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>+</button>
                   <button class="btn btn-danger" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>X</button>
