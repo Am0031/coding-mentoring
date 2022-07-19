@@ -24,6 +24,22 @@ body {
 section {
   margin: 1rem;
 }
+.aside-info {
+  width: 20%;
+  margin: 0;
+}
+.main-info {
+  width: 80%;
+}
+.profile-pic-div {
+  height: 200px;
+}
+.profile-pic-box {
+  width: 100%;
+}
+.profile-pic {
+  height: 200px;
+}
 
 .card {
   background-color: var(--alice-blue);

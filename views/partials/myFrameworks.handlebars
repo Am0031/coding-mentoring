@@ -1,3 +1,4 @@
+<h2>My frameworks</h2>
 <div class="card" id="user-frameworks-container">
   <p>My Selected frameworks</p>
   <div class="d-flex flex-row justify-content-around mb-3" id="my-frameworks-container">
@@ -8,6 +9,7 @@
     {{/each}}
   </div>
 </div>
+
 
 
 <div class="card mb-3" id="frameworks-selection-container">
@@ -31,21 +33,43 @@
           </div>
           
           <div class="collapse" id="collapse-frameworks-selection">
-            
+           {{#if (isEqualTo userType "mentor")}} 
             <div class="d-flex flex-row flex-wrap justify-content-around" id="framework-selection-container">
               {{#each frameworks}}
                 <div class="framework-item ml-3 mr-3">
                   <p class="framework-name{{#if addedId}} added-status{{/if}}" id="framework-selection-name-{{id}}">{{frameworkName}}</p>
                     <select id="framework-level-selection-{{id}}">
+                      
                       <option value="guide">Guide</option>
                       <option value="master">Master</option>
                       <option value="guru">Guru</option>
+                      
+                      <option value="beginner">Beginner</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                    
                     </select>
                   <button class="btn btn-secondary" id="framework-selection-btn-{{id}}" data-framework={{id}} name="framework-selection-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>+</button>
                   <button class="btn btn-danger" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>X</button>
                 </div>
               {{/each}}
             </div>
+            {{else}}
+            <div class="d-flex flex-row flex-wrap justify-content-around" id="framework-selection-container">
+              {{#each frameworks}}
+                <div class="framework-item ml-3 mr-3">
+                  <p class="framework-name{{#if addedId}} added-status{{/if}}" id="framework-selection-name-{{id}}">{{frameworkName}}</p>
+                    <select id="framework-level-selection-{{id}}">
+                      <option value="beginner">Beginner</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                    </select>
+                  <button class="btn btn-secondary" id="framework-selection-btn-{{id}}" data-framework={{id}} name="framework-selection-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>+</button>
+                  <button class="btn btn-danger" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>X</button>
+                </div>
+              {{/each}}
+            </div>
+            {{/if}}
             <p class="text-center"> Click on the + icon to add/update or on the x icon to remove</p>
           </div>
         </div>
