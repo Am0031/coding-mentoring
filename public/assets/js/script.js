@@ -753,9 +753,7 @@ const handleTaskCreate = async (e) => {
         </div>`
       );
 
-      $("#assign-task-btn").click(() => {
-        console.log("click");
-      });
+      $("#assign-task-btn").click(handleTaskAssign);
     } else {
       console.log("error");
     }
