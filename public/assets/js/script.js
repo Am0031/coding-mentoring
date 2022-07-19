@@ -742,8 +742,11 @@ const handleTaskCreate = async (e) => {
         <h4>Task Points: ${newTask.points}</h4>
         <h4>Framework Name: ${frameworkName}</h4>
         </div>
-        </div>
-        <div class="text-center">
+        </div>`
+      );
+
+      $("#task-container").append(
+        `<div class="text-center">
         <div><button type="assign" class="btn btn-primary mt-3" name="assign-task-btn" data-id="${newTask.id}" id="assign-task-btn">Assign Task to Mentee</button></div>
         <div><a class="btn btn-primary mt-3" id="create-another-btn" href="/tasks">Create Another Task</a></div>
         <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
@@ -921,6 +924,6 @@ taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
 assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
-assignTaskBtn.click(handleTaskAssign);
+assignTaskBtn.click(console.log("click"));
 partnershipsContainer.click(handleChangeTaskStatus);
 frameworkSelectionContainer.click(handleFrameworkSelection);
