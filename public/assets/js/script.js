@@ -12,6 +12,7 @@ const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
 const assignTaskBtn = $("#assign-task-btn");
 const assignTaskForm = $("#assign-task-form");
+const frameworkSelectionContainer = $("#framework-selection-container");
 
 let assignTaskModal;
 const partnershipsContainer = $("#partnership-card-container");
@@ -498,6 +499,7 @@ logoutBtn.click(handleLogout);
 resetPasswordForm.submit(handelResetPasswordSubmit);
 $("#mentorSearch").submit(handleMentorSearch);
 $("#menteeSearch").submit(handleMenteeSearch);
+
 const handleMentorSelection = async (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -690,6 +692,7 @@ const handleTaskCreate = async (e) => {
       const newTask = data.newTask;
 
       $("#create-task-section").empty();
+      // $("create-task-section").off("click");
       $("#create-task-section").append(
         `<div class="modal" tabindex="-1" id="assign-task-modal">
           <div class="modal-dialog">
@@ -728,7 +731,7 @@ const handleTaskCreate = async (e) => {
         </div>
         </div>
         <div class="text-center">
-        <div><button type="assign" class="btn btn-primary mt-3" id="assign-task-btn">Assign Task to Mentee</button></div>
+        <div><button type="assign" class="btn btn-primary mt-3" name="assign-task-btn" data-id="${newTask.id}" id="assign-task-btn">Assign Task to Mentee</button></div>
         <div><a class="btn btn-primary mt-3" id="create-another-btn" href="/tasks">Create Another Task</a></div>
         <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
         </div>`
@@ -829,6 +832,74 @@ const handleChangeTaskStatus = async (e) => {
   console.log("status changed");
 };
 
+const handleFrameworkSelection = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  debugger;
+  const target = $(e.target);
+
+  if (target.attr("name") === "framework-delete-btn") {
+    const addedId = target.attr("data-added-id");
+    const id = target.attr("data-framework");
+
+    if (addedId !== 0) {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/frameworks/user/${addedId}`, options);
+
+      if (response.status !== 200) {
+        console.error("Framework removal failed");
+      } else {
+        $(`#my-framework-${id}`).remove();
+        $(`#framework-delete-btn-${id}`).attr("data-added-id", 0);
+        $(`#framework-selection-name-${id}`).removeClass("added-status");
+      }
+    }
+  }
+  if (target.attr("name") === "framework-selection-btn") {
+    const frameworkId = target.attr("data-framework");
+
+    const addedId = target.attr("data-added-id");
+    const level = $(`#framework-level-selection-${frameworkId}`)
+      .find(":selected")
+      .val();
+    const payload = { id: addedId, frameworkId, level };
+    const options = {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const response = await fetch(`/api/frameworks/user`, options);
+
+    if (response.status !== 200) {
+      console.error("Framework addition failed");
+    } else {
+      const frameworkUpdate = await response.json();
+      const newId = frameworkUpdate.id;
+      console.log(newId);
+      if (addedId === 0) {
+        $(`#my-frameworks-container`)
+          .append(`<div class="framework-icon ml-3 mr-3" id="my-framework-${frameworkUpdate.frameworkId}">
+        ${frameworkUpdate.frameworkName}
+      </div>`);
+      }
+      $(`#framework-selection-btn-${frameworkId}`).attr("data-added-id", newId);
+      $(`#framework-selection-name-${frameworkId}`).addClass("added-status");
+    }
+  }
+
+  console.log("framework status changed");
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 updateInfoForm.submit(handleEditSubmit);
@@ -841,5 +912,6 @@ taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
 assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
-assignTaskBtn.click(console.log("click"));
+assignTaskBtn.click(handleTaskAssign);
 partnershipsContainer.click(handleChangeTaskStatus);
+frameworkSelectionContainer.click(handleFrameworkSelection);

@@ -22,7 +22,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--battleship-grey);
+  /* background-color: var(--battleship-grey); */
 }
 
 .main-container {

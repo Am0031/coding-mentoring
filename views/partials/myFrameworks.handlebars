@@ -1,0 +1,53 @@
+<div class="card" id="user-frameworks-container">
+  <p>My Selected frameworks</p>
+  <div class="d-flex flex-row justify-content-around mb-3" id="my-frameworks-container">
+    {{#each userFrameworks}}
+      <div class="framework-icon ml-3 mr-3" id="my-framework-{{frameworkId}}">
+        {{framework.frameworkName}}
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+
+<div class="card mb-3" id="frameworks-selection-container">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="d-flex flex-row justify-content-between">
+            <p>View All frameworks - Click to add or remove</p>
+            
+            <a
+              class="btn btn-primary"
+              data-bs-toggle="collapse"
+              href="#collapse-frameworks-selection"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapse-frameworks-selection"
+              data-id="{{id}}"
+            >
+              See All
+            </a>
+          </div>
+          
+          <div class="collapse" id="collapse-frameworks-selection">
+            
+            <div class="d-flex flex-row flex-wrap justify-content-around" id="framework-selection-container">
+              {{#each frameworks}}
+                <div class="framework-item ml-3 mr-3">
+                  <p class="framework-name{{#if addedId}} added-status{{/if}}" id="framework-selection-name-{{id}}">{{frameworkName}}</p>
+                    <select id="framework-level-selection-{{id}}">
+                      <option value="guide">Guide</option>
+                      <option value="master">Master</option>
+                      <option value="guru">Guru</option>
+                    </select>
+                  <button class="btn btn-secondary" id="framework-selection-btn-{{id}}" data-framework={{id}} name="framework-selection-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>+</button>
+                  <button class="btn btn-danger" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>X</button>
+                </div>
+              {{/each}}
+            </div>
+            <p class="text-center"> Click on the + icon to add/update or on the x icon to remove</p>
+          </div>
+        </div>
+
+      </div>

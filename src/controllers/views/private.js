@@ -4,6 +4,8 @@ const {
   Mentor,
   Task,
   Partnership,
+  MentorFramework,
+  MenteeFramework,
 } = require("../../models");
 
 const renderDashboard = async (req, res) => {
@@ -77,10 +79,55 @@ const renderDashboard = async (req, res) => {
     userData = data.map((i) => i.get({ plain: true }));
   }
 
+  let userFrameworks;
+  if (userType === "mentor") {
+    const data = await MentorFramework.findAll({
+      where: { mentorId: id },
+      attributes: ["id", "mentorId", "frameworkId"],
+      include: [
+        {
+          model: Framework,
+          attributes: ["frameworkName"],
+        },
+      ],
+    });
+    userFrameworks = data.map((i) => i.get({ plain: true }));
+  } else {
+    const data = await MenteeFramework.findAll({
+      where: { menteeId: id },
+      attributes: ["id", "menteeId", "frameworkId"],
+      include: [
+        {
+          model: Framework,
+          attributes: ["frameworkName"],
+        },
+      ],
+    });
+    userFrameworks = data.map((i) => i.get({ plain: true }));
+  }
+
+  const frameworksData = await Framework.findAll({
+    attributes: ["id", "frameworkName"],
+  });
+  const frameworks = frameworksData.map((i) => i.get({ plain: true }));
+
+  userFrameworks.forEach((i) => {
+    let index;
+    frameworks.some((entry, j) => {
+      if (entry.id == i.frameworkId) {
+        index = j;
+        return true;
+      }
+    });
+    frameworks[index].addedId = i.id;
+  });
+
   return res.render("dashboard", {
     user: user,
     userData: userData,
     userType: userType,
+    userFrameworks: userFrameworks,
+    frameworks: frameworks,
     currentPage: "dashboard",
   });
 };

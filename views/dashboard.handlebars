@@ -1,7 +1,7 @@
 {{> privateNavBar}}
 
-<main>
-    <aside class="container">
+<main class="d-flex flex-row">
+    <aside class="container d-flex flex-column">
         <div class="container" id="stats-container">
             <p>User: {{username}}</p>
         </div>
@@ -21,9 +21,9 @@
             <a class="btn btn-primary btn-lg mt-4" href="/search/mentees" role="button">Search mentees</a>
         </div>
     </aside>
-    <section>
-        <div class="container" id="stats-container">
-            {{>stats}}
+    <section class="d-flex flex-column">
+        <div class="container" id="my-frameworks-container">
+            {{>myFrameworks}}
         </div>
         <div class="container" id="partnerships-container">
             {{>partnerships}}
