@@ -127,3 +127,7 @@ footer {
 .card-img {
   object-fit: contain;
 }
+.right-align {
+  display: flex;
+  flex-direction: row-reverse;
+}
