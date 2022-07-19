@@ -14,7 +14,7 @@ const prepareMentorData = () => {
     const lastName = faker.name.lastName();
     const username = faker.internet.userName();
     const email = faker.internet.exampleEmail();
-    const password = faker.internet.password();
+    const password = "Password456!";
     const location = faker.address.city().trim().toLowerCase();
     const availability =
       availabilityArray[Math.floor(Math.random() * availabilityArray.length)];

@@ -752,6 +752,10 @@ const handleTaskCreate = async (e) => {
         <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
         </div>`
       );
+
+      $("#assign-task-btn").click(() => {
+        console.log("click");
+      });
     } else {
       console.log("error");
     }
@@ -924,6 +928,5 @@ taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
 assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
-assignTaskBtn.click(console.log("click"));
 partnershipsContainer.click(handleChangeTaskStatus);
 frameworkSelectionContainer.click(handleFrameworkSelection);
