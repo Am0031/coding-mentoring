@@ -1,6 +1,6 @@
 const signupForm = $("#signup-form");
 const loginForm = $("#login-form");
-const updateInfoForm = $("update-form");
+const updateInfoForm = $("#update-form");
 const logoutBtn = $("#logout-btn");
 const resetPasswordForm = $("#reset-password-form");
 const mentorSearchForm = $("#mentorSearch");
@@ -247,11 +247,11 @@ const handleLoginSubmit = async (e) => {
 
 const handleEditSubmit = async (e) => {
   e.preventDefault();
-  e.stopPropagation();
+  const currentTarget = $(e.currentTarget);
 
   // TODO check syntax
-  const userType = target.attr("data-user-type");
-  console.log(userType);
+  const userType = currentTarget.attr("data-user-type");
+  const userId = currentTarget.attr("data-user-id");
 
   const firstName = $("#firstName").val().trim();
   const lastName = $("#lastName").val().trim();
@@ -313,7 +313,7 @@ const handleEditSubmit = async (e) => {
 
         console.log(payload);
 
-        const response = await fetch(`/api/${userType}s/`, {
+        const response = await fetch(`/api/${userType}s/${userId}`, {
           method: "PUT",
           body: JSON.stringify(payload),
           headers: {

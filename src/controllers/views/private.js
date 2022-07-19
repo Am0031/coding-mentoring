@@ -223,26 +223,22 @@ const renderCreateTask = async (req, res) => {
 };
 
 const renderEditInfo = async (req, res) => {
-  const email = req.session.user.email;
+  const { userType } = req.session;
 
-  const mentor = await Mentor.findOne({ where: { email } });
-  const mentee = await Mentee.findOne({ where: { email } });
+  let userFromDb;
 
-  let currentUser;
-  let userType;
-
-  if (mentor) {
-    currentUser = mentor.getUser();
-    userType = "mentor";
+  if (userType === "mentee") {
+    userFromDb = await Mentee.findByPk(req.session.user.id);
   } else {
-    currentUser = mentee.getUser();
-    userType = "mentee";
+    userFromDb = await Mentor.findByPk(req.session.user.id);
   }
 
-  // console.log(currentUser);
-  // console.log(userType);
+  const user = userFromDb.getUser();
 
-  return res.render("editInfo", { currentUser, userType });
+  return res.render("editInfo", {
+    currentUser: user,
+    userType,
+  });
 };
 
 module.exports = {

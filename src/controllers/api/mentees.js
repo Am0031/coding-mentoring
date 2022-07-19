@@ -134,7 +134,7 @@ const updateMenteeById = async (req, res) => {
 
     await Mentee.update(passedInfo, { where: { id } });
 
-    return res.status(200).json({ message: "Mentee updated" });
+    return res.status(200).json({ success: true, message: "Mentee updated" });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);
