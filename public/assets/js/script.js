@@ -25,12 +25,12 @@ const renderError = (id, message) => {
   </div>`);
 };
 
-const generateSimpleCards = (response, userType) => {
+const generateSimpleCards = (response, user) => {
   const createCard = (each) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <div><a class="btn btn-secondary" href="/search/${userType}s/${each.id}" target="_blank" name="view-profile-btn" id=${each.id}">View profile</a>
+    <div><a class="btn btn-secondary" href="/search/${user}/${each.id}" target="_blank" name="view-profile-btn" id=${each.id}">View profile</a>
     <a class="btn btn-primary" name="email-btn" href="mailto:${each.email}" target="_blank" id="email-btn">Email</a></div>
   </div>
   <div class="card-body">
@@ -400,7 +400,7 @@ const handleMenteeSearch = async (e) => {
     const userType = rawData.userType;
     const data = rawData.mentees;
 
-    const menteeCards = generateSimpleCards(data, userType);
+    const menteeCards = generateSimpleCards(data, "mentees");
     $("#mentee-browse-container").empty();
     $("#mentee-browse-container").append(menteeCards);
   }
@@ -467,7 +467,7 @@ const handleMentorSearch = async (e) => {
       $("#mentor-card-container").empty();
       $("#mentor-card-container").append(mentorCards);
     } else {
-      const mentorCards = generateSimpleCards(data, userType);
+      const mentorCards = generateSimpleCards(data, "mentors");
       $("#mentor-browse-container").empty();
       $("#mentor-browse-container").append(mentorCards);
     }

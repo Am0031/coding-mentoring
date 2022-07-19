@@ -5,11 +5,11 @@
         <div class="inner-sidebar">
           <div class="profile">
             <div class="avatar-wrapper">
-              <img src="/assets/img/clipart472433.png" />
+              <img src={{user.profileImageUrl}} />
             </div>
             <div class="btn">
               <a
-                href="mailto:bob.smith@gmail.com"
+                href="mailto:{{user.email}}"
                 class="card-message"
                 data-attr=""
               ><i class="uil uil-envelope-alt"></i> Send Message</a>
@@ -17,89 +17,47 @@
           </div>
           <div class="profile-info">
             <div class="contact-data">
-              <div class="phone">
-                <i class="uil uil-phone"></i>
-                790-1000-1000
-              </div>
               <div class="email">
                 <i class="uil uil-at"></i>
-                bob.smith@gmail.com
+                {{user.email}}
               </div>
             </div>
             <div class="info-data">
               <div class="feat-city">
                 <i class="uil uil-map-marker"></i>
-                Online
+                {{user.collaborationFormat}}
               </div>
               <div class="feat-city">
                 <i class="uil uil-map-marker"></i>
-                London
+                {{user.location}}
               </div>
               <div class="feat-calendar">
                 <i class="uil uil-schedule"></i>
-                Availability
+                {{user.availability}}
               </div>
-            </div>
-            <div class="week-days">
-              <div class="day-active">M</div>
-              <div class="day-active">T</div>
-              <div class="day-active">W</div>
-              <div class="day-active">T</div>
-              <div class="day-active">F</div>
-              <div class="day-active">S</div>
-              <div class="day-active">S</div>
             </div>
           </div>
         </div>
         <div class="offer-content">
-          <div class="offer-title">Hi! I'm Bob Smith</div>
+          <div class="offer-title">Hi! I'm {{user.username}}</div>
           <div class="offer-full-content">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-            consequuntur totam cum quasi nobis sequi omnis earum error maiores,
-            nam molestias doloremque tenetur harum fugit quisquam eos dolorem
-            animi vero?
+            {{user.personalGoal}}
           </div>
+          <div class="offer-title">Experience - Earned XP</div>
           <div class="offer-full-content">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro fuga
-            laborum, voluptatum necessitatibus doloremque placeat ducimus
-            minima, velit numquam, odio corporis at illo consectetur maiores
-            doloribus eum magnam itaque explicabo.
-          </div>
-          <div class="offer-full-content">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-            voluptatum, a hic blanditiis, expedita veniam ab repellat laudantium
-            fugiat eaque iusto earum quaerat inventore suscipit similique nulla
-            veritatis porro aliquam.
-          </div>
-          <div class="offer-full-content">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            Consectetur doloribus assumenda in expedita explicabo neque. Vero
-            corrupti unde accusamus cupiditate! Voluptatibus minus quam sapiente
-            est molestiae, aliquam vero doloribus animi.
+            {{user.xp}}
           </div>
         </div>
+
         <div class="frameworks">
-          <div class="fr-title">I want to learn:</div>
-          <div class="framework-example">
-            <i class="uil uil-html5 about-icon"></i>
-            <h3 class="about-title">HTML</h3>
-          </div>
-          <div class="framework-example">
-            <i class="uil uil-brackets-curly about-icon"></i>
-            <h4 class="about-title">CSS</h4>
-          </div>
-          <div class="framework-example">
-            <i class="uil uil-java-script about-icon"></i>
-            <h3 class="about-title">JS</h3>
-          </div>
-          <div class="framework-example">
-            <i class="uil uil-keyboard about-icon"></i>
-            <h3 class="about-title">API</h3>
-          </div>
-          <div class="framework-example">
-            <i class="uil uil-java-script about-icon"></i>
-            <h3 class="about-title">Node.JS</h3>
-          </div>
+          <div class="fr-title">I'm keen to learn about:</div>
+          {{#each user.frameworks}}
+            <div class="framework-example">
+              <i class="uil uil-html5 about-icon"></i>
+              <h3 class="about-title">{{frameworkName}}</h3>
+            </div>
+          {{/each}}
+
         </div>
       </div>
     </div>

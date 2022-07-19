@@ -151,8 +151,16 @@ const renderMenteeSearch = async (req, res) => {
 
 const renderMenteeProfile = async (req, res) => {
   const { id } = req.params;
-  const mentee = await Mentee.findByPk(id);
-  const chosenMentee = mentee.getUser();
+  const mentor = await Mentee.findByPk(id, {
+    include: [
+      {
+        model: Framework,
+        through: ["frameworkId"],
+        attributes: ["frameworkName"],
+      },
+    ],
+  });
+  const chosenMentee = mentor.get({ plain: true });
   return res.render("mentee-profile", { user: chosenMentee });
 };
 
