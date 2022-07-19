@@ -97,6 +97,7 @@ footer {
   font-size: 2rem;
   text-align: center;
   color: var(--yale-blue);
+  padding-top: 0.8rem;
 }
 
 .card-title {
@@ -105,11 +106,9 @@ footer {
   color: white;
 }
 
-.card-info {
+.card-text {
   color: white;
-  font-size: 1.2rem;
   text-align: center;
-  padding-top: 1rem;
 }
 
 .card-body {
@@ -130,4 +129,8 @@ footer {
 .right-align {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.left-align {
+  padding-top: 1rem;
 }
