@@ -25,13 +25,13 @@ const renderError = (id, message) => {
   </div>`);
 };
 
-const generateMenteeCards = (response) => {
+const generateSimpleCards = (response, userType) => {
   const createCard = (each) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <div><a class="btn btn-secondary" href="/search/mentees/${each.id}" target="_blank" id="profile-btn">View profile</a>
-    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a></div>
+    <div><a class="btn btn-secondary" href="/search/${userType}s/${each.id}" target="_blank" name="view-profile-btn" id=${each.id}">View profile</a>
+    <a class="btn btn-primary" name="email-btn" href="mailto:${each.email}" target="_blank" id="email-btn">Email</a></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -135,7 +135,7 @@ const handleSignUpSubmit = async (e) => {
   const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
-  const location = $("#location").val().trim();
+  const location = $("#location").val().trim().toLowerCase();
   const availability = $("#availability").val().trim();
 
   // const availabilitySelected = $("input[type=checkbox]:checked");
@@ -259,7 +259,7 @@ const handleEditSubmit = async (e) => {
   // const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
-  const location = $("#location").val().trim();
+  const location = $("#location").val().trim().toLowerCase();
   const availability = $("#availability").val().trim();
   const collaborationFormat = $("#collaborationFormat").val().trim();
   const personalGoal = $("#personalGoal").val().trim();
@@ -362,7 +362,7 @@ const handleMenteeSearch = async (e) => {
 
   const target = $(e.target);
 
-  const location = $("#inputLocation").val();
+  const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
 
   let collaborationFormat;
@@ -396,10 +396,13 @@ const handleMenteeSearch = async (e) => {
   if (response.status !== 200) {
     console.error("Search for mentees failed");
   } else {
-    $("#mentee-card-container").empty();
-    const data = await response.json();
-    const menteeCards = generateMenteeCards(data);
-    $("#mentee-card-container").append(menteeCards);
+    const rawData = await response.json();
+    const userType = rawData.userType;
+    const data = rawData.mentees;
+
+    const menteeCards = generateSimpleCards(data, userType);
+    $("#mentee-browse-container").empty();
+    $("#mentee-browse-container").append(menteeCards);
   }
 };
 
@@ -409,7 +412,7 @@ const handleMentorSearch = async (e) => {
 
   const target = $(e.target);
 
-  const location = $("#inputLocation").val();
+  const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
 
   let collaborationFormat;
@@ -443,21 +446,31 @@ const handleMentorSearch = async (e) => {
   if (response.status !== 200) {
     console.error("Search for mentors failed");
   } else {
-    const data = await response.json();
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-    };
-    const partnerships = await (
-      await fetch("/api/partnerships/mentee", options)
-    ).json();
+    const rawData = await response.json();
 
-    const mentorCards = generateMentorCards(data, partnerships);
-    $("#mentor-card-container").empty();
-    $("#mentor-card-container").append(mentorCards);
+    const userType = rawData.userType;
+    const data = rawData.mentors;
+
+    if (userType === "mentee") {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const partnerships = await (
+        await fetch("/api/partnerships/mentee", options)
+      ).json();
+
+      const mentorCards = generateMentorCards(data, partnerships);
+      $("#mentor-card-container").empty();
+      $("#mentor-card-container").append(mentorCards);
+    } else {
+      const mentorCards = generateSimpleCards(data, userType);
+      $("#mentor-browse-container").empty();
+      $("#mentor-browse-container").append(mentorCards);
+    }
   }
 };
 const handelResetPasswordSubmit = async (e) => {
@@ -836,7 +849,6 @@ const handleFrameworkSelection = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
-  debugger;
   const target = $(e.target);
 
   if (target.attr("name") === "framework-delete-btn") {
@@ -885,7 +897,6 @@ const handleFrameworkSelection = async (e) => {
     } else {
       const frameworkUpdate = await response.json();
       const newId = frameworkUpdate.id;
-      console.log(newId);
       if (addedId === 0) {
         $(`#my-frameworks-container`)
           .append(`<div class="framework-icon ml-3 mr-3" id="my-framework-${frameworkUpdate.frameworkId}">
@@ -896,8 +907,6 @@ const handleFrameworkSelection = async (e) => {
       $(`#framework-selection-name-${frameworkId}`).addClass("added-status");
     }
   }
-
-  console.log("framework status changed");
 };
 
 signupForm.submit(handleSignUpSubmit);

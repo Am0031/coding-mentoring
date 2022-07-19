@@ -44,7 +44,7 @@
       </form>
     </div>
 
-    <div class="container card-container d-flex flex-column mt-3" id="mentor-card-container">
+    <div class="container card-container d-flex flex-column mt-3" id={{#if (isEqualTo userType "mentee")}}"mentor-card-container"{{else}}"mentor-browse-container"{{/if}}>
 
     </div>
   </div>

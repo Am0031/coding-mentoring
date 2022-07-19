@@ -43,7 +43,7 @@ const addFrameworkByUserId = async (req, res) => {
           .status(500)
           .json({ message: "Framework not added to mentee" });
       }
-      return res.json(newMenteeframework[0]);
+      return res.json(newMenteeFramework[0]);
     }
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
