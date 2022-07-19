@@ -134,6 +134,7 @@ const renderDashboard = async (req, res) => {
 
 const renderMenteeSearch = async (req, res) => {
   try {
+    const { userType } = req.session;
     const frameworks = await Framework.findAll();
     if (!frameworks) {
       return res.status(500).json({ message: "Frameworks not found" });
@@ -142,6 +143,7 @@ const renderMenteeSearch = async (req, res) => {
     return res.render("mentee-search", {
       data: data,
       currentPage: "mentees",
+      userType,
     });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
@@ -221,26 +223,22 @@ const renderCreateTask = async (req, res) => {
 };
 
 const renderEditInfo = async (req, res) => {
-  const email = req.session.user.email;
+  const { userType } = req.session;
 
-  const mentor = await Mentor.findOne({ where: { email } });
-  const mentee = await Mentee.findOne({ where: { email } });
+  let userFromDb;
 
-  let currentUser;
-  let userType;
-
-  if (mentor) {
-    currentUser = mentor.getUser();
-    userType = "mentor";
+  if (userType === "mentee") {
+    userFromDb = await Mentee.findByPk(req.session.user.id);
   } else {
-    currentUser = mentee.getUser();
-    userType = "mentee";
+    userFromDb = await Mentor.findByPk(req.session.user.id);
   }
 
-  // console.log(currentUser);
-  // console.log(userType);
+  const user = userFromDb.getUser();
 
-  return res.render("editInfo", { currentUser, userType });
+  return res.render("editInfo", {
+    currentUser: user,
+    userType,
+  });
 };
 
 module.exports = {

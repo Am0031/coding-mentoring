@@ -5,13 +5,15 @@
     <h2 class="text-center">Edit Your Information</h2>
     <hr />
     
-    <form class="mt-4" id="update-form">
+    <form class="mt-4" id="update-form" data-user-type="{{userType}}" data-user-id="{{currentUser.id}}">
       <div class="mb-3">
         <input
           type="text"
           class="form-control"
           id="firstName"
           value="{{currentUser.firstName}}"
+          placeholder="Enter first name*"
+
         />
       </div>
 
@@ -21,6 +23,8 @@
           class="form-control"
           id="lastName"
           value="{{currentUser.lastName}}"
+          placeholder="Enter last name*"
+
         />
       </div>
        
@@ -128,6 +132,7 @@
           class="form-control"
           id="location"
           value="{{currentUser.location}}"
+          placeholder="Enter location*"
         />
       </div>
 
@@ -137,6 +142,7 @@
           class="form-control"
           id="personalGoal"
           value="{{currentUser.personalGoal}}"
+          placeholder="Enter personal goal*"
         />
       </div>
 
@@ -161,12 +167,12 @@
       <div id="edit-error"></div>
 
       <div class="mb-3 text-center">
-        <button type="submit" class="btn btn-primary" id="save-edit-btn" data-user-type="{{userType}}">Save</button>
+        <button type="submit" class="btn btn-primary" id="save-edit-btn">Save</button>
       </div>
+
       <div class="mb-3 text-center error-text">
         <a href="/dashboard">Cancel</a>
       </div>
-
     </form>
   </section>
 </main>
