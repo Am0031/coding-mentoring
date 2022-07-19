@@ -72,3 +72,38 @@ footer {
   color: green;
   font-weight: bold;
 }
+
+.contact-title {
+  font-size: 2rem;
+  text-align: center;
+  color: var(--yale-blue);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  text-align: center;
+  color: white;
+}
+
+.card-info {
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.card-body {
+  background-color: var(--cerulean-frost);
+}
+
+#github-link {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.card-img {
+  object-fit: contain;
+}
