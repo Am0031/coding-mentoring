@@ -59,11 +59,15 @@ footer {
 
 #task-card-container,
 #mentor-card-container,
-#mentee-card-container {
+#mentee-browse-container,
+#mentor-browse-container {
   max-height: 800px;
   overflow-y: auto;
 }
 
+.empty-search-message {
+  min-height: 450px;
+}
 .false-status {
   color: red;
   font-weight: bold;

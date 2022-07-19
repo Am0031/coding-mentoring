@@ -24,6 +24,7 @@ const renderContactPage = (req, res) => {
 
 const renderMentorSearch = async (req, res) => {
   try {
+    const { userType } = req.session;
     const frameworks = await Framework.findAll();
     if (!frameworks) {
       return res.status(500).json({ message: "Frameworks not found" });
@@ -32,6 +33,7 @@ const renderMentorSearch = async (req, res) => {
     const data = frameworks.map((d) => d.dataValues);
     return res.render("mentor-search", {
       isLoggedIn,
+      userType,
       data: data,
       currentPage: "mentors",
     });
