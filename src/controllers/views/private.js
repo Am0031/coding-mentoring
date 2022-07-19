@@ -134,6 +134,7 @@ const renderDashboard = async (req, res) => {
 
 const renderMenteeSearch = async (req, res) => {
   try {
+    const { userType } = req.session;
     const frameworks = await Framework.findAll();
     if (!frameworks) {
       return res.status(500).json({ message: "Frameworks not found" });
@@ -142,6 +143,7 @@ const renderMenteeSearch = async (req, res) => {
     return res.render("mentee-search", {
       data: data,
       currentPage: "mentees",
+      userType,
     });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);

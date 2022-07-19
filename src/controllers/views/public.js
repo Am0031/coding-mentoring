@@ -1,8 +1,9 @@
 const { Framework, Mentor, Mentee } = require("../../models");
 
 const renderHomePage = (req, res) => {
-  const { isLoggedIn } = req.session;
-  return res.render("home", { isLoggedIn, currentPage: "home" });
+  const { isLoggedIn, userType } = req.session;
+
+  return res.render("home", { isLoggedIn, currentPage: "home", userType });
 };
 
 const renderLoginPage = (req, res) => {
@@ -18,8 +19,13 @@ const renderInfoPage = (req, res) => {
 };
 
 const renderContactPage = (req, res) => {
-  const { isLoggedIn } = req.session;
-  return res.render("contact", { isLoggedIn, currentPage: "contact" });
+  const { isLoggedIn, userType } = req.session;
+
+  return res.render("contact", {
+    isLoggedIn,
+    currentPage: "contact",
+    userType,
+  });
 };
 
 const renderMentorSearch = async (req, res) => {
