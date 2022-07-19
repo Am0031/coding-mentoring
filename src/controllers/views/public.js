@@ -24,6 +24,7 @@ const renderContactPage = (req, res) => {
 
 const renderMentorSearch = async (req, res) => {
   try {
+    const { userType } = req.session;
     const frameworks = await Framework.findAll();
     if (!frameworks) {
       return res.status(500).json({ message: "Frameworks not found" });
@@ -32,6 +33,7 @@ const renderMentorSearch = async (req, res) => {
     const data = frameworks.map((d) => d.dataValues);
     return res.render("mentor-search", {
       isLoggedIn,
+      userType,
       data: data,
       currentPage: "mentors",
     });
@@ -43,8 +45,16 @@ const renderMentorSearch = async (req, res) => {
 
 const renderMentorProfile = async (req, res) => {
   const { id } = req.params;
-  const mentor = await Mentor.findByPk(id);
-  const chosenMentor = mentor.getUser();
+  const mentor = await Mentor.findByPk(id, {
+    include: [
+      {
+        model: Framework,
+        through: ["frameworkId"],
+        attributes: ["frameworkName"],
+      },
+    ],
+  });
+  const chosenMentor = mentor.get({ plain: true });
   return res.render("mentor-profile", { user: chosenMentor });
 };
 const renderFAQPage = (req, res) => {

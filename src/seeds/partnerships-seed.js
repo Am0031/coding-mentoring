@@ -49,7 +49,7 @@ const preparePartnershipData = async () => {
       if (!alreadyChosen) {
         chosenMentorsId.push(mentorId);
         f -= 1;
-        const projectName = faker.lorem.words();
+        const projectName = `Partnership ${mentorId} - ${menteeId}`;
         const partnership = { mentorId, menteeId, projectName };
         partnershipData.push(partnership);
       }

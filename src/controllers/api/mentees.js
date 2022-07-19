@@ -8,6 +8,7 @@ const {
 
 const getMentees = async (req, res) => {
   try {
+    const { userType } = req.session;
     const mentees = await Mentee.findAll({
       attributes: [
         "id",
@@ -76,7 +77,7 @@ const getMentees = async (req, res) => {
             .some((element) => framework.includes(element))
       );
 
-    return res.json(filteredMentees);
+    return res.json({ userType: userType, mentees: filteredMentees });
   } catch (error) {
     console.error(`ERROR | ${error.message}`);
     return res.status(500).json(error);

@@ -24,6 +24,22 @@ body {
 section {
   margin: 1rem;
 }
+.aside-info {
+  width: 20%;
+  margin: 0;
+}
+.main-info {
+  width: 80%;
+}
+.profile-pic-div {
+  height: 200px;
+}
+.profile-pic-box {
+  width: 100%;
+}
+.profile-pic {
+  height: 200px;
+}
 
 .card {
   background-color: var(--alice-blue);
@@ -59,11 +75,15 @@ footer {
 
 #task-card-container,
 #mentor-card-container,
-#mentee-card-container {
+#mentee-browse-container,
+#mentor-browse-container {
   max-height: 800px;
   overflow-y: auto;
 }
 
+.empty-search-message {
+  min-height: 450px;
+}
 .false-status {
   color: red;
   font-weight: bold;

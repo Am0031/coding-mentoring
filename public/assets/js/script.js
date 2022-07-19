@@ -12,6 +12,7 @@ const taskCardsContainer = $("#task-card-container");
 const taskCreateForm = $("#create-task-form");
 const assignTaskBtn = $("#assign-task-btn");
 const assignTaskForm = $("#assign-task-form");
+const frameworkSelectionContainer = $("#framework-selection-container");
 
 let assignTaskModal;
 const partnershipsContainer = $("#partnership-card-container");
@@ -24,13 +25,13 @@ const renderError = (id, message) => {
   </div>`);
 };
 
-const generateMenteeCards = (response) => {
+const generateSimpleCards = (response, user) => {
   const createCard = (each) => {
     return `<div class="card border-success mb-3">
   <div class="card-header d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <div><a class="btn btn-secondary" href="/search/mentees/${each.id}" target="_blank" id="profile-btn">View profile</a>
-    <a class="btn btn-primary" href="mailto:${each.email}" target="_blank" id="email-btn">Email Mentee</a></div>
+    <div><a class="btn btn-secondary" href="/search/${user}/${each.id}" target="_blank" name="view-profile-btn" id=${each.id}">View profile</a>
+    <a class="btn btn-primary" name="email-btn" href="mailto:${each.email}" target="_blank" id="email-btn">Email</a></div>
   </div>
   <div class="card-body">
     <p class="postText">${each.collaborationFormat}</p>
@@ -134,7 +135,7 @@ const handleSignUpSubmit = async (e) => {
   const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
-  const location = $("#location").val().trim();
+  const location = $("#location").val().trim().toLowerCase();
   const availability = $("#availability").val().trim();
 
   // const availabilitySelected = $("input[type=checkbox]:checked");
@@ -258,7 +259,7 @@ const handleEditSubmit = async (e) => {
   // const email = $("#email").val().trim();
   const password = $("#password").val().trim();
   const confirmPassword = $("#confirmPassword").val().trim();
-  const location = $("#location").val().trim();
+  const location = $("#location").val().trim().toLowerCase();
   const availability = $("#availability").val().trim();
   const collaborationFormat = $("#collaborationFormat").val().trim();
   const personalGoal = $("#personalGoal").val().trim();
@@ -361,7 +362,7 @@ const handleMenteeSearch = async (e) => {
 
   const target = $(e.target);
 
-  const location = $("#inputLocation").val();
+  const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
 
   let collaborationFormat;
@@ -395,10 +396,13 @@ const handleMenteeSearch = async (e) => {
   if (response.status !== 200) {
     console.error("Search for mentees failed");
   } else {
-    $("#mentee-card-container").empty();
-    const data = await response.json();
-    const menteeCards = generateMenteeCards(data);
-    $("#mentee-card-container").append(menteeCards);
+    const rawData = await response.json();
+    const userType = rawData.userType;
+    const data = rawData.mentees;
+
+    const menteeCards = generateSimpleCards(data, "mentees");
+    $("#mentee-browse-container").empty();
+    $("#mentee-browse-container").append(menteeCards);
   }
 };
 
@@ -408,7 +412,7 @@ const handleMentorSearch = async (e) => {
 
   const target = $(e.target);
 
-  const location = $("#inputLocation").val();
+  const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
 
   let collaborationFormat;
@@ -442,21 +446,31 @@ const handleMentorSearch = async (e) => {
   if (response.status !== 200) {
     console.error("Search for mentors failed");
   } else {
-    const data = await response.json();
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-    };
-    const partnerships = await (
-      await fetch("/api/partnerships/mentee", options)
-    ).json();
+    const rawData = await response.json();
 
-    const mentorCards = generateMentorCards(data, partnerships);
-    $("#mentor-card-container").empty();
-    $("#mentor-card-container").append(mentorCards);
+    const userType = rawData.userType;
+    const data = rawData.mentors;
+
+    if (userType === "mentee") {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const partnerships = await (
+        await fetch("/api/partnerships/mentee", options)
+      ).json();
+
+      const mentorCards = generateMentorCards(data, partnerships);
+      $("#mentor-card-container").empty();
+      $("#mentor-card-container").append(mentorCards);
+    } else {
+      const mentorCards = generateSimpleCards(data, "mentors");
+      $("#mentor-browse-container").empty();
+      $("#mentor-browse-container").append(mentorCards);
+    }
   }
 };
 const handelResetPasswordSubmit = async (e) => {
@@ -498,6 +512,7 @@ logoutBtn.click(handleLogout);
 resetPasswordForm.submit(handelResetPasswordSubmit);
 $("#mentorSearch").submit(handleMentorSearch);
 $("#menteeSearch").submit(handleMenteeSearch);
+
 const handleMentorSelection = async (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -690,6 +705,7 @@ const handleTaskCreate = async (e) => {
       const newTask = data.newTask;
 
       $("#create-task-section").empty();
+      // $("create-task-section").off("click");
       $("#create-task-section").append(
         `<div class="modal" tabindex="-1" id="assign-task-modal">
           <div class="modal-dialog">
@@ -728,7 +744,7 @@ const handleTaskCreate = async (e) => {
         </div>
         </div>
         <div class="text-center">
-        <div><button type="assign" class="btn btn-primary mt-3" id="assign-task-btn">Assign Task to Mentee</button></div>
+        <div><button type="assign" class="btn btn-primary mt-3" name="assign-task-btn" data-id="${newTask.id}" id="assign-task-btn">Assign Task to Mentee</button></div>
         <div><a class="btn btn-primary mt-3" id="create-another-btn" href="/tasks">Create Another Task</a></div>
         <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
         </div>`
@@ -829,6 +845,70 @@ const handleChangeTaskStatus = async (e) => {
   console.log("status changed");
 };
 
+const handleFrameworkSelection = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const target = $(e.target);
+
+  if (target.attr("name") === "framework-delete-btn") {
+    const addedId = target.attr("data-added-id");
+    const id = target.attr("data-framework");
+
+    if (addedId !== 0) {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const response = await fetch(`/api/frameworks/user/${addedId}`, options);
+
+      if (response.status !== 200) {
+        console.error("Framework removal failed");
+      } else {
+        $(`#my-framework-${id}`).remove();
+        $(`#framework-delete-btn-${id}`).attr("data-added-id", 0);
+        $(`#framework-selection-name-${id}`).removeClass("added-status");
+      }
+    }
+  }
+  if (target.attr("name") === "framework-selection-btn") {
+    const frameworkId = target.attr("data-framework");
+
+    const addedId = target.attr("data-added-id");
+    const level = $(`#framework-level-selection-${frameworkId}`)
+      .find(":selected")
+      .val();
+    const payload = { id: addedId, frameworkId, level };
+    const options = {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const response = await fetch(`/api/frameworks/user`, options);
+
+    if (response.status !== 200) {
+      console.error("Framework addition failed");
+    } else {
+      const frameworkUpdate = await response.json();
+      const newId = frameworkUpdate.id;
+      if (addedId === 0) {
+        $(`#my-frameworks-container`)
+          .append(`<div class="framework-icon ml-3 mr-3" id="my-framework-${frameworkUpdate.frameworkId}">
+        ${frameworkUpdate.frameworkName}
+      </div>`);
+      }
+      $(`#framework-selection-btn-${frameworkId}`).attr("data-added-id", newId);
+      $(`#framework-selection-name-${frameworkId}`).addClass("added-status");
+    }
+  }
+};
+
 signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 updateInfoForm.submit(handleEditSubmit);
@@ -841,5 +921,6 @@ taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
 assignTaskForm.submit(handleAssignTaskToPartnership);
 taskCreateForm.submit(handleTaskCreate);
-assignTaskBtn.click(console.log("click"));
+assignTaskBtn.click(handleTaskAssign);
 partnershipsContainer.click(handleChangeTaskStatus);
+frameworkSelectionContainer.click(handleFrameworkSelection);

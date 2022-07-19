@@ -1,9 +1,16 @@
 {{> privateNavBar}}
 
-<main>
-    <aside class="container">
+<main class="d-flex flex-row">
+    <aside class="container d-flex flex-column aside-info">
         <div class="container" id="stats-container">
-            <p>User: {{username}}</p>
+            <div class="profile-pic-div"><div class="profile-pic-box"><img class="profile-pic" src="{{user.profileImageUrl}}"></div></div>
+            <p>User: {{user.username}}</p>
+            <p>Email: {{user.email}}</p>
+            <p>Location: {{user.location}}</p>
+            <p>Availability: {{user.availability}}</p>
+            <p>Collaboration format: {{user.collaborationFormat}}</p>
+            <p>Github: {{user.gitHubUrl}}</p>
+            <p>XP: {{user.xp}}</p>
         </div>
         <div>
             <a class="btn btn-primary btn-lg mt-4" href="/editInfo" role="button">Edit your personal information</a>
@@ -21,12 +28,14 @@
             <a class="btn btn-primary btn-lg mt-4" href="/search/mentees" role="button">Search mentees</a>
         </div>
     </aside>
-    <section>
-        <div class="container" id="stats-container">
-            {{>stats}}
-        </div>
-        <div class="container" id="partnerships-container">
-            {{>partnerships}}
-        </div>
-    </section>
+    <div class="d-flex flex-column main-info">
+        <section class="d-flex flex-column frameworks-info">
+            <div class="container" id="my-frameworks-container">
+                {{>myFrameworks}}
+            </div>
+            <div class="container partnerships-info" id="partnerships-container">
+                {{>partnerships}}
+            </div>
+        </section>
+    </div>
 </main>
