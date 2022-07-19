@@ -707,33 +707,7 @@ const handleTaskCreate = async (e) => {
       $("#create-task-section").empty();
       // $("create-task-section").off("click");
       $("#create-task-section").append(
-        `<div class="modal" tabindex="-1" id="assign-task-modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Assign to Mentee</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="assign-task-form">
-                  <div class="mb-3">
-                    <select class="form-select" id="mentee-select">
-                      {{#each mentees as |mentee|}}
-                        <option value={{id}}>{{username}}</option>
-                      {{/each}}
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                  <div id="assign-task-error"></div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
+        `<div>
         <h2 class="text-center">Your task was created successfully.</h2>
         <div id="newTaskContainer">
         <h4 id="task-name">Task Name: ${newTask.taskName}</h4>
@@ -747,13 +721,10 @@ const handleTaskCreate = async (e) => {
 
       $("#task-container").append(
         `<div class="text-center">
-        <div><button type="assign" class="btn btn-primary mt-3" name="assign-task-btn" data-id="${newTask.id}" id="assign-task-btn">Assign Task to Mentee</button></div>
         <div><a class="btn btn-primary mt-3" id="create-another-btn" href="/tasks">Create Another Task</a></div>
         <div><a class="btn btn-primary mt-3" id="return-db-btn" href="/dashboard">Return to Dashboard</a></div>
         </div>`
       );
-
-      $("#assign-task-btn").click(handleTaskAssign);
     } else {
       console.log("error");
     }
