@@ -21,9 +21,12 @@ body {
   padding: 0;
 }
 
-section {
-  margin: 1rem;
+.homepg {
+  justify-content: center;
+  height: 500px;
+  margin-top: 1rem;
 }
+
 .aside-info {
   width: 20%;
   margin: 0;
