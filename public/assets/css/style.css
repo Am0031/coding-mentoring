@@ -151,6 +151,10 @@ body {
   min-height: 100px;
 }
 
+.login-container {
+  height: 90%;
+}
+
 .navbar,
 .footer {
   background-color: var(--yale-blue);
