@@ -24,8 +24,19 @@ body {
 
 .homepg {
   justify-content: center;
-  height: 500px;
+  height: 800px;
   margin-top: 1rem;
+}
+
+.welcome-container {
+  background-image: url(../images/homepage2.jpg);
+  object-fit: cover;
+}
+.welcome-text {
+  color: var(--alice-blue);
+}
+.btn-homepage {
+  background-color: var(--cerulean-frost);
 }
 
 .aside-info {
