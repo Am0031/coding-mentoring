@@ -6,6 +6,8 @@ const resetPasswordForm = $("#reset-password-form");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
+const mentorBrowseContainer = $("#mentor-browse-container");
+const menteeBrowseContainer = $("#mentee-browse-container");
 const taskSearchForm = $("#taskSearch");
 const myTasksSearch = $("#my-tasks-btn");
 const taskCardsContainer = $("#task-card-container");
@@ -26,13 +28,13 @@ const renderError = (id, message) => {
   </div>`);
 };
 
-const generateSimpleCards = (response, user) => {
+const generateSimpleCards = (response) => {
   const createCard = (each) => {
     return `<div class="card border-info mb-3">
   <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <div><a class="btn btn-secondary" href="/search/${user}/${each.id}" target="_blank" name="view-profile-btn" id=${each.id}">View profile</a>
-    <a class="btn btn-primary" name="email-btn" href="mailto:${each.email}" target="_blank" id="email-btn">Email</a></div>
+    <div><button class="btn btn-secondary" data-id="" name="view-profile-btn" id=${each.id}">View profile</button>
+    <button class="btn btn-primary" name="email-btn" data-email=${each.email}" id="email-btn">Email</button></div>
   </div>
   <div class="card-summary-info d-flex flex-row justify-content-around">
     <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
@@ -51,7 +53,7 @@ const generateMentorCards = (data, partnerships) => {
   <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
-    <div><button class="btn btn-secondary" name="view-profile-btn" href="/search/mentors/${each.id}" target="_blank" id=${each.id}>View profile</button>
+    <div><button class="btn btn-secondary" name="view-profile-btn" id=${each.id}>View profile</button>
     <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div></div>
   </div>
   <div class="card-summary-info d-flex flex-row justify-content-around">
@@ -388,7 +390,7 @@ const handleMenteeSearch = async (e) => {
     const rawData = await response.json();
     const data = rawData.mentees;
 
-    const menteeCards = generateSimpleCards(data, "mentees");
+    const menteeCards = generateSimpleCards(data);
     $("#mentee-browse-container").empty();
     $("#mentee-browse-container").append(menteeCards);
   }
@@ -453,7 +455,7 @@ const handleMentorSearch = async (e) => {
       $("#mentor-card-container").empty();
       $("#mentor-card-container").append(mentorCards);
     } else {
-      const mentorCards = generateSimpleCards(data, "mentors");
+      const mentorCards = generateSimpleCards(data);
       $("#mentor-browse-container").empty();
       $("#mentor-browse-container").append(mentorCards);
     }
@@ -532,10 +534,8 @@ const handleMentorSelection = async (e) => {
 
   const target = $(e.target);
   const mentorId = target.attr("data-id");
-  const mentorName = target.attr("data-name");
-  const projectName = `Coding practice with ${mentorName}`;
 
-  const partnershipBody = { mentorId, projectName };
+  const partnershipBody = { mentorId };
 
   if (target.is("button") && target.attr("name") === "add-partnership-btn") {
     const options = {
@@ -566,16 +566,48 @@ const handleMentorSelection = async (e) => {
       },
       redirect: "follow",
     };
-    const response = await fetch(`/api/mentors/${id}`, options);
+    const mentorResponse = await fetch(`/api/mentors/${id}`, options);
 
-    if (response.status !== 200) {
+    if (mentorResponse.status !== 200) {
       console.error("Mentor Profile data could not be retrieved");
     } else {
-      const data = await response.json();
-      renderProfileModal(data);
+      const mentorData = await mentorResponse.json();
+      renderProfileModal(mentorData);
     }
+  }
+  if (target.attr("name") === "email-btn") {
+    const email = target.attr("data-email");
+    window.open(`mailto:${email}?subject='Hi there from a MentorMe member'`);
+  }
+};
 
-    // window.open(`http://localhost:4000/search/mentors/${id}`);
+const handleMenteeSelection = async (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const target = $(e.target);
+
+  if (target.attr("name") === "email-btn") {
+    const email = target.attr("data-email");
+    window.open(`mailto:${email}?subject='Hi there from a MentorMe member'`);
+  }
+  if (target.attr("name") === "view-profile-btn") {
+    const id = target.attr("id");
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const menteeResponse = await fetch(`/api/mentees/${id}`, options);
+
+    if (menteeResponse.status !== 200) {
+      console.error("Mentee Profile data could not be retrieved");
+    } else {
+      const menteeData = await menteeResponse.json();
+      renderProfileModal(menteeData);
+    }
   }
 };
 
@@ -914,6 +946,8 @@ logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
+mentorBrowseContainer.click(handleMentorSelection);
+menteeBrowseContainer.click(handleMenteeSelection);
 myTasksSearch.click(handleMyTasksSearch);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);
