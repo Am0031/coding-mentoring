@@ -25,42 +25,44 @@
               </a>
             </div>
             <div class="collapse" id="collapse-partnership-{{id}}">
-              <div class="card card-body">
+              <div class="partnership-details">
                 <div
                   class="d-flex flex-column justify-content-center"
                   id="task-details-container-{{id}}"
                 >
                   <div class="d-flex flex-column">
                     <div>
-
+                      <p>Partnership Details</p>
                       <div class="d-flex flex-row justify-content-around">
-                        <p>Partner 1: {{mentor.username}}</p><p>Email:
-                          {{mentor.email}}</p></div>
-                      <div class="d-flex flex-row"><p>
-                          Frameworks:</p>
-                        {{#each mentor.frameworks}}
+                        <p class="mr-3">{{mentor.username}}</p><p class="mr-3">
+                          {{mentor.email}}</p>
+                        <div class="d-flex flex-row"><p class="mr-2">
+                            Frameworks:</p>
+                          {{#each mentor.frameworks}}
 
-                          <p
-                            class="btn btn-dark mr-2 mb-0"
-                          >{{frameworkName}}</p>
+                            <p
+                              class="framework-name mr-2 mb-0"
+                            >{{frameworkName}}</p>
 
-                        {{/each}}
-                      </div>
+                          {{/each}}
+                        </div></div>
                       <div class="d-flex flex-row justify-content-around">
-                        <p>Partner 2: {{mentee.username}}</p><p>Email:
-                          {{mentee.email}}</p></div>
-                      <div class="d-flex flex-row"><p>
-                          Frameworks:</p>
-                        {{#each mentee.frameworks}}
+                        <p class="mr-3">{{mentee.username}}</p><p class="mr-3">
+                          {{mentee.email}}</p>
+                        <div class="d-flex flex-row"><p class="mr-2">
+                            Frameworks:</p>
+                          {{#each mentee.frameworks}}
 
-                          <p
-                            class="btn btn-dark mr-2 mb-0"
-                          >{{frameworkName}}</p>
+                            <p
+                              class="framework-name mr-2 mb-0"
+                            >{{frameworkName}}</p>
 
-                        {{/each}}
+                          {{/each}}
+                        </div>
                       </div>
                     </div>
                     {{#if tasks.length}}
+                      <h4>Assigned tasks:</h4>
                       {{#each tasks}}
                         <div
                           class="d-flex flex-row justify-content-center align-items-center"

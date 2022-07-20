@@ -31,7 +31,7 @@ const renderDashboard = async (req, res) => {
         },
         {
           model: Mentor,
-          attributes: ["id", "username", "email"],
+          attributes: ["id", "username"],
           as: "mentor",
           include: [
             {
@@ -60,7 +60,7 @@ const renderDashboard = async (req, res) => {
       include: [
         {
           model: Mentee,
-          attributes: ["id", "username", "email"],
+          attributes: ["id", "username"],
           as: "mentee",
           include: [
             {

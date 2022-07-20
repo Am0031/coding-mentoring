@@ -78,6 +78,10 @@ body {
   color: var(--alice-blue);
   font-weight: bold;
 }
+.framework-name {
+  font-weight: bold;
+  color: var(--cerulean-frost);
+}
 .how-btn {
   width: 150px;
   height: 150px;
