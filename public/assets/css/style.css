@@ -14,44 +14,77 @@
   --baby-blue-eyes: #a3cef1ff;
   --battleship-grey: #8b8c89ff;
   --dark: #343a40;
+  --accent: #f6950c;
 }
 
 body {
-  background-color: var(--cerulean-frost);
+  background-color: var(--alice-blue);
   margin: 0;
   padding: 0;
+  color: var(--yale-blue);
 }
 
 .homepg {
   justify-content: center;
-  height: 800px;
+  width: 90%;
+  height: auto;
+
   margin-top: 1rem;
+  background: var(--baby-blue-eyes);
 }
 
 .welcome-container {
-  background-image: url(../images/homepage2.jpg);
-  object-fit: cover;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 0%;
+  border: 0;
+  background-image: url(../images/homepage3.jpg);
+  /* object-fit: cover; */
 }
+
 .welcome-text {
   color: var(--alice-blue);
+  font-weight: 400;
 }
-.btn-homepage {
+
+.btn {
   background-color: var(--cerulean-frost);
+  color: var(--alice-blue);
+  width: 100%;
+  border: 0;
+  /* margin: auto; */
+}
+
+.btn:hover {
+  background-color: var(--accent);
+  color: aliceblue;
+  border: 0;
+}
+
+.fw-btn {
+  background-color: var(--yale-blue);
 }
 
 .aside-info {
   width: 20%;
   margin: 0;
 }
+
 .main-info {
   width: 80%;
 }
+
 .profile-pic-div {
   height: 200px;
 }
+
 .profile-pic-box {
   width: 100%;
 }
+
 .profile-pic {
   height: 200px;
 }
@@ -60,9 +93,11 @@ body {
   margin-right: 1rem;
   color: var(--yale-blue);
 }
+
 .modal-info-line {
   font-weight: bold;
 }
+
 .avatar-wrapper img {
   width: 100px;
   height: 100px;
@@ -76,39 +111,49 @@ body {
 .card {
   background-color: var(--alice-blue);
 }
+
 .card-color {
   background-color: var(--yale-blue);
 }
+
 .card-summary-info {
   background-color: var(--alice-blue);
 }
+
 .infoText {
   margin-top: 1rem;
 }
+
 .partnership-comment {
   color: var(--alice-blue);
   font-weight: bold;
 }
+
 .framework-name {
   font-weight: bold;
   color: var(--cerulean-frost);
 }
+
 .how-btn {
   width: 150px;
   height: 150px;
 }
+
 .framework-level {
   color: var(--alice-blue);
 }
+
 .partnership-header {
   width: 100%;
 }
+
 #user-frameworks-container {
   min-height: 100px;
 }
 
-footer {
-  background-color: var(--dark);
+.navbar,
+.footer {
+  background-color: var(--yale-blue);
   color: var(--alice-blue);
   text-align: center;
 }
@@ -191,4 +236,20 @@ footer {
 
 .left-align {
   padding-top: 1rem;
+}
+
+@media screen and (max-width: 576px) {
+  .how-to-container {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .framework-tile-container {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .welcome-text {
+    font-size: 80px;
+  }
 }
