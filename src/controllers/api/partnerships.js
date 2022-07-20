@@ -3,7 +3,8 @@ const { Partnership, Mentor } = require("../../models");
 const createPartnership = async (req, res) => {
   try {
     const menteeId = req.session.user.id;
-    const { mentorId, projectName } = req.body;
+    const { mentorId } = req.body;
+    const projectName = `Partnership ${mentorId} - ${menteeId}`;
 
     const partnership = await Partnership.create({
       mentorId,
@@ -16,9 +17,10 @@ const createPartnership = async (req, res) => {
       partnership: partnership,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create partnership | ${error.message}`);
-
-    return res.status(500).json({ success: false });
+    return res.status(500).json({
+      success: false,
+      message: `[ERROR]: Failed to create partnership | ${error.message}`,
+    });
   }
 };
 
@@ -37,8 +39,7 @@ const getPartnershipsByMenteeId = async (req, res) => {
 
     return res.json(partnerships);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 

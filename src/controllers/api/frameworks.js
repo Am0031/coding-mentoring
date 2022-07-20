@@ -8,8 +8,52 @@ const getAllFrameworks = async (req, res) => {
     }
     return res.json(frameworks);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
+  }
+};
+
+const getFrameworksByUserId = async (req, res) => {
+  try {
+    const { userType } = req.session;
+    const userId = req.session.user.id;
+
+    if (userType === "mentor") {
+      const data = await MentorFramework.findAll({
+        where: { mentorId: userId },
+        attributes: ["id", "mentorId", "frameworkId", "level"],
+        include: [
+          {
+            model: Framework,
+            attributes: ["frameworkName"],
+          },
+        ],
+      });
+      if (!data) {
+        return res
+          .status(500)
+          .json({ message: "Framework not found for that mentor" });
+      }
+      return res.json(data);
+    } else {
+      const data = await MenteeFramework.findAll({
+        where: { menteeId: userId },
+        attributes: ["id", "menteeId", "frameworkId", "level"],
+        include: [
+          {
+            model: Framework,
+            attributes: ["frameworkName"],
+          },
+        ],
+      });
+      if (!data) {
+        return res
+          .status(500)
+          .json({ message: "Framework not found for that mentee" });
+      }
+      return res.json(data);
+    }
+  } catch (error) {
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -46,8 +90,7 @@ const addFrameworkByUserId = async (req, res) => {
       return res.json(newMenteeFramework[0]);
     }
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -80,8 +123,7 @@ const deleteFrameworkByUserId = async (req, res) => {
         .json({ message: "Framework deleted for this mentee" });
     }
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -89,4 +131,5 @@ module.exports = {
   getAllFrameworks,
   deleteFrameworkByUserId,
   addFrameworkByUserId,
+  getFrameworksByUserId,
 };

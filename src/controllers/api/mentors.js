@@ -61,13 +61,6 @@ const getMentors = async (req, res) => {
 
     const { framework, collaborationFormat, location } = req.body;
 
-    //need to make sure we are getting this as an array (from the framework checkboxes) empty array if "all" or array of the id of the frameworks selected
-    //otherwise, we would need the below checkpoint - and filter on frameworkArray below in the 3rd filter
-    // const frameworkArray = [];
-    // Array.isArray(framework)
-    //   ? frameworkArray.push(...framework)
-    //   : frameworkArray.push(framework);
-
     //flitering on only 1 teaching format at a time, and only one city at a time
     const filteredMentors = formattedMentors
       .filter((item) => !location || item.location === location)
@@ -86,8 +79,7 @@ const getMentors = async (req, res) => {
 
     return res.json({ userType: userType, mentors: filteredMentors });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -120,8 +112,7 @@ const getMentorById = async (req, res) => {
     }
     return res.json(mentor);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -163,8 +154,10 @@ const updateMentorById = async (req, res) => {
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error(`[ERROR]: Failed to update mentor | ${error.message}`);
-    return res.status(500).json({ success: false });
+    return res.status(500).json({
+      success: false,
+      message: `[ERROR]: Failed to update mentor | ${error.message}`,
+    });
   }
 };
 
@@ -181,8 +174,7 @@ const deleteMentorById = async (req, res) => {
     await Mentor.destroy({ where: { id } });
     return res.status(200).json({ message: "Mentor deleted" });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -213,8 +205,7 @@ const getMentorData = async (req, res) => {
     }
     return res.json(mentorData);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 

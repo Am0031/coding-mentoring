@@ -79,8 +79,7 @@ const getMentees = async (req, res) => {
 
     return res.json({ userType: userType, mentees: filteredMentees });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -113,8 +112,7 @@ const getMenteeById = async (req, res) => {
     }
     return res.json(mentee);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -136,8 +134,7 @@ const updateMenteeById = async (req, res) => {
 
     return res.status(200).json({ success: true, message: "Mentee updated" });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -153,8 +150,7 @@ const deleteMenteeById = async (req, res) => {
     await Mentee.destroy({ where: { id } });
     return res.status(200).json({ message: "Mentee deleted" });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -184,8 +180,7 @@ const getMenteeData = async (req, res) => {
     }
     return res.json(menteeData);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 

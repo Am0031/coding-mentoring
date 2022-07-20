@@ -13,6 +13,7 @@
   --cerulean-frost: #6096baff;
   --baby-blue-eyes: #a3cef1ff;
   --battleship-grey: #8b8c89ff;
+  --dark: #343a40;
 }
 
 body {
@@ -23,8 +24,19 @@ body {
 
 .homepg {
   justify-content: center;
-  height: 500px;
+  height: 800px;
   margin-top: 1rem;
+}
+
+.welcome-container {
+  background-image: url(../images/homepage2.jpg);
+  object-fit: cover;
+}
+.welcome-text {
+  color: var(--alice-blue);
+}
+.btn-homepage {
+  background-color: var(--cerulean-frost);
 }
 
 .aside-info {
@@ -44,17 +56,60 @@ body {
   height: 200px;
 }
 
+.modal-info-label {
+  margin-right: 1rem;
+  color: var(--yale-blue);
+}
+.modal-info-line {
+  font-weight: bold;
+}
+.avatar-wrapper img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 23px;
+  text-align: center;
+  display: block;
+}
+
 .card {
   background-color: var(--alice-blue);
 }
-
+.card-color {
+  background-color: var(--yale-blue);
+}
+.card-summary-info {
+  background-color: var(--alice-blue);
+}
+.infoText {
+  margin-top: 1rem;
+}
+.partnership-comment {
+  color: var(--alice-blue);
+  font-weight: bold;
+}
+.framework-name {
+  font-weight: bold;
+  color: var(--cerulean-frost);
+}
 .how-btn {
   width: 150px;
   height: 150px;
 }
+.framework-level {
+  color: var(--alice-blue);
+}
+.partnership-header {
+  width: 100%;
+}
+#user-frameworks-container {
+  min-height: 100px;
+}
 
 footer {
-  background-color: var(--battleship-grey);
+  background-color: var(--dark);
+  color: var(--alice-blue);
   text-align: center;
 }
 

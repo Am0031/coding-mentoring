@@ -6,6 +6,8 @@ const resetPasswordForm = $("#reset-password-form");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
+const mentorBrowseContainer = $("#mentor-browse-container");
+const menteeBrowseContainer = $("#mentee-browse-container");
 const taskSearchForm = $("#taskSearch");
 const myTasksSearch = $("#my-tasks-btn");
 const taskCardsContainer = $("#task-card-container");
@@ -15,6 +17,7 @@ const assignTaskForm = $("#assign-task-form");
 const frameworkSelectionContainer = $("#framework-selection-container");
 
 let assignTaskModal;
+let viewProfileModal;
 const partnershipsContainer = $("#partnership-card-container");
 
 const renderError = (id, message) => {
@@ -25,18 +28,33 @@ const renderError = (id, message) => {
   </div>`);
 };
 
-const generateSimpleCards = (response, user) => {
+const generateFrameworksString = (response) => {
+  const createFramework = (each) => {
+    return `<div class="d-flex flex-column ml-3 mr-3">
+    <div class="framework-icon" id="my-framework-${each.frameworkId}">
+      <span class="btn btn-info code-label">${each.framework.frameworkName}</span>
+    </div>
+    <div class="framework-level text-center">
+     ${each.level}
+    </div>
+  </div>`;
+  };
+  const responseHtml = response.map(createFramework).join("");
+  return responseHtml;
+};
+
+const generateSimpleCards = (response) => {
   const createCard = (each) => {
-    return `<div class="card border-success mb-3">
-  <div class="card-header d-flex flex-row justify-content-between">
+    return `<div class="card border-info mb-3">
+  <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
-    <div><a class="btn btn-secondary" href="/search/${user}/${each.id}" target="_blank" name="view-profile-btn" id=${each.id}">View profile</a>
-    <a class="btn btn-primary" name="email-btn" href="mailto:${each.email}" target="_blank" id="email-btn">Email</a></div>
+    <div><button class="btn btn-secondary" data-id="" name="view-profile-btn" id=${each.id}">View profile</button>
+    <button class="btn btn-primary" name="email-btn" data-email=${each.email}" id="email-btn">Email</button></div>
   </div>
-  <div class="card-body">
-    <p class="postText">${each.collaborationFormat}</p>
-    <p class="postText">${each.location}</p>
-    <p class="postText">${each.availability}</p>
+  <div class="card-summary-info d-flex flex-row justify-content-around">
+    <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
+    <p class="infoText"><i class="fa-solid fa-location-pin"></i> ${each.location}</p>
+    <p class="infoText"><i class="fa-solid fa-calendar"></i> ${each.availability}</p>
   </div>
 </div>`;
   };
@@ -46,31 +64,31 @@ const generateSimpleCards = (response, user) => {
 
 const generateMentorCards = (data, partnerships) => {
   const createCard = (each) => {
-    return `<div class="card border-success mb-3">
-  <div class="card-header d-flex flex-row justify-content-between">
+    return `<div class="card border-info mb-3">
+  <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
-    <div><button class="btn btn-secondary" name="view-profile-btn" href="/search/mentors/${each.id}" target="_blank" id=${each.id}>View profile</button>
+    <div><button class="btn btn-secondary" name="view-profile-btn" id=${each.id}>View profile</button>
     <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div></div>
   </div>
-  <div class="card-body">
-    <p class="postText">${each.collaborationFormat}</p>
-    <p class="postText">${each.location}</p>
-    <p class="postText">${each.availability}</p>
+  <div class="card-summary-info d-flex flex-row justify-content-around">
+    <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
+    <p class="infoText"><i class="fa-solid fa-location-pin"></i> ${each.location}</p>
+    <p class="infoText"><i class="fa-solid fa-calendar"></i> ${each.availability}</p>
   </div>
 </div>`;
   };
   const createDisabledCard = (each) => {
-    return `<div class="card border-success mb-3">
-  <div class="card-header d-flex flex-row justify-content-between">
+    return `<div class="card border-info mb-3">
+  <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div>
     <p class="partnership-comment" data-id=${each.id} data-name=${each.username}>You're already working with this mentor!</p></div>
   </div>
-  <div class="card-body">
-    <p class="postText">${each.collaborationFormat}</p>
-    <p class="postText">${each.location}</p>
-    <p class="postText">${each.availability}</p>
+  <div class="card-summary-info d-flex flex-row justify-content-around">
+    <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
+    <p class="infoText"><i class="fa-solid fa-location-pin"></i> ${each.location}</p>
+    <p class="infoText"><i class="fa-solid fa-calendar"></i> ${each.availability}</p>
   </div>
 </div>`;
   };
@@ -138,11 +156,6 @@ const handleSignUpSubmit = async (e) => {
   const location = $("#location").val().trim().toLowerCase();
   const availability = $("#availability").val().trim();
 
-  // const availabilitySelected = $("input[type=checkbox]:checked");
-  // const availabilityAll = Array.from(availabilitySelected).map(
-  //   (selected) => selected.id
-  // );
-
   const collaborationFormat = $("#collaborationFormat").val().trim();
   const personalGoal = $("#personalGoal").val().trim();
   const profileImageUrl = $("#profileImageUrl").val().trim();
@@ -176,8 +189,6 @@ const handleSignUpSubmit = async (e) => {
           profileImageUrl,
           gitHubUrl,
         };
-
-        console.log(payload);
 
         const response = await fetch("/auth/signup", {
           method: "POST",
@@ -240,7 +251,6 @@ const handleLoginSubmit = async (e) => {
       renderError("login-error", "Failed to login. Try again.");
     }
   } else {
-    console.log("fields");
     renderError("login-error", "Please complete all fields.");
   }
 };
@@ -311,8 +321,6 @@ const handleEditSubmit = async (e) => {
           };
         }
 
-        console.log(payload);
-
         const response = await fetch(`/api/${userType}s/${userId}`, {
           method: "PUT",
           body: JSON.stringify(payload),
@@ -352,15 +360,13 @@ const handleLogout = async () => {
       window.location.assign("/");
     }
   } catch (error) {
-    console.log("Failed to logout");
+    console.error("Failed to logout");
   }
 };
 
 const handleMenteeSearch = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
-  const target = $(e.target);
 
   const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
@@ -397,10 +403,9 @@ const handleMenteeSearch = async (e) => {
     console.error("Search for mentees failed");
   } else {
     const rawData = await response.json();
-    const userType = rawData.userType;
     const data = rawData.mentees;
 
-    const menteeCards = generateSimpleCards(data, "mentees");
+    const menteeCards = generateSimpleCards(data);
     $("#mentee-browse-container").empty();
     $("#mentee-browse-container").append(menteeCards);
   }
@@ -409,8 +414,6 @@ const handleMenteeSearch = async (e) => {
 const handleMentorSearch = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
-  const target = $(e.target);
 
   const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
@@ -467,12 +470,13 @@ const handleMentorSearch = async (e) => {
       $("#mentor-card-container").empty();
       $("#mentor-card-container").append(mentorCards);
     } else {
-      const mentorCards = generateSimpleCards(data, "mentors");
+      const mentorCards = generateSimpleCards(data);
       $("#mentor-browse-container").empty();
       $("#mentor-browse-container").append(mentorCards);
     }
   }
 };
+
 const handelResetPasswordSubmit = async (e) => {
   e.preventDefault();
 
@@ -513,16 +517,40 @@ resetPasswordForm.submit(handelResetPasswordSubmit);
 $("#mentorSearch").submit(handleMentorSearch);
 $("#menteeSearch").submit(handleMenteeSearch);
 
+const renderProfileModal = (data) => {
+  viewProfileModal = new bootstrap.Modal(
+    document.getElementById("profileModal")
+  );
+  $("#profileModalLabel").text(`${data.username}`);
+  $("#modalAvatar").attr("src", `${data.profileImageUrl}`);
+  $("#modalEmail").text(`${data.email}`);
+  $("#modalLocation").text(`${data.location}`);
+  $("#modalCollaboration").text(`${data.collaborationFormat}`);
+  $("#modalAvailability").text(`${data.availability}`);
+  $("#modalGoal").text(`${data.personalGoal}`);
+  $("#modalXp").text(`${data.xp}`);
+  const frameworksList = data.frameworks
+    .map((i) => {
+      const frameworkName = i.frameworkName;
+      const level = i.level.level;
+      return `${frameworkName} - ${level} `;
+    })
+    .join(" | ");
+  $("#modalFrameworks").text(`${frameworksList}`);
+  viewProfileModal.show();
+
+  $("#modalCloseBtn").click(() => viewProfileModal.hide());
+  $("#modalDismissCross").click(() => viewProfileModal.hide());
+};
+
 const handleMentorSelection = async (e) => {
   e.preventDefault();
   e.stopPropagation();
 
   const target = $(e.target);
   const mentorId = target.attr("data-id");
-  const mentorName = target.attr("data-name");
-  const projectName = `Coding practice with ${mentorName}`;
 
-  const partnershipBody = { mentorId, projectName };
+  const partnershipBody = { mentorId };
 
   if (target.is("button") && target.attr("name") === "add-partnership-btn") {
     const options = {
@@ -546,15 +574,61 @@ const handleMentorSelection = async (e) => {
   }
   if (target.attr("name") === "view-profile-btn") {
     const id = target.attr("id");
-    window.open(`http://localhost:4000/search/mentors/${id}`);
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const mentorResponse = await fetch(`/api/mentors/${id}`, options);
+
+    if (mentorResponse.status !== 200) {
+      console.error("Mentor Profile data could not be retrieved");
+    } else {
+      const mentorData = await mentorResponse.json();
+      renderProfileModal(mentorData);
+    }
+  }
+  if (target.attr("name") === "email-btn") {
+    const email = target.attr("data-email");
+    window.open(`mailto:${email}?subject='Hi there from a MentorMe member'`);
+  }
+};
+
+const handleMenteeSelection = async (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const target = $(e.target);
+
+  if (target.attr("name") === "email-btn") {
+    const email = target.attr("data-email");
+    window.open(`mailto:${email}?subject='Hi there from a MentorMe member'`);
+  }
+  if (target.attr("name") === "view-profile-btn") {
+    const id = target.attr("id");
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const menteeResponse = await fetch(`/api/mentees/${id}`, options);
+
+    if (menteeResponse.status !== 200) {
+      console.error("Mentee Profile data could not be retrieved");
+    } else {
+      const menteeData = await menteeResponse.json();
+      renderProfileModal(menteeData);
+    }
   }
 };
 
 const handleTaskSearch = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
-  const target = $(e.target);
 
   const levelSelect = $("#levelSelect").find(":selected").text();
   let taskLevel;
@@ -592,7 +666,7 @@ const handleTaskSearch = async (e) => {
   }
 };
 
-const handleTaskAssign = async (e, req, res) => {
+const handleTaskAssign = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
@@ -618,7 +692,6 @@ const handleAssignTaskToPartnership = async (e) => {
     e.preventDefault();
 
     const menteeId = $("#mentee-select").val();
-    console.log(menteeId);
 
     const taskId = JSON.parse(localStorage.getItem("currentTask")) || {};
 
@@ -653,8 +726,6 @@ const handleAssignTaskToPartnership = async (e) => {
 const handleTaskCreate = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
-  const target = $(e.target);
 
   const taskName = $("#taskName").val().trim();
   const taskDescription = $("#taskDescription").val();
@@ -726,10 +797,10 @@ const handleTaskCreate = async (e) => {
         </div>`
       );
     } else {
-      console.log("error");
+      console.error("error - task create failed");
     }
   } catch (error) {
-    console.log("error");
+    console.error("error - task create failed");
   }
 };
 
@@ -817,8 +888,10 @@ const handleChangeTaskStatus = async (e) => {
       }
     }
   }
-
-  console.log("status changed");
+  if(target.is("button") && target.attr("name") === "email-btn"){
+    const email = target.attr("data-email");
+    window.open(`mailto:${email}?subject='Hi there from your partner'`);
+  }
 };
 
 const handleFrameworkSelection = async (e) => {
@@ -873,14 +946,29 @@ const handleFrameworkSelection = async (e) => {
     } else {
       const frameworkUpdate = await response.json();
       const newId = frameworkUpdate.id;
-      if (addedId === 0) {
-        $(`#my-frameworks-container`)
-          .append(`<div class="framework-icon ml-3 mr-3" id="my-framework-${frameworkUpdate.frameworkId}">
-        ${frameworkUpdate.frameworkName}
-      </div>`);
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const updatedFrameworks = await fetch(`/api/frameworks/user`, options);
+
+      if (updatedFrameworks.status !== 200) {
+        console.error("Updated frameworks could not be retrieved");
+      } else {
+        const data = await updatedFrameworks.json();
+        const string = generateFrameworksString(data);
+        $(`#my-frameworks-list-container`).empty();
+        $("#my-frameworks-list-container").append(string);
+
+        $(`#framework-selection-btn-${frameworkId}`).attr(
+          "data-added-id",
+          newId
+        );
+        $(`#framework-selection-name-${frameworkId}`).addClass("added-status");
       }
-      $(`#framework-selection-btn-${frameworkId}`).attr("data-added-id", newId);
-      $(`#framework-selection-name-${frameworkId}`).addClass("added-status");
     }
   }
 };
@@ -892,6 +980,8 @@ logoutBtn.click(handleLogout);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
+mentorBrowseContainer.click(handleMentorSelection);
+menteeBrowseContainer.click(handleMenteeSelection);
 myTasksSearch.click(handleMyTasksSearch);
 taskSearchForm.submit(handleTaskSearch);
 taskCardsContainer.click(handleTaskAssign);

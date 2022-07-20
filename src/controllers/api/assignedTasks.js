@@ -31,19 +31,18 @@ const assignTask = async (req, res) => {
         assignedTask: assignedTask,
       });
     } else {
-      console.log(`[ERROR]: Failed to assign task | Task already assigned`);
-
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Task already assigned to this mentee",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Task already assigned to this mentee",
+      });
     }
   } catch (error) {
-    console.log(`[ERROR]: Failed to assign task | ${error.message}`);
-
-    return res.status(500).json({ success: false });
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: `[ERROR]: Failed to assign task | ${error.message}`,
+      });
   }
 };
 
@@ -61,11 +60,15 @@ const updateAssignedTaskStatus = async (req, res) => {
 
     return res.json({
       message: "Task status successfully updated",
+      assignedTaskStatus: assignedTaskStatus,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to update task status | ${error.message}`);
-
-    return res.status(500).json({ success: false });
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: `[ERROR]: Failed to update task status | ${error.message}`,
+      });
   }
 };
 

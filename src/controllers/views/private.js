@@ -11,7 +11,7 @@ const {
 const renderDashboard = async (req, res) => {
   const { userType, user } = req.session;
   const id = user.id;
-  //need to work out which api call to bring the right data here: their info and their partnerships and tasks etc
+
   let userData;
   if (userType === "mentor") {
     const data = await Partnership.findAll({
@@ -20,7 +20,7 @@ const renderDashboard = async (req, res) => {
       include: [
         {
           model: Mentee,
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "email"],
           as: "mentee",
           include: [
             {
@@ -29,7 +29,17 @@ const renderDashboard = async (req, res) => {
             },
           ],
         },
-        { model: Mentor, attributes: ["id", "username"], as: "mentor" },
+        {
+          model: Mentor,
+          attributes: ["id", "username"],
+          as: "mentor",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
         {
           model: Task,
           through: { attributes: ["id", "taskDeadline", "taskComplete"] },
@@ -52,10 +62,16 @@ const renderDashboard = async (req, res) => {
           model: Mentee,
           attributes: ["id", "username"],
           as: "mentee",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
         },
         {
           model: Mentor,
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "email"],
           as: "mentor",
           include: [
             {
@@ -83,7 +99,7 @@ const renderDashboard = async (req, res) => {
   if (userType === "mentor") {
     const data = await MentorFramework.findAll({
       where: { mentorId: id },
-      attributes: ["id", "mentorId", "frameworkId"],
+      attributes: ["id", "mentorId", "frameworkId", "level"],
       include: [
         {
           model: Framework,
@@ -95,7 +111,7 @@ const renderDashboard = async (req, res) => {
   } else {
     const data = await MenteeFramework.findAll({
       where: { menteeId: id },
-      attributes: ["id", "menteeId", "frameworkId"],
+      attributes: ["id", "menteeId", "frameworkId", "level"],
       include: [
         {
           model: Framework,
@@ -146,25 +162,24 @@ const renderMenteeSearch = async (req, res) => {
       userType,
     });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
-const renderMenteeProfile = async (req, res) => {
-  const { id } = req.params;
-  const mentor = await Mentee.findByPk(id, {
-    include: [
-      {
-        model: Framework,
-        through: ["frameworkId"],
-        attributes: ["frameworkName"],
-      },
-    ],
-  });
-  const chosenMentee = mentor.get({ plain: true });
-  return res.render("mentee-profile", { user: chosenMentee });
-};
+// const renderMenteeProfile = async (req, res) => {
+//   const { id } = req.params;
+//   const mentor = await Mentee.findByPk(id, {
+//     include: [
+//       {
+//         model: Framework,
+//         through: ["frameworkId"],
+//         attributes: ["frameworkName"],
+//       },
+//     ],
+//   });
+//   const chosenMentee = mentor.get({ plain: true });
+//   return res.render("mentee-profile", { user: chosenMentee });
+// };
 
 const renderTaskSearch = async (req, res) => {
   try {
@@ -191,10 +206,13 @@ const renderTaskSearch = async (req, res) => {
       return res.status(500).json({ message: "Frameworks not found" });
     }
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("task-search", { data: data, mentees: mentees });
+    return res.render("task-search", {
+      data: data,
+      mentees: mentees,
+      partnerships: partnerships,
+    });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -217,8 +235,7 @@ const renderCreateTask = async (req, res) => {
       return res.render("createTask", { user: id, data: data });
     }
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -244,7 +261,6 @@ const renderEditInfo = async (req, res) => {
 module.exports = {
   renderDashboard,
   renderMenteeSearch,
-  renderMenteeProfile,
   renderTaskSearch,
   renderTaskDetails,
   renderCreateTask,

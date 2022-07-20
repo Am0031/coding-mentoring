@@ -1,6 +1,57 @@
   {{> privateNavBar}}
 
-<div class="container">
+<main class="main" id="main">
+<div class="container" id="search-container">
+  <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="profileModalLabel"></h5>
+            <button type="button" id="modalDismissCross" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <div class="avatar-wrapper">
+                  <img class="avatar" id="modalAvatar" src="" />
+                </div>
+              <div class="profile-info">
+                <div class="modal-info-div d-flex flex-row">
+                <p class="modal-info-label" id="modalLabelEmail"><i class="fa-solid fa-envelope"></i> Email : </p>
+                <p class="modal-info-line" id="modalEmail"></p>
+                </div>
+                <div class="modal-info-div d-flex flex-row">
+                <p class="modal-info-label" id="modalLabelLocation"><i class="fa-solid fa-location-pin"></i> Location : </p>
+                <p class="modal-info-line" id="modalLocation"></p>
+                </div>
+                <div class="modal-info-div d-flex flex-row">
+                <p class="modal-info-label" id="modalLabelCollaboration"><i class="fa-solid fa-chalkboard-user"></i> Collaboration format : </p>
+                <p class="modal-info-line" id="modalCollaboration"></p>
+                </div>
+                <div class="modal-info-div d-flex flex-row">
+                <p class="modal-info-label" id="modalLabelAvailability"><i class="fa-solid fa-calendar"></i> Availability : </p>
+                <p class="modal-info-line" id="modalAvailability"></p>
+                </div>
+                <div class="modal-info-div d-flex flex-row">
+                <p class="modal-info-label" id="modalLabelGoal"><i class="fa-solid fa-bullseye"></i> Personal goal : </p>
+                <p class="modal-info-line" id="modalGoal"></p>
+                </div>
+                <div class="modal-info-div d-flex flex-row">
+                <p class="modal-info-label" id="modalLabelXp"><i class="fa-solid fa-star"></i> Experience - Earned XP : </p>
+                <p class="modal-info-line" id="modalXp"></p>
+                </div>
+                <div class="modal-info-div d-flex flex-row">
+                <p class="modal-info-label" id="modalLabelFrameworks"><i class="fa-solid fa-code"></i> Frameworks : </p>
+                <p class="modal-info-line" id="modalFrameworks"></p>
+                </div>
+              </div> 
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalCloseBtn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
       <div style="margin-top: 20px" class="text-center card-header">
         <h1 class="mb-4">Search for a mentee</h1>
         <form class="text-left" id="menteeSearch">
@@ -39,7 +90,9 @@
         </form>
       </div>
 
-      <div class="container card-container d-flex flex-column mt-3" id="mentee-browse-container">
+      
+    </div>
+    <div class="container card-container d-flex flex-column mt-3" id="mentee-browse-container">
         <p class="text-center empty-search-message"> Use the form above to start a search! </p>
       </div>
-    </div>
+    </main>
