@@ -10,11 +10,10 @@ const login = async (req, res) => {
       user = await Mentor.findOne({ where: { email } });
 
       if (!user) {
-        console.log(
-          `[ERROR]: Failed to login | No mentor with email address of ${email}`
-        );
-
-        return res.status(500).json({ success: false });
+        return res.status(500).json({
+          success: false,
+          message: `[ERROR]: Failed to login | No mentor with email address of ${email}`,
+        });
       }
     }
 
@@ -22,11 +21,10 @@ const login = async (req, res) => {
       user = await Mentee.findOne({ where: { email } });
 
       if (!user) {
-        console.log(
-          `[ERROR]: Failed to login | No mentee with email address of ${email}`
-        );
-
-        return res.status(500).json({ success: false });
+        return res.status(500).json({
+          success: false,
+          message: `[ERROR]: Failed to login | No mentee with email address of ${email}`,
+        });
       }
     }
 
@@ -40,15 +38,16 @@ const login = async (req, res) => {
         return res.json({ success: true });
       });
     } else {
-      console.log(
-        `[ERROR]: Failed to login | Incorrect password for email: ${email}`
-      );
-      return res.status(500).json({ success: false });
+      return res.status(500).json({
+        success: false,
+        message: `[ERROR]: Failed to login | Incorrect password for email: ${email}`,
+      });
     }
   } catch (error) {
-    console.log(`[ERROR]: Failed to login | ${error.message}`);
-
-    return res.status(500).json({ success: false });
+    return res.status(500).json({
+      success: false,
+      message: `ERROR | Failed to login | ${error.message}`,
+    });
   }
 };
 
@@ -71,11 +70,10 @@ const mentorSignup = async (req, res) => {
     const mentor = await Mentor.findOne({ where: { email } });
 
     if (mentor) {
-      console.log(
-        `[ERROR]: Failed to create mentor | Email address of ${email} already exists as a mentor`
-      );
-
-      return res.status(500).json({ success: false });
+      return res.status(500).json({
+        success: false,
+        message: `[ERROR]: Failed to create mentor | Email address of ${email} already exists as a mentor`,
+      });
     }
 
     const data = await Mentor.create({
@@ -94,9 +92,10 @@ const mentorSignup = async (req, res) => {
 
     return res.json({ success: true });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create mentor | ${error.message}`);
-
-    return res.status(500).json({ success: false });
+    return res.status(500).json({
+      success: false,
+      message: `[ERROR]: Failed to create mentor | ${error.message}`,
+    });
   }
 };
 
@@ -119,11 +118,10 @@ const menteeSignup = async (req, res) => {
     const mentee = await Mentee.findOne({ where: { email } });
 
     if (mentee) {
-      console.log(
-        `[ERROR]: Failed to create mentee | Email address of ${email} already exists as a mentee`
-      );
-
-      return res.status(500).json({ success: false });
+      return res.status(500).json({
+        success: false,
+        message: `[ERROR]: Failed to create mentee | Email address of ${email} already exists as a mentee`,
+      });
     }
 
     const data = await Mentee.create({
@@ -140,11 +138,12 @@ const menteeSignup = async (req, res) => {
       gitHubUrl,
     });
 
-    return res.json({ success: true });
+    return res.json({ success: true, data: data });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create mentee | ${error.message}`);
-
-    return res.status(500).json({ success: false });
+    return res.status(500).json({
+      success: false,
+      message: `[ERROR]: Failed to create mentee | ${error.message}`,
+    });
   }
 };
 

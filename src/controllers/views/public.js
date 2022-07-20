@@ -44,8 +44,7 @@ const renderMentorSearch = async (req, res) => {
       currentPage: "mentors",
     });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 

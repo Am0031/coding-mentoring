@@ -8,8 +8,7 @@ const getAllFrameworks = async (req, res) => {
     }
     return res.json(frameworks);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 
@@ -46,8 +45,7 @@ const addFrameworkByUserId = async (req, res) => {
       return res.json(newMenteeFramework[0]);
     }
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -80,8 +78,7 @@ const deleteFrameworkByUserId = async (req, res) => {
         .json({ message: "Framework deleted for this mentee" });
     }
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 

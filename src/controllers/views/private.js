@@ -11,7 +11,7 @@ const {
 const renderDashboard = async (req, res) => {
   const { userType, user } = req.session;
   const id = user.id;
-  //need to work out which api call to bring the right data here: their info and their partnerships and tasks etc
+
   let userData;
   if (userType === "mentor") {
     const data = await Partnership.findAll({
@@ -146,8 +146,7 @@ const renderMenteeSearch = async (req, res) => {
       userType,
     });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -191,10 +190,13 @@ const renderTaskSearch = async (req, res) => {
       return res.status(500).json({ message: "Frameworks not found" });
     }
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("task-search", { data: data, mentees: mentees });
+    return res.render("task-search", {
+      data: data,
+      mentees: mentees,
+      partnerships: partnerships,
+    });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -217,8 +219,7 @@ const renderCreateTask = async (req, res) => {
       return res.render("createTask", { user: id, data: data });
     }
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 

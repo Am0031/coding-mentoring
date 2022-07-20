@@ -59,8 +59,7 @@ const getTasks = async (req, res) => {
 
     return res.json(filteredTasks);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -115,8 +114,7 @@ const getTasksByMentor = async (req, res) => {
 
     return res.json(formattedTasks);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -169,8 +167,7 @@ const getTaskById = async (req, res) => {
     const formattedTask = formatTask(task);
     return res.json(formattedTask);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -215,8 +212,7 @@ const createTask = async (req, res) => {
 
     return res.status(200).json({ message: "Task created", newTask: newTask });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -238,8 +234,7 @@ const updateTaskById = async (req, res) => {
 
     return res.status(200).json({ message: "Task updated" });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 
@@ -255,8 +250,7 @@ const deleteTaskById = async (req, res) => {
     await Task.destroy({ where: { id } });
     return res.status(200).json({ message: "Task deleted" });
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: `ERROR | ${error.message}` });
   }
 };
 

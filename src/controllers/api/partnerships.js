@@ -16,9 +16,12 @@ const createPartnership = async (req, res) => {
       partnership: partnership,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create partnership | ${error.message}`);
-
-    return res.status(500).json({ success: false });
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: `[ERROR]: Failed to create partnership | ${error.message}`,
+      });
   }
 };
 
@@ -37,8 +40,7 @@ const getPartnershipsByMenteeId = async (req, res) => {
 
     return res.json(partnerships);
   } catch (error) {
-    console.error(`ERROR | ${error.message}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ message: error });
   }
 };
 

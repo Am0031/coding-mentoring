@@ -33,48 +33,9 @@ const prepareMenteeFrameworkData = async () => {
   return menteeFrameworkData;
 };
 
-// const menteeFrameworkData = [
-//   {
-//     menteeId: 1,
-//     frameworkId: 2,
-//     level: "Dabbler",
-//   },
-//   {
-//     menteeId: 2,
-//     frameworkId: 5,
-//     level: "Apprentice",
-//   },
-//   {
-//     menteeId: 2,
-//     frameworkId: 6,
-//     level: "Apprentice",
-//   },
-//   {
-//     menteeId: 1,
-//     frameworkId: 1,
-//     level: "dabbler",
-//   },
-//   {
-//     menteeId: 3,
-//     frameworkId: 8,
-//     level: "Practitioner",
-//   },
-//   {
-//     menteeId: 3,
-//     frameworkId: 5,
-//     level: "Practitioner",
-//   },
-//   {
-//     menteeId: 3,
-//     frameworkId: 3,
-//     level: "Practitioner",
-//   },
-// ];
-
 const seedMenteeFrameworks = async () => {
   const menteeFrameworkData = await prepareMenteeFrameworkData();
   await MenteeFramework.bulkCreate(menteeFrameworkData);
-  console.log("Successfully seeded mentees frameworks");
 };
 
 module.exports = seedMenteeFrameworks;

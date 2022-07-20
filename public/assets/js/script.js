@@ -138,11 +138,6 @@ const handleSignUpSubmit = async (e) => {
   const location = $("#location").val().trim().toLowerCase();
   const availability = $("#availability").val().trim();
 
-  // const availabilitySelected = $("input[type=checkbox]:checked");
-  // const availabilityAll = Array.from(availabilitySelected).map(
-  //   (selected) => selected.id
-  // );
-
   const collaborationFormat = $("#collaborationFormat").val().trim();
   const personalGoal = $("#personalGoal").val().trim();
   const profileImageUrl = $("#profileImageUrl").val().trim();
@@ -176,8 +171,6 @@ const handleSignUpSubmit = async (e) => {
           profileImageUrl,
           gitHubUrl,
         };
-
-        console.log(payload);
 
         const response = await fetch("/auth/signup", {
           method: "POST",
@@ -240,7 +233,6 @@ const handleLoginSubmit = async (e) => {
       renderError("login-error", "Failed to login. Try again.");
     }
   } else {
-    console.log("fields");
     renderError("login-error", "Please complete all fields.");
   }
 };
@@ -311,8 +303,6 @@ const handleEditSubmit = async (e) => {
           };
         }
 
-        console.log(payload);
-
         const response = await fetch(`/api/${userType}s/${userId}`, {
           method: "PUT",
           body: JSON.stringify(payload),
@@ -352,15 +342,13 @@ const handleLogout = async () => {
       window.location.assign("/");
     }
   } catch (error) {
-    console.log("Failed to logout");
+    console.error("Failed to logout");
   }
 };
 
 const handleMenteeSearch = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
-  const target = $(e.target);
 
   const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
@@ -397,7 +385,6 @@ const handleMenteeSearch = async (e) => {
     console.error("Search for mentees failed");
   } else {
     const rawData = await response.json();
-    const userType = rawData.userType;
     const data = rawData.mentees;
 
     const menteeCards = generateSimpleCards(data, "mentees");
@@ -409,8 +396,6 @@ const handleMenteeSearch = async (e) => {
 const handleMentorSearch = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
-  const target = $(e.target);
 
   const location = $("#inputLocation").val().trim().toLowerCase();
   const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
@@ -473,6 +458,7 @@ const handleMentorSearch = async (e) => {
     }
   }
 };
+
 const handelResetPasswordSubmit = async (e) => {
   e.preventDefault();
 
@@ -554,8 +540,6 @@ const handleTaskSearch = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
-  const target = $(e.target);
-
   const levelSelect = $("#levelSelect").find(":selected").text();
   let taskLevel;
   levelSelect === "All" ? (taskLevel = "") : (taskLevel = levelSelect);
@@ -592,7 +576,7 @@ const handleTaskSearch = async (e) => {
   }
 };
 
-const handleTaskAssign = async (e, req, res) => {
+const handleTaskAssign = async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
@@ -618,7 +602,6 @@ const handleAssignTaskToPartnership = async (e) => {
     e.preventDefault();
 
     const menteeId = $("#mentee-select").val();
-    console.log(menteeId);
 
     const taskId = JSON.parse(localStorage.getItem("currentTask")) || {};
 
@@ -653,8 +636,6 @@ const handleAssignTaskToPartnership = async (e) => {
 const handleTaskCreate = async (e) => {
   e.stopPropagation();
   e.preventDefault();
-
-  const target = $(e.target);
 
   const taskName = $("#taskName").val().trim();
   const taskDescription = $("#taskDescription").val();
@@ -726,10 +707,10 @@ const handleTaskCreate = async (e) => {
         </div>`
       );
     } else {
-      console.log("error");
+      console.error("error - task create failed");
     }
   } catch (error) {
-    console.log("error");
+    console.error("error - task create failed");
   }
 };
 
@@ -817,8 +798,6 @@ const handleChangeTaskStatus = async (e) => {
       }
     }
   }
-
-  console.log("status changed");
 };
 
 const handleFrameworkSelection = async (e) => {

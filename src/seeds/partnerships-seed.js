@@ -59,29 +59,9 @@ const preparePartnershipData = async () => {
   return partnershipData;
 };
 
-//static set of partnership seeds - starter set
-// const partnershipData = [
-//   {
-//     mentorId: 1,
-//     menteeId: 1,
-//     projectName: "front-end practice",
-//   },
-//   {
-//     mentorId: 2,
-//     menteeId: 2,
-//     projectName: "CLI with node",
-//   },
-//   {
-//     mentorId: 3,
-//     menteeId: 1,
-//     projectName: "javascript practice",
-//   },
-// ];
-
 const seedPartnerships = async () => {
   const partnershipData = await preparePartnershipData();
   await Partnership.bulkCreate(partnershipData);
-  console.log("Successfully seeded partnerships");
 };
 
 module.exports = seedPartnerships;
