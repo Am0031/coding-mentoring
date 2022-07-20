@@ -20,7 +20,7 @@ const renderDashboard = async (req, res) => {
       include: [
         {
           model: Mentee,
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "email"],
           as: "mentee",
           include: [
             {
@@ -29,7 +29,17 @@ const renderDashboard = async (req, res) => {
             },
           ],
         },
-        { model: Mentor, attributes: ["id", "username"], as: "mentor" },
+        {
+          model: Mentor,
+          attributes: ["id", "username", "email"],
+          as: "mentor",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
+        },
         {
           model: Task,
           through: { attributes: ["id", "taskDeadline", "taskComplete"] },
@@ -50,12 +60,18 @@ const renderDashboard = async (req, res) => {
       include: [
         {
           model: Mentee,
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "email"],
           as: "mentee",
+          include: [
+            {
+              model: Framework,
+              attributes: ["id", "frameworkName"],
+            },
+          ],
         },
         {
           model: Mentor,
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "email"],
           as: "mentor",
           include: [
             {
