@@ -226,11 +226,11 @@ body {
 .card-title {
   font-size: 1.5rem;
   text-align: center;
-  color: white;
+  color: var(--alice-blue);
 }
 
 .card-text {
-  color: white;
+  color: var(--alice-blue);
   text-align: center;
 }
 
@@ -249,6 +249,12 @@ body {
 .card-img {
   object-fit: contain;
 }
+
+.card-img-top {
+  max-width: 300px;
+  height: 300px;
+}
+
 .right-align {
   display: flex;
   flex-direction: row-reverse;
@@ -259,12 +265,9 @@ body {
 }
 
 @media screen and (max-width: 576px) {
-  .how-to-container {
-    align-items: center;
-    justify-content: center;
-  }
-
-  .framework-tile-container {
+  .how-to-container,
+  .framework-tile-container,
+  .contact-container {
     align-items: center;
     justify-content: center;
   }
