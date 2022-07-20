@@ -48,20 +48,20 @@ const renderMentorSearch = async (req, res) => {
   }
 };
 
-const renderMentorProfile = async (req, res) => {
-  const { id } = req.params;
-  const mentor = await Mentor.findByPk(id, {
-    include: [
-      {
-        model: Framework,
-        through: ["frameworkId"],
-        attributes: ["frameworkName"],
-      },
-    ],
-  });
-  const chosenMentor = mentor.get({ plain: true });
-  return res.render("mentor-profile", { user: chosenMentor });
-};
+// const renderMentorProfile = async (req, res) => {
+//   const { id } = req.params;
+//   const mentor = await Mentor.findByPk(id, {
+//     include: [
+//       {
+//         model: Framework,
+//         through: ["frameworkId"],
+//         attributes: ["frameworkName"],
+//       },
+//     ],
+//   });
+//   const chosenMentor = mentor.get({ plain: true });
+//   return res.render("mentor-profile", { user: chosenMentor });
+// };
 const renderFAQPage = (req, res) => {
   return res.render("faq", { currentPage: "faq" });
 };
@@ -75,7 +75,6 @@ module.exports = {
   renderInfoPage,
   renderContactPage,
   renderMentorSearch,
-  renderMentorProfile,
   renderFAQPage,
   renderResetPasswordPage,
 };
