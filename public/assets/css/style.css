@@ -44,10 +44,30 @@ body {
   height: 200px;
 }
 
+.modal-info-label {
+  margin-right: 1rem;
+  color: var(--yale-blue);
+}
+.modal-info-line {
+  font-weight: bold;
+}
+
 .card {
   background-color: var(--alice-blue);
 }
-
+.card-color {
+  background-color: var(--yale-blue);
+}
+.card-summary-info {
+  background-color: var(--alice-blue);
+}
+.infoText {
+  margin-top: 1rem;
+}
+.partnership-comment {
+  color: var(--alice-blue);
+  font-weight: bold;
+}
 .how-btn {
   width: 150px;
   height: 150px;

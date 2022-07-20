@@ -15,6 +15,7 @@ const assignTaskForm = $("#assign-task-form");
 const frameworkSelectionContainer = $("#framework-selection-container");
 
 let assignTaskModal;
+let viewProfileModal;
 const partnershipsContainer = $("#partnership-card-container");
 
 const renderError = (id, message) => {
@@ -27,16 +28,16 @@ const renderError = (id, message) => {
 
 const generateSimpleCards = (response, user) => {
   const createCard = (each) => {
-    return `<div class="card border-success mb-3">
-  <div class="card-header d-flex flex-row justify-content-between">
+    return `<div class="card border-info mb-3">
+  <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div><a class="btn btn-secondary" href="/search/${user}/${each.id}" target="_blank" name="view-profile-btn" id=${each.id}">View profile</a>
     <a class="btn btn-primary" name="email-btn" href="mailto:${each.email}" target="_blank" id="email-btn">Email</a></div>
   </div>
-  <div class="card-body">
-    <p class="postText">${each.collaborationFormat}</p>
-    <p class="postText">${each.location}</p>
-    <p class="postText">${each.availability}</p>
+  <div class="card-summary-info d-flex flex-row justify-content-around">
+    <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
+    <p class="infoText"><i class="fa-solid fa-location-pin"></i> ${each.location}</p>
+    <p class="infoText"><i class="fa-solid fa-calendar"></i> ${each.availability}</p>
   </div>
 </div>`;
   };
@@ -46,31 +47,31 @@ const generateSimpleCards = (response, user) => {
 
 const generateMentorCards = (data, partnerships) => {
   const createCard = (each) => {
-    return `<div class="card border-success mb-3">
-  <div class="card-header d-flex flex-row justify-content-between">
+    return `<div class="card border-info mb-3">
+  <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
     <div><button class="btn btn-secondary" name="view-profile-btn" href="/search/mentors/${each.id}" target="_blank" id=${each.id}>View profile</button>
     <button class="btn btn-primary" name="add-partnership-btn" id="add-btn-${each.id}" data-id=${each.id} data-name=${each.username}>Add Mentor</button></div></div>
   </div>
-  <div class="card-body">
-    <p class="postText">${each.collaborationFormat}</p>
-    <p class="postText">${each.location}</p>
-    <p class="postText">${each.availability}</p>
+  <div class="card-summary-info d-flex flex-row justify-content-around">
+    <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
+    <p class="infoText"><i class="fa-solid fa-location-pin"></i> ${each.location}</p>
+    <p class="infoText"><i class="fa-solid fa-calendar"></i> ${each.availability}</p>
   </div>
 </div>`;
   };
   const createDisabledCard = (each) => {
-    return `<div class="card border-success mb-3">
-  <div class="card-header d-flex flex-row justify-content-between">
+    return `<div class="card border-info mb-3">
+  <div class="card-header card-color d-flex flex-row justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div>
     <p class="partnership-comment" data-id=${each.id} data-name=${each.username}>You're already working with this mentor!</p></div>
   </div>
-  <div class="card-body">
-    <p class="postText">${each.collaborationFormat}</p>
-    <p class="postText">${each.location}</p>
-    <p class="postText">${each.availability}</p>
+  <div class="card-summary-info d-flex flex-row justify-content-around">
+    <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
+    <p class="infoText"><i class="fa-solid fa-location-pin"></i> ${each.location}</p>
+    <p class="infoText"><i class="fa-solid fa-calendar"></i> ${each.availability}</p>
   </div>
 </div>`;
   };
@@ -499,6 +500,32 @@ resetPasswordForm.submit(handelResetPasswordSubmit);
 $("#mentorSearch").submit(handleMentorSearch);
 $("#menteeSearch").submit(handleMenteeSearch);
 
+const renderProfileModal = (data) => {
+  viewProfileModal = new bootstrap.Modal(
+    document.getElementById("profileModal")
+  );
+  $("#profileModalLabel").text(`${data.username}`);
+  $("#modalAvatar").attr("src", `${data.profileImageUrl}`);
+  $("#modalEmail").text(`${data.email}`);
+  $("#modalLocation").text(`${data.location}`);
+  $("#modalCollaboration").text(`${data.collaborationFormat}`);
+  $("#modalAvailability").text(`${data.availability}`);
+  $("#modalGoal").text(`${data.personalGoal}`);
+  $("#modalXp").text(`${data.xp}`);
+  const frameworksList = data.frameworks
+    .map((i) => {
+      const frameworkName = i.frameworkName;
+      const level = i.level.level;
+      return `${frameworkName} - ${level} `;
+    })
+    .join(" | ");
+  $("#modalFrameworks").text(`${frameworksList}`);
+  viewProfileModal.show();
+
+  $("#modalCloseBtn").click(() => viewProfileModal.hide());
+  $("#modalDismissCross").click(() => viewProfileModal.hide());
+};
+
 const handleMentorSelection = async (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -532,7 +559,23 @@ const handleMentorSelection = async (e) => {
   }
   if (target.attr("name") === "view-profile-btn") {
     const id = target.attr("id");
-    window.open(`http://localhost:4000/search/mentors/${id}`);
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+    };
+    const response = await fetch(`/api/mentors/${id}`, options);
+
+    if (response.status !== 200) {
+      console.error("Mentor Profile data could not be retrieved");
+    } else {
+      const data = await response.json();
+      renderProfileModal(data);
+    }
+
+    // window.open(`http://localhost:4000/search/mentors/${id}`);
   }
 };
 
