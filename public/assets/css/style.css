@@ -13,6 +13,7 @@
   --cerulean-frost: #6096baff;
   --baby-blue-eyes: #a3cef1ff;
   --battleship-grey: #8b8c89ff;
+  --dark: #343a40;
 }
 
 body {
@@ -83,7 +84,8 @@ body {
 }
 
 footer {
-  background-color: var(--battleship-grey);
+  background-color: var(--dark);
+  color: var(--alice-blue);
   text-align: center;
 }
 
