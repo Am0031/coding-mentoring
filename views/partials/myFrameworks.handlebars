@@ -1,14 +1,21 @@
-<h2>My frameworks</h2>
-<div class="card" id="user-frameworks-container">
-  <p>My Selected frameworks</p>
-  <div class="d-flex flex-row justify-content-around mb-3" id="my-frameworks-container">
-    {{#each userFrameworks}}
-      <div class="framework-icon ml-3 mr-3" id="my-framework-{{frameworkId}}">
-        {{framework.frameworkName}}
-      </div>
-    {{/each}}
+<div class="container m-3">
+  <h2 class="mb-3 mt-3">My frameworks</h2>
+  <div class="card card-color" id="user-frameworks-container">
+    <h4 class="card-title">My Selected frameworks</h4>
+    <div class="d-flex flex-row justify-content-around mb-3" id="my-frameworks-list-container">
+      {{#each userFrameworks}}
+        <div class="d-flex flex-column ml-3 mr-3">
+          <div class="framework-icon" id="my-framework-{{frameworkId}}">
+            <span class="btn btn-info code-label">{{framework.frameworkName}}</span>
+          </div>
+          <div class="framework-level text-center">
+           {{level}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
   </div>
-</div>
+
 
 
 
@@ -17,7 +24,7 @@
           class="d-flex flex-column justify-content-center align-items-center"
         >
           <div class="d-flex flex-row justify-content-between">
-            <p>View All frameworks - Click to add or remove</p>
+            <h5 class="ml-5 mr-5">Open to amend your frameworks - Click to add or remove</h5>
             
             <a
               class="btn btn-primary"
@@ -67,5 +74,7 @@
             <p class="text-center"> Click on the + icon to add/update or on the x icon to remove</p>
           </div>
         </div>
+
+      </div>
 
       </div>

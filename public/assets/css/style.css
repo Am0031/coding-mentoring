@@ -72,6 +72,15 @@ body {
   width: 150px;
   height: 150px;
 }
+.framework-level {
+  color: var(--alice-blue);
+}
+.partnership-header {
+  width: 100%;
+}
+#user-frameworks-container {
+  min-height: 100px;
+}
 
 footer {
   background-color: var(--battleship-grey);

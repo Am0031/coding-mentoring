@@ -28,6 +28,21 @@ const renderError = (id, message) => {
   </div>`);
 };
 
+const generateFrameworksString = (response) => {
+  const createFramework = (each) => {
+    return `<div class="d-flex flex-column ml-3 mr-3">
+    <div class="framework-icon" id="my-framework-${each.frameworkId}">
+      <span class="btn btn-info code-label">${each.framework.frameworkName}</span>
+    </div>
+    <div class="framework-level text-center">
+     ${each.level}
+    </div>
+  </div>`;
+  };
+  const responseHtml = response.map(createFramework).join("");
+  return responseHtml;
+};
+
 const generateSimpleCards = (response) => {
   const createCard = (each) => {
     return `<div class="card border-info mb-3">
@@ -927,14 +942,29 @@ const handleFrameworkSelection = async (e) => {
     } else {
       const frameworkUpdate = await response.json();
       const newId = frameworkUpdate.id;
-      if (addedId === 0) {
-        $(`#my-frameworks-container`)
-          .append(`<div class="framework-icon ml-3 mr-3" id="my-framework-${frameworkUpdate.frameworkId}">
-        ${frameworkUpdate.frameworkName}
-      </div>`);
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      };
+      const updatedFrameworks = await fetch(`/api/frameworks/user`, options);
+
+      if (updatedFrameworks.status !== 200) {
+        console.error("Updated frameworks could not be retrieved");
+      } else {
+        const data = await updatedFrameworks.json();
+        const string = generateFrameworksString(data);
+        $(`#my-frameworks-list-container`).empty();
+        $("#my-frameworks-list-container").append(string);
+
+        $(`#framework-selection-btn-${frameworkId}`).attr(
+          "data-added-id",
+          newId
+        );
+        $(`#framework-selection-name-${frameworkId}`).addClass("added-status");
       }
-      $(`#framework-selection-btn-${frameworkId}`).attr("data-added-id", newId);
-      $(`#framework-selection-name-${frameworkId}`).addClass("added-status");
     }
   }
 };

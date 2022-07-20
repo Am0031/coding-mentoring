@@ -83,7 +83,7 @@ const renderDashboard = async (req, res) => {
   if (userType === "mentor") {
     const data = await MentorFramework.findAll({
       where: { mentorId: id },
-      attributes: ["id", "mentorId", "frameworkId"],
+      attributes: ["id", "mentorId", "frameworkId", "level"],
       include: [
         {
           model: Framework,
@@ -95,7 +95,7 @@ const renderDashboard = async (req, res) => {
   } else {
     const data = await MenteeFramework.findAll({
       where: { menteeId: id },
-      attributes: ["id", "menteeId", "frameworkId"],
+      attributes: ["id", "menteeId", "frameworkId", "level"],
       include: [
         {
           model: Framework,
