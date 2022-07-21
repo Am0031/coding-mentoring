@@ -74,6 +74,13 @@ body {
   background-color: var(--yale-blue);
 }
 
+.signup-info {
+  color: var(--battleship-grey);
+  margin-left: 4px;
+  margin-bottom: 12px;
+  font-weight: 200;
+}
+
 .aside-info {
   width: 25%;
   margin: 0;

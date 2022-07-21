@@ -4,8 +4,10 @@
   <section class="mt-4 border p-3 rounded-2 bg-light">
     <h2 class="text-center">Edit Your Profile</h2>
     <hr />
+
+    <h6 class="signup-info mt-4">Personal Information</h6>
     
-    <form class="mt-4" id="update-form" data-user-type="{{userType}}" data-user-id="{{currentUser.id}}">
+    <form id="update-form" data-user-type="{{userType}}" data-user-id="{{currentUser.id}}">
       <div class="mb-3">
         <input
           type="text"
@@ -38,6 +40,10 @@
         />
       </div>
 
+      <hr />
+
+    <h6 class="signup-info">Login Information</h6>
+
       <div class="mb-3">
         <input
           type="emailAddress"
@@ -68,6 +74,10 @@
           placeholder="Confirm new password"
         />
       </div>
+
+    <hr />
+
+    <h6 class="signup-info">Profile Information</h6>
 
       <div>
         <select class="sign-up-select form-select mb-3" id="availability" aria-label="availability">
@@ -106,6 +116,10 @@
           placeholder="Enter personal goal*"
         />
       </div>
+
+    <hr />
+
+    <h6 class="signup-info">Links</h6>
 
       <div class="mb-3">
         <input
