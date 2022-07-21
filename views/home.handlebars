@@ -10,12 +10,15 @@
             <div class="mx-auto p-2 ">
                 <div class="col-md-12">
                     <h1 class="welcome-text text-center p-3 display-1 fw-bold">Welcome to MentorMe</h1>
-
-{{#unless isLoggedIn}}
+{{#if isLoggedIn}}
+                    <div class="mx-auto col-6">
+                        <a class="btn btn-homepage btn-lg mt-4" href="/dashboard" role="button">Go To My Dashboard</a>
+                    </div>
+{{else }}
                     <div class="mx-auto col-6">
                         <a class="btn btn-homepage btn-lg mt-4" href="/signup" role="button">Get Started</a>
                     </div>
-{{/unless}}
+{{/if}}
                 </div>
             </div>
         </section>
@@ -150,11 +153,15 @@
 
                 </div>
 
-{{#unless isLoggedIn}}
-                <div class="mx-auto col-8">
-                    <a class="btn btn-primary btn-lg mt-4 mb-4" href="/signup" role="button">Get Started</a>
-                </div>
-{{/unless}}
+{{#if isLoggedIn}}
+                    <div class="mx-auto col-6">
+                        <a class="btn btn-homepage btn-lg mt-4" href="/dashboard" role="button">Go To My Dashboard</a>
+                    </div>
+{{else }}
+                    <div class="mx-auto col-6">
+                        <a class="btn btn-homepage btn-lg mt-4" href="/signup" role="button">Get Started</a>
+                    </div>
+{{/if}}
 
             </div>
         </section>

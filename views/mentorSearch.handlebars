@@ -18,10 +18,12 @@
                   <img class="avatar" id="modalAvatar" src="" />
                 </div>
               <div class="profile-info">
+                {{#if isLoggedIn}}
                 <div class="modal-info-div d-flex flex-row">
                 <p class="modal-info-label" id="modalLabelEmail"><i class="fa-solid fa-envelope"></i> Email:</p>
                 <p class="modal-info-line" id="modalEmail"></p>
                 </div>
+                {{/if}}
                 <div class="modal-info-div d-flex flex-row">
                 <p class="modal-info-label" id="modalLabelLocation"><i class="fa-solid fa-location-pin"></i> Location:</p>
                 <p class="modal-info-line" id="modalLocation"></p>
