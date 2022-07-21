@@ -145,6 +145,7 @@ const generateTaskCards = (data) => {
 
 const handleSignUpSubmit = async (e) => {
   e.preventDefault();
+  e.stopPropagation();
 
   const userType = $("input[type=radio]:checked").attr("id");
 
@@ -333,7 +334,7 @@ const handleEditSubmit = async (e) => {
         const data = await response.json();
 
         if (data.success) {
-          window.location.assign("/dashboard");
+          window.location.replace("/dashboard");
         } else {
           renderError("edit-error", "Failed to update account. Try again.");
         }
@@ -511,12 +512,12 @@ const handelResetPasswordSubmit = async (e) => {
     renderError("login-error", "Please complete all fields.");
   }
 };
-signupForm.submit(handleSignUpSubmit);
-loginForm.submit(handleLoginSubmit);
-logoutBtn.click(handleLogout);
-resetPasswordForm.submit(handelResetPasswordSubmit);
-$("#mentorSearch").submit(handleMentorSearch);
-$("#menteeSearch").submit(handleMenteeSearch);
+// signupForm.submit(handleSignUpSubmit);
+// loginForm.submit(handleLoginSubmit);
+// logoutBtn.click(handleLogout);
+// resetPasswordForm.submit(handelResetPasswordSubmit);
+// $("#mentorSearch").submit(handleMentorSearch);
+// $("#menteeSearch").submit(handleMenteeSearch);
 
 const renderProfileModal = (data) => {
   viewProfileModal = new bootstrap.Modal(

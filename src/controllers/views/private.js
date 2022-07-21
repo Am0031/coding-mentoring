@@ -9,8 +9,8 @@ const {
 } = require("../../models");
 
 const renderDashboard = async (req, res) => {
-  const { userType, user } = req.session;
-  const id = user.id;
+  const { userType } = req.session;
+  const id = req.session.user.id;
 
   let userData;
   if (userType === "mentor") {
@@ -137,6 +137,15 @@ const renderDashboard = async (req, res) => {
     });
     frameworks[index].addedId = i.id;
   });
+
+  let user;
+  if (userType === "mentor") {
+    const data = await Mentor.findByPk(id);
+    user = data.get({ plain: true });
+  } else {
+    const data = await Mentee.findByPk(id);
+    user = data.get({ plain: true });
+  }
 
   return res.render("dashboard", {
     user: user,
