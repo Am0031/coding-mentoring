@@ -383,7 +383,8 @@ body {
 
   .db-container,
   .assigned,
-  .task-info {
+  .task-info,
+  .card-title-info {
     flex-direction: column;
     align-items: center;
     justify-content: center;

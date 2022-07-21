@@ -46,7 +46,7 @@ const generateFrameworksString = (response) => {
 const generateSimpleCards = (response) => {
   const createCard = (each) => {
     return `<div class="card border-info mb-3">
-  <div class="card-header card-color d-flex flex-row justify-content-between">
+  <div class="card-header card-color d-flex card-title-info justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div><button class="btn btn-secondary" data-id="" name="view-profile-btn" id=${each.id}">View profile</button>
     <button class="btn btn-primary" name="email-btn" data-email=${each.email}" id="email-btn">Email</button></div>
@@ -65,7 +65,7 @@ const generateSimpleCards = (response) => {
 const generateMentorCards = (data, partnerships) => {
   const createCard = (each) => {
     return `<div class="card border-info mb-3">
-  <div class="card-header card-color d-flex flex-row justify-content-between">
+  <div class="card-header card-color d-flex card-title-info justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
     <div><button class="btn btn-secondary" name="view-profile-btn" id=${each.id}>View profile</button>
@@ -81,7 +81,7 @@ const generateMentorCards = (data, partnerships) => {
 
   const createDisabledCard = (each) => {
     return `<div class="card border-info mb-3">
-  <div class="card-header card-color d-flex flex-row justify-content-between">
+  <div class="card-header card-color d-flex card-title-info justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div>
     <p class="partnership-comment" data-id=${each.id} data-name=${each.username}>You're already working with this mentor!</p></div>
