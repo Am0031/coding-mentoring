@@ -116,11 +116,12 @@ const generateMentorCards = (data, partnerships) => {
 
 const generateTaskCards = (data) => {
   const createCard = (each) => {
+    const capitalisedLevel = each.taskLevel.toUpperCase();
     return `<div class="card mb-3" id="task-container-${each.id}">
   <div class="task-info">
     <div class="d-flex flex-row align-items-center"><h5 class="mr-2 col-md-12">${each.taskName}</h5></div>
     <p class="btn btn-info mr-2 mb-0 col-md-2">${each.frameworkName}</p>
-    <p class="btn btn-info mr-2 mb-0 col-md-2">${each.taskLevel}</p>
+    <p class="btn btn-info mr-2 mb-0 col-md-2">${capitalisedLevel}</p>
     <a class="btn btn-primary col-6 col-md-2 m-2" data-bs-toggle="collapse" href="#collapse-${each.id}" role="button" aria-expanded="false" aria-controls="collapse-${each.id}" data-id=${each.id}>
     View Details
     </a>
