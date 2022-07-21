@@ -82,7 +82,7 @@ const renderDashboard = async (req, res) => {
         },
         {
           model: Task,
-          through: { attributes: ["taskDeadline", "taskComplete"] },
+          through: { attributes: ["id", "taskDeadline", "taskComplete"] },
           include: [
             {
               model: Framework,
