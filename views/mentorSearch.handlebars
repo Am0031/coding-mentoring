@@ -63,7 +63,7 @@
 
       <p class="mb-2">Filter your search here.</br>If you choose to not apply a filter for any field, the search will return results for all options.</p>
 
-      <form class="text-left" id="mentorSearch">
+      <form class="text-left" id={{#if isLoggedIn}}"mentorSearch"{{else}}"publicMentorSearch"{{/if}}>
         <fieldset>
           <div class="form-group mt-4">
             <label for="location" class="form-label">City</label>

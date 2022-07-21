@@ -3,6 +3,7 @@ const loginForm = $("#login-form");
 const updateInfoForm = $("#update-form");
 const logoutBtn = $("#logout-btn");
 const resetPasswordForm = $("#reset-password-form");
+const publicMentorSearchForm = $("#publicMentorSearch");
 const mentorSearchForm = $("#mentorSearch");
 const menteeSearchForm = $("#menteeSearch");
 const mentorCardsContainer = $("#mentor-card-container");
@@ -40,6 +41,25 @@ const generateFrameworksString = (response) => {
   </div>`;
   };
   const responseHtml = response.map(createFramework).join("");
+  return responseHtml;
+};
+
+const generatePublicMentorCards = (response) => {
+  const createCard = (each) => {
+    return `<div class="card border-info mb-3">
+  <div class="card-header card-color d-flex card-title-info justify-content-between">
+    <h4 class="card-title">${each.username}</h4>
+    <div><button class="btn btn-secondary" data-id="" name="view-profile-btn" id=${each.id}">View profile</button>
+    </div>
+  </div>
+  <div class="card-summary-info d-flex flex-row justify-content-around">
+    <p class="infoText"><i class="fa-solid fa-chalkboard-user"></i> ${each.collaborationFormat}</p>
+    <p class="infoText"><i class="fa-solid fa-location-pin"></i> ${each.location}</p>
+    <p class="infoText"><i class="fa-solid fa-calendar"></i> ${each.availability}</p>
+  </div>
+</div>`;
+  };
+  const responseHtml = response.map(createCard).join("");
   return responseHtml;
 };
 
@@ -477,6 +497,54 @@ const handleMentorSearch = async (e) => {
       $("#mentor-browse-container").empty();
       $("#mentor-browse-container").append(mentorCards);
     }
+  }
+};
+
+const handlePublicMentorSearch = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const location = $("#inputLocation").val().trim().toLowerCase();
+  const collaborationFormatSelect = $("#formatSelect").find(":selected").text();
+
+  let collaborationFormat;
+
+  collaborationFormatSelect === "All"
+    ? (collaborationFormat = "")
+    : (collaborationFormat = collaborationFormatSelect);
+
+  const allChecked = $("input[type=checkbox]:checked");
+  const checkboxes = Array.from(allChecked).map((checkbox) =>
+    parseInt(checkbox.id)
+  );
+
+  //passing checkboxes array, collaboration format string and city string into our body object
+  const searchBody = {
+    framework: checkboxes,
+    collaborationFormat,
+    location,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(searchBody),
+  };
+  const response = await fetch("/api/mentors", options);
+
+  if (response.status !== 200) {
+    console.error("Search for mentors failed");
+  } else {
+    const rawData = await response.json();
+
+    const data = rawData.mentors;
+
+    const mentorCards = generatePublicMentorCards(data);
+    $("#mentor-browse-container").empty();
+    $("#mentor-browse-container").append(mentorCards);
   }
 };
 
@@ -955,6 +1023,7 @@ signupForm.submit(handleSignUpSubmit);
 loginForm.submit(handleLoginSubmit);
 updateInfoForm.submit(handleEditSubmit);
 logoutBtn.click(handleLogout);
+publicMentorSearchForm.submit(handlePublicMentorSearch);
 mentorSearchForm.submit(handleMentorSearch);
 menteeSearchForm.submit(handleMenteeSearch);
 mentorCardsContainer.click(handleMentorSelection);
