@@ -141,6 +141,10 @@ body {
   color: var(--accent);
 }
 
+.partnership-container,
+.frameworks-container {
+  margin: 3rem;
+}
 .btn-secondary {
   background-color: var(--baby-blue-eyes);
   color: var(--yale-blue);
@@ -406,7 +410,8 @@ body {
 
   .partnership-container,
   .frameworks-container {
-    margin: auto;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .aside-info,
