@@ -46,7 +46,7 @@ const generateFrameworksString = (response) => {
 const generateSimpleCards = (response) => {
   const createCard = (each) => {
     return `<div class="card border-info mb-3">
-  <div class="card-header card-color d-flex flex-row justify-content-between">
+  <div class="card-header card-color d-flex card-title-info justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div><button class="btn btn-secondary" data-id="" name="view-profile-btn" id=${each.id}">View profile</button>
     <button class="btn btn-primary" name="email-btn" data-email=${each.email}" id="email-btn">Email</button></div>
@@ -65,7 +65,7 @@ const generateSimpleCards = (response) => {
 const generateMentorCards = (data, partnerships) => {
   const createCard = (each) => {
     return `<div class="card border-info mb-3">
-  <div class="card-header card-color d-flex flex-row justify-content-between">
+  <div class="card-header card-color d-flex card-title-info justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div class="add-partnership-div-${each.id}">
     <div><button class="btn btn-secondary" name="view-profile-btn" id=${each.id}>View profile</button>
@@ -78,9 +78,10 @@ const generateMentorCards = (data, partnerships) => {
   </div>
 </div>`;
   };
+
   const createDisabledCard = (each) => {
     return `<div class="card border-info mb-3">
-  <div class="card-header card-color d-flex flex-row justify-content-between">
+  <div class="card-header card-color d-flex card-title-info justify-content-between">
     <h4 class="card-title">${each.username}</h4>
     <div>
     <p class="partnership-comment" data-id=${each.id} data-name=${each.username}>You're already working with this mentor!</p></div>
@@ -115,24 +116,25 @@ const generateMentorCards = (data, partnerships) => {
 
 const generateTaskCards = (data) => {
   const createCard = (each) => {
+    const capitalisedLevel = each.taskLevel.toUpperCase();
     return `<div class="card mb-3" id="task-container-${each.id}">
-  <div class="card-header d-flex flex-row justify-content-between align-items-center">
-    <div class="d-flex flex-row align-items-center"><h4 class="card-title mr-2">${each.taskName}</h4>
-    <p class="btn btn-dark mr-2 mb-0">${each.frameworkName}</p>
-    <p class="btn btn-dark mr-2 mb-0">${each.taskLevel}</p></div>
-    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-${each.id}" role="button" aria-expanded="false" aria-controls="collapse-${each.id}" data-id=${each.id}>
+  <div class="task-info">
+    <div class="d-flex flex-row align-items-center"><h5 class="mr-2 col-md-12">${each.taskName}</h5></div>
+    <p class="btn btn-info mr-2 mb-0 col-md-2">${each.frameworkName}</p>
+    <p class="btn btn-info mr-2 mb-0 col-md-2">${capitalisedLevel}</p>
+    <a class="btn btn-primary col-6 col-md-2 m-2" data-bs-toggle="collapse" href="#collapse-${each.id}" role="button" aria-expanded="false" aria-controls="collapse-${each.id}" data-id=${each.id}>
     View Details
     </a>
     </div>
   <div class="collapse" id="collapse-${each.id}">
-    <div class="card card-body">
-        <div class="card-body d-flex flex-column justify-content-center" id="task-details-container-${each.id}">
+    <div class="task-card">
+        <div class="d-flex flex-column justify-content-center" id="task-details-container-${each.id}">
           <div class="d-flex flex-column">
-            <p class="task-detail">Points: ${each.points}</p>
-            <p class="task-detail">Description: ${each.taskDescription}</p>
-            <p class="task-detail">Useful resources: ${each.resourceURL}</p>
+            <p class="task-detail"><span class="sub-title xp">Experience Points</span> ${each.points}</p>
+            <p class="task-detail"><span class="sub-title">Description</span> ${each.taskDescription}</p>
+            <p class="task-detail"><span class="sub-title">Useful resources</span> ${each.resourceURL}</p>
           </div>
-          <button class="btn btn-primary" data-id=${each.id} name="assign-task-btn">Assign task to a mentee</button>
+          <button class="btn btn-primary" data-id=${each.id} name="assign-task-btn">Assign Task to a Mentee</button>
         </div>
     </div>
   </div>
@@ -144,6 +146,7 @@ const generateTaskCards = (data) => {
 
 const handleSignUpSubmit = async (e) => {
   e.preventDefault();
+  e.stopPropagation();
 
   const userType = $("input[type=radio]:checked").attr("id");
 
@@ -332,7 +335,7 @@ const handleEditSubmit = async (e) => {
         const data = await response.json();
 
         if (data.success) {
-          window.location.assign("/dashboard");
+          window.location.replace("/dashboard");
         } else {
           renderError("edit-error", "Failed to update account. Try again.");
         }
@@ -476,46 +479,6 @@ const handleMentorSearch = async (e) => {
     }
   }
 };
-
-const handelResetPasswordSubmit = async (e) => {
-  e.preventDefault();
-
-  const email = $("#email").val().trim();
-
-  if (email) {
-    try {
-      const payload = {
-        email,
-      };
-
-      const response = await fetch("/auth/reset-password", {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        window.location.assign("/login");
-      } else {
-        renderError("login-error", "Email address does not exist.");
-      }
-    } catch (error) {
-      renderError("login-error", "Failed to reset password.");
-    }
-  } else {
-    renderError("login-error", "Please complete all fields.");
-  }
-};
-signupForm.submit(handleSignUpSubmit);
-loginForm.submit(handleLoginSubmit);
-logoutBtn.click(handleLogout);
-resetPasswordForm.submit(handelResetPasswordSubmit);
-$("#mentorSearch").submit(handleMentorSearch);
-$("#menteeSearch").submit(handleMenteeSearch);
 
 const renderProfileModal = (data) => {
   viewProfileModal = new bootstrap.Modal(
@@ -661,7 +624,6 @@ const handleTaskSearch = async (e) => {
     $("#task-card-container").empty();
     const data = await response.json();
     const taskCards = generateTaskCards(data);
-    $("#task-card-container").append(`<h2>My search results: </h2>`);
     $("#task-card-container").append(taskCards);
   }
 };
@@ -779,13 +741,13 @@ const handleTaskCreate = async (e) => {
       // $("create-task-section").off("click");
       $("#create-task-section").append(
         `<div>
-        <h2 class="text-center">Your task was created successfully.</h2>
-        <div id="newTaskContainer">
-        <h4 id="task-name">Task Name: ${newTask.taskName}</h4>
-        <h4>Task Description: ${newTask.taskDescription}</h4>
-        <h4>Task Level: ${newTask.taskLevel}</h4>
-        <h4>Task Points: ${newTask.points}</h4>
-        <h4>Framework Name: ${frameworkName}</h4>
+        <h2 class="text-center m-3"><i class="fa-solid fa-circle-check"></i> Your task was created successfully.</h2>
+        <div class="new-task-container mt-3">
+        <h4 id="task-name">Task Name: <span>${newTask.taskName}</span></h4>
+        <h4>Task Description: <span>${newTask.taskDescription}</span></h4>
+        <h4>Task Level: <span>${newTask.taskLevel}</span></h4>
+        <h4>Task Points: <span>${newTask.points}</span></h4>
+        <h4>Framework Name: <span>${frameworkName}</span></h4>
         </div>
         </div>`
       );
@@ -826,7 +788,6 @@ const handleMyTasksSearch = async (e) => {
       $("#task-card-container").empty();
       const data = await response.json();
       const taskCards = generateTaskCards(data);
-      $("#task-card-container").append(`<h2>My tasks</h2>`);
       $("#task-card-container").append(taskCards);
     }
   }
@@ -888,7 +849,7 @@ const handleChangeTaskStatus = async (e) => {
       }
     }
   }
-  if(target.is("button") && target.attr("name") === "email-btn"){
+  if (target.is("button") && target.attr("name") === "email-btn") {
     const email = target.attr("data-email");
     window.open(`mailto:${email}?subject='Hi there from your partner'`);
   }
@@ -917,9 +878,26 @@ const handleFrameworkSelection = async (e) => {
       if (response.status !== 200) {
         console.error("Framework removal failed");
       } else {
-        $(`#my-framework-${id}`).remove();
-        $(`#framework-delete-btn-${id}`).attr("data-added-id", 0);
-        $(`#framework-selection-name-${id}`).removeClass("added-status");
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          redirect: "follow",
+        };
+        const updatedFrameworks = await fetch(`/api/frameworks/user`, options);
+
+        if (updatedFrameworks.status !== 200) {
+          console.error("Updated frameworks could not be retrieved");
+        } else {
+          const data = await updatedFrameworks.json();
+          const string = generateFrameworksString(data);
+          $(`#my-frameworks-list-container`).empty();
+          $("#my-frameworks-list-container").append(string);
+
+          $(`#framework-delete-btn-${id}`).attr("data-added-id", 0);
+          $(`#framework-selection-name-${id}`).removeClass("added-status");
+        }
       }
     }
   }

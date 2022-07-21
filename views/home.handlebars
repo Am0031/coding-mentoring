@@ -5,129 +5,159 @@
 {{/if}}
 
 
-    <main>
-        <section class="homepg welcome-container container card shadow">
+        <section class="welcome-container container-fluid m-0 shadow d-flex justify-content-evenly align-items-center">
             
-            <div class="mx-auto p-2">
+            <div class="mx-auto p-2 ">
                 <div class="col-md-12">
-                    <h1 class="welcome-text text-center p-3">Welcome to the Home Page</h1>
+                    <h1 class="welcome-text text-center p-3 display-1 fw-bold">Welcome to MentorMe</h1>
 
-                    <p class="welcome-text text-center">Click the button below to begin your journey through our site.</p>
-
-                    <div class="mx-auto col-2">
+{{#unless isLoggedIn}}
+                    <div class="mx-auto col-6">
                         <a class="btn btn-homepage btn-lg mt-4" href="/signup" role="button">Get Started</a>
                     </div>
+{{/unless}}
                 </div>
             </div>
         </section>
 
-        <section class="homepg container card shadow ">
+{{#unless isLoggedIn}}
+
+        <section class="homepg container-fluid card shadow ">
             <div class="p-2 row">
                 <div class="col-md-12">
-                    <h1 class="text-center p-3">How-to</h1>
-                    <p class="text-center">Sign up to begin, then set up your profile and finally, find mentors/mentees to connect with!</p>
+                    <h1 class="text-center pt-3">How To</h1>
+                    <p class="text-center">Sign up to get started, then set up your profile and find mentors and mentees to connect with!</p>
                 </div>
 
-                
-                <div class="row mx-auto">
+                <div class="how-to-container row mx-auto d-flex justify-content-evenly align-items-center flex-wrap">
 
-                    <div class="p-2">
-                        <a class="btn btn-primary btn-lg how-btn" href="/signup" role="button">
+                    <div class="p-4">
+                        <a class="btn btn-primary btn-lg how-btn border-0" href="/signup" role="button">
                             <div class="how-to-btn">
-                                <i class="fa-solid fa-user-plus fa-border fa-2x"></i>
+                                <i class="fa-solid fa-user-plus fa-2x mt-4"></i>
                             </div>
                             
-                            <p class="m-2 p-2">Sign-up</p>
+                            <p class="m-2 p-2">Sign Up</p>
                         </a>
                     </div>
 
-                    <div class="p-2">
-                        <a class="btn btn-primary btn-lg how-btn" href="/signup" role="button">
+                    <div class="p-4">
+                        <a class="btn btn-primary btn-lg how-btn border-0" href="/signup" role="button">
                             <div class="how-to-btn">
-                                <i class="fa-solid fa-address-card fa-border fa-2x"></i>
+                                <i class="fa-solid fa-address-card mt-4 fa-2x"></i>
                             </div>
                             
-                            <p class="m-2 p-2">Set-up</p>
+                            <p class="m-2 p-2">Set Up</p>
                         </a>
                     </div>
 
-                    <div class="p-2">
-                        <a class="btn btn-primary btn-lg how-btn" href="/signup" role="button">
+                    <div class="p-4">
+                        <a class="btn btn-primary btn-lg how-btn border-0" href="/signup" role="button">
                             <div class="">
-                                <i class="fa-solid fa-person-chalkboard fa-border fa-2x"></i>
+                                <i class="fa-solid fa-person-chalkboard mt-4 fa-2x"></i>
                             </div>
                             
-                            <p class="m-2 p-2">Find</p>
+                            <p class="m-2 p-2">Search</p>
                         </a>
                     </div>
 
                 </div>
             </div>
         </section>
+{{/unless}}
 
-        <section class="homepg container card shadow">
+        <section class="homepg container-fluid card shadow mb-3">
 
             <h1 class="text-center p-3">Frameworks</h1>
 
             <div class="mx-auto p-2">
                 
-                <div class="row">
-                    
-                    <div class="p-2 col">
-                        <a class="btn btn-primary btn-lg" href="https://www.w3schools.com/js/default.asp"  target=”_blank” role="button">
-                            <i class="fa-brands fa-js-square fa-3x"></i>
+
+                <div class="framework-tile-container d-flex justify-content-evenly align-items-center flex-wrap">
+                
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/js/default.asp"  target=”_blank” role="button">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="100" height="100"/>
                             
                         </a>
                     </div>
 
-                    <div class="p-2 col">
-                        <a class="btn btn-primary btn-lg" href="https://www.w3schools.com/nodejs/nodejs_intro.asp"  target=”_blank” role="button">
-                            <i class="fa-brands fa-node-js fa-3x"></i>
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/nodejs/nodejs_intro.asp"  target=”_blank” role="button">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="100" height="100"/>
                             
                         </a>
                     </div>
 
-                    <div class="p-2 col">
-                        <a class="btn btn-primary btn-lg" href="https://www.w3schools.com/html/default.asp"  target=”_blank” role="button">
-                            <i class="fa-brands fa-html5 fa-3x"></i>
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/html/default.asp"  target=”_blank” role="button">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="100" height="100"/>
                             
                         </a>
                     </div>
 
-                    <div class="p-2 col">
-                        <a class="btn btn-primary btn-lg" href="https://www.w3schools.com/css/default.asp"  target=”_blank” role="button">
-                            <i class="fa-brands fa-css3-alt fa-3x"></i>
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/css/default.asp"  target=”_blank” role="button">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="100" height="100"/>
                             
                         </a>
                     </div>
 
+
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/git/"  target=”_blank” role="button">
+                            <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="100" height="100"/>
+                            
+                        </a>
                     </div>
-
-                    <div class="row">
-                        <div class="p-2 col">
-                            <a class="btn btn-primary btn-lg" href="https://www.w3schools.com/git/"  target=”_blank” role="button">
-                                <i class="fa-brands fa-git-alt fa-3x"></i>
-                                
-                            </a>
-                        </div>
-            
-
         
-                        <div class="p-2 col-">
-                            <a class="btn btn-primary btn-lg" href="https://www.w3schools.com/angular/"  target=”_blank” role="button">
-                                <i class="fa-brands fa-angular fa-3x"></i>
-                                
-                            </a>
-                        </div>
+
+    
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/angular/"  target=”_blank” role="button">
+                            <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="angular" width="100" height="100"/>
+                            
+                        </a>
                     </div>
 
-                <div class="mx-auto col-4">
-                    <a class="btn btn-primary btn-lg mt-4" href="/signup" role="button">Get Started</a>
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://expressjs.com/"  target=”_blank” role="button">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="100" height="100"/>
+                            
+                        </a>
+                    </div>
+
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/react/"  target=”_blank” role="button">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="100" height="100"/>
+                            
+                        </a>
+                    </div>
+
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://www.w3schools.com/mysql/"  target=”_blank” role="button">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mySQL" width="100" height="100"/>
+                            
+                        </a>
+                    </div>
+
+                    <div class="p-2 col framework-tile">
+                        <a class="btn btn-primary btn-lg fw-btn" href="https://handlebarsjs.com/"  target=”_blank” role="button">
+                            <img src="/assets/images/handlebarsjs-ar21 (1).svg" alt="handlebars" width="100" height="100"/>
+                            
+                        </a>
+                    </div>
+
                 </div>
+
+{{#unless isLoggedIn}}
+                <div class="mx-auto col-8">
+                    <a class="btn btn-primary btn-lg mt-4 mb-4" href="/signup" role="button">Get Started</a>
+                </div>
+{{/unless}}
 
             </div>
         </section>
 
-    </main>
 
 

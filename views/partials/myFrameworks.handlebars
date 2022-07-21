@@ -1,10 +1,10 @@
-<div class="container m-3">
-  <h2 class="mb-3 mt-3">My frameworks</h2>
+<div class="frameworks-container container">
+  <h2 class="mb-3 mt-3 text-center">My Frameworks</h2>
   <div class="card card-color" id="user-frameworks-container">
-    <h4 class="card-title">My Selected frameworks</h4>
-    <div class="d-flex flex-row justify-content-around mb-3" id="my-frameworks-list-container">
+    <h4 class="card-title m-3">Selected Frameworks</h4>
+    <div class="d-flex flex-row justify-content-around flex-wrap m-3" id="my-frameworks-list-container">
       {{#each userFrameworks}}
-        <div class="d-flex flex-column ml-3 mr-3">
+        <div class="d-flex flex-column ml-3 mr-3 mb-3">
           <div class="framework-icon" id="my-framework-{{frameworkId}}">
             <span class="btn btn-info code-label">{{framework.frameworkName}}</span>
           </div>
@@ -24,10 +24,9 @@
           class="d-flex flex-column justify-content-center align-items-center"
         >
           <div class="d-flex flex-row justify-content-between">
-            <h5 class="ml-5 mr-5">Open to amend your frameworks - Click to add or remove</h5>
             
             <a
-              class="btn btn-primary"
+              class="btn btn-primary mt-3"
               data-bs-toggle="collapse"
               href="#collapse-frameworks-selection"
               role="button"
@@ -38,40 +37,42 @@
               See All
             </a>
           </div>
+
+          <h5 class="ml-5 mr-5 mt-3 mb-3">Click <span class="action-i">+</span> to add or <span class="action-i">x</span> to remove</h5>
+
           
           <div class="collapse" id="collapse-frameworks-selection">
            {{#if (isEqualTo userType "mentor")}} 
             <div class="d-flex flex-row flex-wrap justify-content-around" id="framework-selection-container">
               {{#each frameworks}}
-                <div class="framework-item ml-3 mr-3">
+                <div class="framework-item ml-3 mr-3 mb-4 text-center">
                   <p class="framework-name{{#if addedId}} added-status{{/if}}" id="framework-selection-name-{{id}}">{{frameworkName}}</p>
-                    <select id="framework-level-selection-{{id}}">
+                    <select class="level-select" id="framework-level-selection-{{id}}">
                       <option value="guide">Guide</option>
                       <option value="master">Master</option>
                       <option value="guru">Guru</option>
                     </select>
                   <button class="btn btn-secondary" id="framework-selection-btn-{{id}}" data-framework={{id}} name="framework-selection-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>+</button>
-                  <button class="btn btn-danger" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>X</button>
+                  <button class="btn btn-danger" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>x</button>
                 </div>
               {{/each}}
             </div>
             {{else}}
             <div class="d-flex flex-row flex-wrap justify-content-around" id="framework-selection-container">
               {{#each frameworks}}
-                <div class="framework-item ml-3 mr-3">
+                <div class="framework-item ml-3 mr-3 mb-4 text-center">
                   <p class="framework-name{{#if addedId}} added-status{{/if}}" id="framework-selection-name-{{id}}">{{frameworkName}}</p>
-                    <select id="framework-level-selection-{{id}}">
+                    <select class="level-select" id="framework-level-selection-{{id}}">
                       <option value="beginner">Beginner</option>
                       <option value="intermediate">Intermediate</option>
                       <option value="advanced">Advanced</option>
                     </select>
-                  <button class="btn btn-secondary" id="framework-selection-btn-{{id}}" data-framework={{id}} name="framework-selection-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>+</button>
-                  <button class="btn btn-danger" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>X</button>
+                  <button class="btn btn-primary" id="framework-selection-btn-{{id}}" data-framework={{id}} name="framework-selection-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>+</button>
+                  <button class="btn btn-secondary" id="framework-delete-btn-{{id}}" data-framework={{id}} name="framework-delete-btn" data-added-id={{#if addedId}}{{addedId}}{{else}}0{{/if}}>x</button>
                 </div>
               {{/each}}
             </div>
             {{/if}}
-            <p class="text-center"> Click on the + icon to add/update or on the x icon to remove</p>
           </div>
         </div>
 

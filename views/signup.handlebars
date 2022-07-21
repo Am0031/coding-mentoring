@@ -1,6 +1,6 @@
 {{> publicNavBar}}
 
-<main class="container">
+<div class="container">
   <section class="mt-4 border p-3 rounded-2 bg-light">
     <h2 class="text-center">Sign Up</h2>
     <hr />
@@ -18,7 +18,9 @@
 
     <hr />
 
-    <form class="mt-4" id="signup-form">
+    <h6 class="signup-info mt-4">Personal Information</h6>
+
+    <form id="signup-form">
       <div class="mb-3">
         <input
           type="text"
@@ -45,6 +47,10 @@
           placeholder="Enter username*"
         />
       </div>
+
+      <hr />
+
+    <h6 class="signup-info">Login Information</h6>
 
       <div class="mb-3">
         <input
@@ -74,38 +80,12 @@
         />
       </div>
 
-{{!-- checkbox and dropdown formats --}}
-      {{!-- <div class="ml-1 mb-3">
-        <p id="availability">Select availability*</p>
-      </div> --}}
+    <hr />
 
-{{!-- TODO fix bug when clicking on words instead of boxes --}}
-      {{!-- <div class="form-check ml-2 mb-3">
-        <input class="form-check-input" type="checkbox" id="weekdays">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Weekdays
-        </label>
-        <input class="form-check-input" type="checkbox" id="weekends">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Weekends
-        </label>
-        <input class="form-check-input" type="checkbox" id="mornings">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Mornings
-        </label>
-        <input class="form-check-input" type="checkbox" id="afternoons">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Afternoons
-        </label>
-        <input class="form-check-input" type="checkbox" id="evenings">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Evenings
-        </label>
-      </div> --}}
+    <h6 class="signup-info">Profile Information</h6>
 
-{{!-- TODO fix styling and dropdown functionality --}}
       <div>
-        <select class="form-select mb-3" id="availability" aria-label="availability">
+        <select class="form-select mb-3 sign-up-select" id="availability" aria-label="availability">
           <option selected>Select availability*</option>
           <option value="weekdays">Weekdays</option>
           <option value="weekends">Weekends</option>
@@ -114,7 +94,7 @@
       </div>
 
       <div>
-        <select class="form-select mb-3" id="collaborationFormat" aria-label="collaborationFormat">
+        <select class="form-select mb-3 sign-up-select" id="collaborationFormat" aria-label="collaborationFormat">
           <option selected>Select collaboration format*</option>
           <option value="online">Online</option>
           <option value="in-person">In-Person</option>
@@ -122,15 +102,6 @@
         </select>
       </div>
       
-      {{!-- <div>
-        <select class="form-select mb-3" id="location" aria-label="location">
-          <option selected>Select location*</option>
-          <option value="birmingham">Birmingham</option>
-          <option value="london">London</option>
-          <option value="manchester">Manchester</option>
-        </select>
-      </div> --}}
-
       <div class="mb-3">
         <input
           type="text"
@@ -148,6 +119,10 @@
           placeholder="Enter personal goal*"
         />
       </div>
+
+    <hr />
+
+    <h6 class="signup-info">Links</h6>
 
       <div class="mb-3">
         <input
@@ -179,4 +154,4 @@
 
     </form>
   </section>
-</main>
+</div>
