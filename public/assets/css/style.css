@@ -188,7 +188,8 @@ body {
 .sign-up-select,
 .collaboration-select,
 .task-select,
-.level-select {
+.level-select,
+.mentee-select {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -344,14 +345,20 @@ body {
   font-style: italic;
 }
 
+.task-card {
+  background-color: var(--alice-blue);
+}
+
 .db-container,
-.assigned {
+.assigned,
+.task-info {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.assigned {
+.assigned,
+.task-info {
   align-items: center;
 }
 
@@ -368,7 +375,8 @@ body {
   }
 
   .db-container,
-  .assigned {
+  .assigned,
+  .task-info {
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -380,11 +388,17 @@ body {
     text-align: center;
   }
 
-  .partnerships-container,
-  .partnership-details,
-  .partnership-card-container {
+  .partnerships-info,
+  .my-frameworks-container {
     width: 90vw;
     font-size: medium;
+    margin: auto;
+    padding: 0%;
+  }
+
+  .partnership-container,
+  .frameworks-container {
+    margin: auto;
   }
 
   .aside-info,

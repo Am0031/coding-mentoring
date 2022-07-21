@@ -117,23 +117,23 @@ const generateMentorCards = (data, partnerships) => {
 const generateTaskCards = (data) => {
   const createCard = (each) => {
     return `<div class="card mb-3" id="task-container-${each.id}">
-  <div class="card-header d-flex flex-row justify-content-between align-items-center">
-    <div class="d-flex flex-row align-items-center"><h4 class="card-title mr-2">${each.taskName}</h4>
-    <p class="btn btn-dark mr-2 mb-0">${each.frameworkName}</p>
-    <p class="btn btn-dark mr-2 mb-0">${each.taskLevel}</p></div>
-    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-${each.id}" role="button" aria-expanded="false" aria-controls="collapse-${each.id}" data-id=${each.id}>
+  <div class="task-info">
+    <div class="d-flex flex-row align-items-center"><h5 class="mr-2 col-md-12">${each.taskName}</h5></div>
+    <p class="btn btn-info mr-2 mb-0 col-md-2">${each.frameworkName}</p>
+    <p class="btn btn-info mr-2 mb-0 col-md-2">${each.taskLevel}</p>
+    <a class="btn btn-primary col-6 col-md-2 m-2" data-bs-toggle="collapse" href="#collapse-${each.id}" role="button" aria-expanded="false" aria-controls="collapse-${each.id}" data-id=${each.id}>
     View Details
     </a>
     </div>
   <div class="collapse" id="collapse-${each.id}">
-    <div class="card card-body">
-        <div class="card-body d-flex flex-column justify-content-center" id="task-details-container-${each.id}">
+    <div class="task-card">
+        <div class="d-flex flex-column justify-content-center" id="task-details-container-${each.id}">
           <div class="d-flex flex-column">
-            <p class="task-detail">Points: ${each.points}</p>
-            <p class="task-detail">Description: ${each.taskDescription}</p>
-            <p class="task-detail">Useful resources: ${each.resourceURL}</p>
+            <p class="task-detail"><span class="sub-title xp">Experience Points</span> ${each.points}</p>
+            <p class="task-detail"><span class="sub-title">Description</span> ${each.taskDescription}</p>
+            <p class="task-detail"><span class="sub-title">Useful resources</span> ${each.resourceURL}</p>
           </div>
-          <button class="btn btn-primary" data-id=${each.id} name="assign-task-btn">Assign task to a mentee</button>
+          <button class="btn btn-primary" data-id=${each.id} name="assign-task-btn">Assign Task to a Mentee</button>
         </div>
     </div>
   </div>
