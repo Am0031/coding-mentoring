@@ -888,7 +888,7 @@ const handleChangeTaskStatus = async (e) => {
       }
     }
   }
-  if(target.is("button") && target.attr("name") === "email-btn"){
+  if (target.is("button") && target.attr("name") === "email-btn") {
     const email = target.attr("data-email");
     window.open(`mailto:${email}?subject='Hi there from your partner'`);
   }

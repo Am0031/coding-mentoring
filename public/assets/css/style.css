@@ -96,12 +96,13 @@ body {
 }
 
 .modal-info-label {
-  margin-right: 1rem;
   color: var(--yale-blue);
+  font-weight: bold;
+  width: 50%;
 }
 
 .modal-info-line {
-  font-weight: bold;
+  width: 50%;
 }
 
 .avatar-wrapper img {
@@ -124,6 +125,16 @@ body {
 
 .card-summary-info {
   background-color: var(--alice-blue);
+}
+
+.card-summary-info i,
+.modal-body i {
+  color: var(--accent);
+}
+
+.btn-secondary {
+  background-color: var(--baby-blue-eyes);
+  color: var(--yale-blue);
 }
 
 .infoText {
@@ -156,10 +167,6 @@ body {
 #user-frameworks-container {
   min-height: 100px;
 }
-
-/* .login-container {
-  height: 90%;
-} */
 
 .sign-up-select,
 .collaboration-select {
