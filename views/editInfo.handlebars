@@ -69,38 +69,8 @@
         />
       </div>
 
-{{!-- checkbox and dropdown formats --}}
-      {{!-- <div class="ml-1 mb-3">
-        <p id="availability">Select availability*</p>
-      </div> --}}
-
-{{!-- TODO fix bug when clicking on words instead of boxes --}}
-      {{!-- <div class="form-check ml-2 mb-3">
-        <input class="form-check-input" type="checkbox" id="weekdays">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Weekdays
-        </label>
-        <input class="form-check-input" type="checkbox" id="weekends">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Weekends
-        </label>
-        <input class="form-check-input" type="checkbox" id="mornings">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Mornings
-        </label>
-        <input class="form-check-input" type="checkbox" id="afternoons">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Afternoons
-        </label>
-        <input class="form-check-input" type="checkbox" id="evenings">
-        <label class="form-check-label mr-5" for="flexCheckDefault">
-          Evenings
-        </label>
-      </div> --}}
-
-{{!-- TODO fix styling and dropdown functionality --}}
       <div>
-        <select class="form-select mb-3" id="availability" aria-label="availability">
+        <select class="sign-up-select form-select mb-3" id="availability" aria-label="availability">
           <option>Select availability*</option>
           <option {{#if (isEqualTo currentUser.availability "weekdays")}} selected {{/if}}value="weekdays">Weekdays</option>
           <option {{#if (isEqualTo currentUser.availability "weekends")}} selected {{/if}}value="weekends">Weekends</option>
@@ -109,7 +79,7 @@
       </div>
 
       <div>
-        <select class="form-select mb-3" id="collaborationFormat" aria-label="collaborationFormat">
+        <select class="sign-up-select form-select mb-3" id="collaborationFormat" aria-label="collaborationFormat">
           <option>Select collaboration format*</option>
           <option {{#if (isEqualTo currentUser.collaborationFormat "online")}} selected {{/if}} value="online">Online</option>
           <option {{#if (isEqualTo currentUser.collaborationFormat "in-person")}} selected {{/if}} value="in-person">In-Person</option>
@@ -117,15 +87,6 @@
         </select>
       </div>
       
-      {{!-- <div>
-        <select class="form-select mb-3" id="location" aria-label="location">
-          <option>Select location*</option>
-          <option {{#if (isEqualTo currentUser.location "birmingham")}} selected {{/if}} value="birmingham">Birmingham</option>
-          <option {{#if (isEqualTo currentUser.location "london")}} selected {{/if}} value="london">London</option>
-          <option {{#if (isEqualTo currentUser.location "manchester")}} selected {{/if}} value="manchester">Manchester</option>
-        </select>
-      </div> --}}
-
       <div class="mb-3">
         <input
           type="text"

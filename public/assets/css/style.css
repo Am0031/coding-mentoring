@@ -296,6 +296,10 @@ body {
   background-color: var(--yale-blue);
 }
 
+.btn-link:hover {
+  background-color: var(--yale-blue);
+}
+
 @media screen and (max-width: 576px) {
   .how-to-container,
   .framework-tile-container,
