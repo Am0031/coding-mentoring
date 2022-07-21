@@ -75,24 +75,24 @@ body {
 }
 
 .aside-info {
-  width: 20%;
+  width: 25%;
   margin: 0;
+  font-weight: 200;
+}
+
+.aside-info span {
+  font-weight: 400;
 }
 
 .main-info {
-  width: 80%;
-}
-
-.profile-pic-div {
-  height: 200px;
-}
-
-.profile-pic-box {
-  width: 100%;
+  width: 75%;
 }
 
 .profile-pic {
   height: 200px;
+  width: 200px;
+  margin: 18px 0px;
+  border-radius: 50%;
 }
 
 .modal-info-label {
@@ -129,13 +129,19 @@ body {
 
 .card-summary-info i,
 .modal-body i,
-.fa-circle-check {
+.fa-circle-check,
+.aside-info i {
   color: var(--accent);
 }
 
 .btn-secondary {
   background-color: var(--baby-blue-eyes);
   color: var(--yale-blue);
+}
+
+.action-i {
+  font-weight: 800;
+  color: var(--battleship-grey);
 }
 
 .infoText {
@@ -171,7 +177,8 @@ body {
 
 .sign-up-select,
 .collaboration-select,
-.task-select {
+.task-select,
+.level-select {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -298,12 +305,26 @@ body {
   padding-top: 1rem;
 }
 
+.db-btn {
+  font-size: large;
+}
+
 .btn-link {
   background-color: var(--yale-blue);
 }
 
 .btn-link:hover {
   background-color: var(--yale-blue);
+}
+
+.btn-info:hover {
+  background-color: var(--cerulean-frost);
+}
+
+.db-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 @media screen and (max-width: 576px) {
@@ -316,5 +337,20 @@ body {
 
   .welcome-text {
     font-size: 80px;
+  }
+
+  .db-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .aside-info,
+  .main-info {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    /* margin: auto; */
   }
 }

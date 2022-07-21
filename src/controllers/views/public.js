@@ -37,7 +37,7 @@ const renderMentorSearch = async (req, res) => {
     }
     const { isLoggedIn } = req.session;
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("mentor-search", {
+    return res.render("mentorSearch", {
       isLoggedIn,
       userType,
       data: data,

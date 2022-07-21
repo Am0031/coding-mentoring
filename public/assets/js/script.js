@@ -78,6 +78,7 @@ const generateMentorCards = (data, partnerships) => {
   </div>
 </div>`;
   };
+
   const createDisabledCard = (each) => {
     return `<div class="card border-info mb-3">
   <div class="card-header card-color d-flex flex-row justify-content-between">
@@ -661,7 +662,6 @@ const handleTaskSearch = async (e) => {
     $("#task-card-container").empty();
     const data = await response.json();
     const taskCards = generateTaskCards(data);
-    $("#task-card-container").append(`<h2>My search results: </h2>`);
     $("#task-card-container").append(taskCards);
   }
 };
@@ -826,7 +826,6 @@ const handleMyTasksSearch = async (e) => {
       $("#task-card-container").empty();
       const data = await response.json();
       const taskCards = generateTaskCards(data);
-      $("#task-card-container").append(`<h2>My tasks</h2>`);
       $("#task-card-container").append(taskCards);
     }
   }

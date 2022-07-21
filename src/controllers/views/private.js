@@ -156,7 +156,7 @@ const renderMenteeSearch = async (req, res) => {
       return res.status(500).json({ message: "Frameworks not found" });
     }
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("mentee-search", {
+    return res.render("menteeSearch", {
       data: data,
       currentPage: "mentees",
       userType,
@@ -182,6 +182,8 @@ const renderMenteeSearch = async (req, res) => {
 // };
 
 const renderTaskSearch = async (req, res) => {
+  const { userType } = req.session;
+
   try {
     const partnershipsFromDb = await Partnership.findAll({
       where: { mentorId: req.session.user.id },
@@ -206,10 +208,11 @@ const renderTaskSearch = async (req, res) => {
       return res.status(500).json({ message: "Frameworks not found" });
     }
     const data = frameworks.map((d) => d.dataValues);
-    return res.render("task-search", {
+    return res.render("taskSearch", {
       data: data,
       mentees: mentees,
       partnerships: partnerships,
+      userType,
     });
   } catch (error) {
     return res.status(500).json({ message: `ERROR | ${error.message}` });
@@ -217,14 +220,18 @@ const renderTaskSearch = async (req, res) => {
 };
 
 const renderTaskDetails = async (req, res) => {
+  const { userType } = req.session;
+
   const { id } = req.params;
   const task = await Task.findByPk(id);
   //need to check if the task fields need formatting before passing them to the render function
   const chosenTask = task;
-  return res.render("task-details", { user: chosenTask });
+  return res.render("taskDetails", { user: chosenTask, userType });
 };
 
 const renderCreateTask = async (req, res) => {
+  const { userType } = req.session;
+
   try {
     const { id } = req.session.user;
     const frameworks = await Framework.findAll();
@@ -232,7 +239,7 @@ const renderCreateTask = async (req, res) => {
       return res.status(500).json({ message: "Frameworks not found" });
     } else {
       const data = frameworks.map((d) => d.dataValues);
-      return res.render("createTask", { user: id, data: data });
+      return res.render("createTask", { user: id, data: data, userType });
     }
   } catch (error) {
     return res.status(500).json({ message: `ERROR | ${error.message}` });
