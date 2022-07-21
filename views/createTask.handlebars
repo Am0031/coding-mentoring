@@ -35,7 +35,7 @@
             <label for="taskLevel"
               >Please select a level for your task:</label
             >
-            <select id="taskLevel">
+            <select class="task-select" id="taskLevel">
               <option value="beginner">Beginner</option>
               <option value="intermediate">Intermediate</option>
               <option value="advanced">Advanced</option>
@@ -45,7 +45,7 @@
             <label for="framework"
               >Please select a framework for your task:</label
             >
-            <select id="framework">
+            <select class="task-select" id="framework">
               {{#each data}}
               <option value={{id}}>{{frameworkName}}</option>
               {{/each}}

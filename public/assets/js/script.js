@@ -779,13 +779,13 @@ const handleTaskCreate = async (e) => {
       // $("create-task-section").off("click");
       $("#create-task-section").append(
         `<div>
-        <h2 class="text-center">Your task was created successfully.</h2>
-        <div id="newTaskContainer">
-        <h4 id="task-name">Task Name: ${newTask.taskName}</h4>
-        <h4>Task Description: ${newTask.taskDescription}</h4>
-        <h4>Task Level: ${newTask.taskLevel}</h4>
-        <h4>Task Points: ${newTask.points}</h4>
-        <h4>Framework Name: ${frameworkName}</h4>
+        <h2 class="text-center m-3"><i class="fa-solid fa-circle-check"></i> Your task was created successfully.</h2>
+        <div class="new-task-container mt-3">
+        <h4 id="task-name">Task Name: <span>${newTask.taskName}</span></h4>
+        <h4>Task Description: <span>${newTask.taskDescription}</span></h4>
+        <h4>Task Level: <span>${newTask.taskLevel}</span></h4>
+        <h4>Task Points: <span>${newTask.points}</span></h4>
+        <h4>Framework Name: <span>${frameworkName}</span></h4>
         </div>
         </div>`
       );

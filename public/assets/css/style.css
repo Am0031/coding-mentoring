@@ -128,7 +128,8 @@ body {
 }
 
 .card-summary-info i,
-.modal-body i {
+.modal-body i,
+.fa-circle-check {
   color: var(--accent);
 }
 
@@ -169,7 +170,8 @@ body {
 }
 
 .sign-up-select,
-.collaboration-select {
+.collaboration-select,
+.task-select {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -188,6 +190,10 @@ body {
 .form-label {
   font-weight: 600;
   font-size: large;
+}
+
+.new-task-container span {
+  font-weight: 200;
 }
 
 .navbar,
