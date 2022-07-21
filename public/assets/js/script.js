@@ -917,9 +917,26 @@ const handleFrameworkSelection = async (e) => {
       if (response.status !== 200) {
         console.error("Framework removal failed");
       } else {
-        $(`#my-framework-${id}`).remove();
-        $(`#framework-delete-btn-${id}`).attr("data-added-id", 0);
-        $(`#framework-selection-name-${id}`).removeClass("added-status");
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          redirect: "follow",
+        };
+        const updatedFrameworks = await fetch(`/api/frameworks/user`, options);
+
+        if (updatedFrameworks.status !== 200) {
+          console.error("Updated frameworks could not be retrieved");
+        } else {
+          const data = await updatedFrameworks.json();
+          const string = generateFrameworksString(data);
+          $(`#my-frameworks-list-container`).empty();
+          $("#my-frameworks-list-container").append(string);
+
+          $(`#framework-delete-btn-${id}`).attr("data-added-id", 0);
+          $(`#framework-selection-name-${id}`).removeClass("added-status");
+        }
       }
     }
   }
