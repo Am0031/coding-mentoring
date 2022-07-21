@@ -1,4 +1,4 @@
-<div class="container m-3">
+<div class="partnership-container container m-3">
   <h2 class="mb-3 mt-3 text-center">My Partnerships</h2>
   <div
     class="container partnership-card-container"
@@ -10,10 +10,10 @@
             class="d-flex flex-column justify-content-between align-items-center"
           >
             <div
-              class="card-header card-color partnership-header d-flex flex-row justify-content-between align-items-stretch"
-            ><h4 class="card-title mr-2">{{projectName}}</h4>
+              class="card-header card-color partnership-header d-flex flex-row justify-content-between align-items-center"
+            ><h4 class="partnership-name fs-6 mr-2">{{projectName}}</h4>
               <a
-                class="btn btn-primary"
+                class="btn btn-primary col-md-3"
                 data-bs-toggle="collapse"
                 href="#collapse-partnership-{{id}}"
                 role="button"
@@ -27,18 +27,22 @@
             <div class="collapse" id="collapse-partnership-{{id}}">
               <div class="partnership-details">
                 <div
-                  class="d-flex flex-column justify-content-center"
+                  class="task-details d-flex flex-column justify-content-center m-2"
                   id="task-details-container-{{id}}"
                 >
                   <div class="d-flex flex-column">
                     <div>
-                      <p>Partnership Details</p>
-                      <div class="d-flex flex-row justify-content-around">
-                        <p class="mr-3">{{mentor.username}}</p><p class="mr-3">
-                          {{mentor.email}}</p>
-                        <div class="d-flex flex-row"><p class="mr-2">
-                            Frameworks:</p>
+                      <div
+                        class="m-info d-flex flex-row justify-content-left flex-wrap ml-2"
+                      >
+                        <p class="mr-3"><span class="sub-title">Mentor
+                          </span>
+                          {{mentor.username}}</p><p class="m-email mr-3">
+                          {{mentor.email}}
+                        </p>
+                        <div class="d-flex flex-row">
                           {{#each mentor.frameworks}}
+                            -
 
                             <p
                               class="framework-name mr-2 mb-0"
@@ -46,46 +50,55 @@
 
                           {{/each}}
                         </div></div>
-                      <div class="d-flex flex-row justify-content-around">
-                        <p class="mr-3">{{mentee.username}}</p><p class="mr-3">
-                          {{mentee.email}}</p>
-                        <div class="d-flex flex-row"><p class="mr-2">
-                            Frameworks:</p>
-                          {{#each mentee.frameworks}}
+                      <div>
+                        <div
+                          class="m-info d-flex flex-row justify-content-left flex-wrap ml-2"
+                        >
+                          <p class="mr-3"><span class="sub-title">Mentee
+                            </span>
+                            {{mentee.username}}</p><p class="m-email mr-3">
+                            {{mentee.email}}
+                          </p>
+                          <div class="d-flex flex-row">
+                            {{#each mentee.frameworks}}
+                              -
 
-                            <p
-                              class="framework-name mr-2 mb-0"
-                            >{{frameworkName}}</p>
+                              <p
+                                class="framework-name mr-2 mb-0"
+                              >{{frameworkName}}</p>
 
-                          {{/each}}
-                        </div>
+                            {{/each}}
+                          </div></div>
                       </div>
                     </div>
                     {{#if tasks.length}}
-                      <h4>Assigned tasks:</h4>
+                      <h4 class="text-center m-3">Assigned Tasks</h4>
                       {{#each tasks}}
-                        <div
-                          class="d-flex flex-row justify-content-center align-items-center"
-                        >
-                          <p class="task-detail">{{taskName}}
-                            -
-                            {{taskLevel}}
-                            -
+                        <div class="assigned m-2">
+                          <div class="task-detail col-md-4"><span
+                              class="sub-title"
+                            >{{taskName}}</span>
+                          </div>
+
+                          <div class="xp col-md-1">
                             {{points}}
-                            XP - Deadline:
+                            XP
+                          </div>
+
+                          <div class="deadline text-center col-md-2">
+                            <span class="sub-title">Deadline</span>
                             {{formatDate assignedTask.taskDeadline}}
-                          </p>
-                          <p>
-                            Status:
-                            <span
-                              class="status-span
-                                {{assignedTask.taskComplete}}-status"
-                              id="span-task-{{assignedTask.id}}"
-                            >{{formatStatus
-                                assignedTask.taskComplete
-                              }}</span></p>
+                          </div>
+
+                          <div
+                            class="status-span
+                              {{assignedTask.taskComplete}}-status text-center"
+                            id="span-task-{{assignedTask.id}} col-md-2"
+                          >{{formatStatus assignedTask.taskComplete}}
+                          </div>
+
                           <button
-                            class="btn btn-primary m-2"
+                            class="status-btn btn btn-primary m-2 col-md-3"
                             name="change-status-btn"
                             id="status-btn-{{assignedTask.id}}"
                             data-status="{{assignedTask.taskComplete}}"

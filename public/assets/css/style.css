@@ -169,6 +169,16 @@ body {
 
 .partnership-header {
   width: 100%;
+  background-color: var(--alice-blue);
+  color: var(--yale-blue);
+}
+
+.partnership-name {
+  font-size: larger;
+}
+
+.sub-title {
+  font-weight: 800;
 }
 
 #user-frameworks-container {
@@ -201,6 +211,15 @@ body {
 
 .new-task-container span {
   font-weight: 200;
+}
+
+.assigned {
+  border-bottom: solid 0.5px var(--yale-blue);
+}
+
+.xp {
+  color: var(--cerulean-frost);
+  font-weight: 600;
 }
 
 .navbar,
@@ -321,10 +340,19 @@ body {
   background-color: var(--cerulean-frost);
 }
 
-.db-container {
+.m-email {
+  font-style: italic;
+}
+
+.db-container,
+.assigned {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.assigned {
+  align-items: center;
 }
 
 @media screen and (max-width: 576px) {
@@ -339,11 +367,24 @@ body {
     font-size: 80px;
   }
 
-  .db-container {
+  .db-container,
+  .assigned {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
+  }
+
+  .task-detail,
+  .xp {
+    text-align: center;
+  }
+
+  .partnerships-container,
+  .partnership-details,
+  .partnership-card-container {
+    width: 90vw;
+    font-size: medium;
   }
 
   .aside-info,
@@ -352,5 +393,10 @@ body {
     align-items: center;
     width: 100%;
     /* margin: auto; */
+  }
+
+  .m-info {
+    justify-content: center;
+    margin-bottom: 18px;
   }
 }

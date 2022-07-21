@@ -1,11 +1,11 @@
 const moment = require("moment");
 
 const formatDate = (date) => {
-  return moment(date).format("DD/MM/YYYY");
+  return moment(date).format("DD/MM/YY");
 };
 
 const formatStatus = (status) => {
-  return status ? "completed" : "in progress";
+  return status ? "Completed" : "In progress";
 };
 
 const isEqualTo = (data, equalToString) => {

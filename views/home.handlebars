@@ -11,13 +11,16 @@
                 <div class="col-md-12">
                     <h1 class="welcome-text text-center p-3 display-1 fw-bold">Welcome to MentorMe</h1>
 
-
+{{#unless isLoggedIn}}
                     <div class="mx-auto col-6">
                         <a class="btn btn-homepage btn-lg mt-4" href="/signup" role="button">Get Started</a>
                     </div>
+{{/unless}}
                 </div>
             </div>
         </section>
+
+{{#unless isLoggedIn}}
 
         <section class="homepg container-fluid card shadow ">
             <div class="p-2 row">
@@ -26,7 +29,6 @@
                     <p class="text-center">Sign up to get started, then set up your profile and find mentors and mentees to connect with!</p>
                 </div>
 
-                
                 <div class="how-to-container row mx-auto d-flex justify-content-evenly align-items-center flex-wrap">
 
                     <div class="p-4">
@@ -62,6 +64,7 @@
                 </div>
             </div>
         </section>
+{{/unless}}
 
         <section class="homepg container-fluid card shadow mb-3">
 
@@ -118,10 +121,11 @@
                     </div>
                 </div>
 
-
+{{#unless isLoggedIn}}
                 <div class="mx-auto col-8">
                     <a class="btn btn-primary btn-lg mt-4 mb-4" href="/signup" role="button">Get Started</a>
                 </div>
+{{/unless}}
 
             </div>
         </section>
