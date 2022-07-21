@@ -223,7 +223,7 @@ body {
   overflow-y: auto;
 }
 
-.mentor-search-form {
+.search-form {
   background-color: var(--form);
 }
 
@@ -290,6 +290,10 @@ body {
 
 .left-align {
   padding-top: 1rem;
+}
+
+.btn-link {
+  background-color: var(--yale-blue);
 }
 
 @media screen and (max-width: 576px) {

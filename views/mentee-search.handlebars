@@ -1,6 +1,5 @@
   {{> privateNavBar}}
 
-<div class="container" id="search-container">
   <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -51,46 +50,51 @@
         </div>
       </div>
     </div>
-      <div style="margin-top: 20px" class="text-center card-header">
-        <h1 class="mb-4">Search for a mentee</h1>
-        <form class="text-left" id="menteeSearch">
-          <fieldset>
-            <div class="form-group">
-              <label for="location" class="form-label">Filter by city (optional - default all)</label>
-              <input
-                type="text"
-                class="form-control"
-                id="inputLocation"
-                aria-describedby="locationHelp"
-                placeholder="Enter a city"
-                maxlength="30"
-              />
-            </div>
-            <div class="form-group">
-              <label for="inputFormat" class="form-label">Filter by collaboration format (default all)</label>
-              <select class="form-select" aria-label="Default select" id="formatSelect">
-                <option selected>All</option>
-                <option value="online">online</option>
-                <option value="in-person">in-person</option>
-            </select>
-            </div>
-            <div class="form-group">
-              <p class="form-label">Filter by framework (default all)</p>
-              <div class="d-flex flex-row flex-wrap">
-                {{>frameworks}}
-                
-                </div>
-            </div>
-            
-            <div class="form-group d-flex flex-column align-items-center">
-              <button type="submit" class="btn btn-primary" id="mentee-search-btn">Submit</button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
+
+    <div class="container mt-3" id="search-container">
+      <div class="search-form text-center card-header mt-3">
+        <h1 class="mb-3">Search for a mentee</h1>
+
+      <p class="mb-2">Filter your search here.</br>If you choose to not apply a filter for any field, the search will return results for all options.</p>
+
+      <form class="text-left" id="menteeSearch">
+        <fieldset>
+          <div class="form-group mt-4">
+            <label for="location" class="form-label">City</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputLocation"
+              aria-describedby="locationHelp"
+              placeholder="Enter a city"
+              maxlength="30"
+            />
+          </div>
+          <div class="form-group mt-4">
+            <label for="inputFormat" class="form-label">Collaboration Format</label>
+            <select class="collaboration-select form-select" aria-label="Default select" id="formatSelect">
+              <option selected>All</option>
+              <option value="online">Online</option>
+              <option value="in-person">In-person</option>
+          </select>
+          </div>
+          <div class="form-group mt-4">
+            <p class="form-label">Framework</p>
+            <div class="d-flex flex-row flex-wrap">
+              {{>frameworks}}
+              
+              </div>
+          </div>
+          
+          <div class="form-group d-flex flex-column align-items-center">
+            <button type="submit" class="btn btn-primary mt-4 border-0" id="mentee-search-btn">Submit</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
 
       
     </div>
     <div class="container card-container d-flex flex-column mt-3" id="mentee-browse-container">
-        <p class="text-center empty-search-message"> Use the form above to start a search! </p>
       </div>
