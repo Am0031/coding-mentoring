@@ -6,12 +6,12 @@ Platform to match coding mentors with coding mentees
 
 ## Team members
 
-[Katarzyna Jaromin-Kaliciak](https://github.com/katarzynajk)
-[Abdirahman Osman](https://github.com/AOsman0)
-[Ricky Palmer](https://github.com/SkyIsNotGreen)
-[Amelie Pira](https://github.com/Am0031)
-[Aisha Saleh](https://github.com/Saleha22)
-[Cherelle Simpson](https://github.com/C-Sim)
+- [Katarzyna Jaromin-Kaliciak](https://github.com/katarzynajk)
+- [Abdirahman Osman](https://github.com/AOsman0)
+- [Ricky Palmer](https://github.com/SkyIsNotGreen)
+- [Amelie Pira](https://github.com/Am0031)
+- [Aisha Saleh](https://github.com/Saleha22)
+- [Cherelle Simpson](https://github.com/C-Sim)
 
 ## Technologies
 
@@ -33,11 +33,19 @@ Platform to match coding mentors with coding mentees
 ## Screenshots
 
 <details>
-<summary>Homepage</summary>
+<summary>Homepage - Desktop Viewport</summary>
 
-![homepage](...)
+![homepage-dt](public/assets/screenshots/hp-dt.png)
 
 </details>
+
+<details>
+<summary>Homepage - Mobile Viewport</summary>
+
+![homepage-mob](public/assets/screenshots/hp-mob.png)
+
+</details>
+</br>
 
 ## User Story
 
