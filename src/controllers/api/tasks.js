@@ -80,9 +80,9 @@ const getTasksByMentor = async (req, res) => {
         "resourceURL",
         "authorId",
       ],
-      include: [{ model: Framework }],
+      include: [{ model: Framework }, { model: Mentor }],
     });
-    const tasks = temptasks.map((i) => i.dataValues);
+    const tasks = temptasks.map((i) => i.get({ plain: true }));
 
     if (!tasks) {
       return res.status(500).json({ message: "Tasks not found" });
@@ -98,6 +98,7 @@ const getTasksByMentor = async (req, res) => {
       const authorId = each.authorId;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
+      const authorName = each.mentor?.username ?? "MentorMe";
 
       const response = {
         id,
@@ -109,6 +110,7 @@ const getTasksByMentor = async (req, res) => {
         authorId,
         frameworkId,
         frameworkName,
+        authorName,
       };
       return response;
     };
@@ -134,9 +136,9 @@ const getTaskById = async (req, res) => {
         "resourceURL",
         "authorId",
       ],
-      include: Framework,
+      include: [{ model: Framework }, { model: Mentor }],
     });
-    const task = temptask.dataValues;
+    const task = temptask.get({ plain: true });
 
     if (!task) {
       return res.status(500).json({ message: "Task not found" });
@@ -152,6 +154,7 @@ const getTaskById = async (req, res) => {
       const authorId = each.authorId;
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
+      const authorName = each.mentor?.username ?? "MentorMe";
 
       const response = {
         id,
@@ -163,6 +166,7 @@ const getTaskById = async (req, res) => {
         authorId,
         frameworkId,
         frameworkName,
+        authorName,
       };
       return response;
     };
