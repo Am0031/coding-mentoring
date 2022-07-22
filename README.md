@@ -2,7 +2,7 @@
 
 Platform to match coding mentors with coding mentees
 
-[Deployed URL](...)
+[Deployed URL](https://lit-atoll-12366.herokuapp.com/)
 
 ## Team members
 
@@ -72,7 +72,9 @@ THEN my user credentials are saved and I am logged into the site
 WHEN I revisit the site at a later time and choose to sign in
 THEN I am prompted to enter my email and password
 WHEN I am signed in to the site
-THEN I see navigation links for the homepage, my dashboard, and the option to log out
-WHEN I ...
-THEN I ...
+THEN I see navigation links for the homepage, my dashboard, and the option to log out and am able to edit my personal information
+WHEN I am logged in as a Mentee
+THEN I can view profiles of Mentors and other Mentees and connect with them via email, view and edit the frameworks I am interested in learning, view my partnerships with Mentors and the tasks they have assigned to me
+WHEN I am logged in as a Mentor
+THEN I can view profiles of Mentees and connect with them via email, view and edit the frameworks I am interested in coaching and view my partnerships with Mentees and the tasks they I have assigned to them. I can also search the library of tasks, filter them to show the tasks that I have created, and create additional tasks to add to the library
 ```
