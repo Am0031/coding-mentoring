@@ -1,4 +1,4 @@
-const { Task, Framework } = require("../../models");
+const { Task, Framework, Mentor } = require("../../models");
 
 const getTasks = async (req, res) => {
   try {
@@ -12,9 +12,9 @@ const getTasks = async (req, res) => {
         "resourceURL",
         "authorId",
       ],
-      include: [{ model: Framework }],
+      include: [{ model: Framework }, { model: Mentor }],
     });
-    const tasks = tempTasks.map((i) => i.dataValues);
+    const tasks = tempTasks.map((i) => i.get({ plain: true }));
 
     if (!tasks) {
       return res.status(500).json({ message: "Tasks not found" });
@@ -31,6 +31,8 @@ const getTasks = async (req, res) => {
       const frameworkId = each.framework.id;
       const frameworkName = each.framework.frameworkName;
 
+      const authorName = each.mentor?.username ?? "MentorMe";
+
       const response = {
         id,
         taskName,
@@ -41,6 +43,7 @@ const getTasks = async (req, res) => {
         authorId,
         frameworkId,
         frameworkName,
+        authorName,
       };
       return response;
     };

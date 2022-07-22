@@ -153,6 +153,7 @@ const generateTaskCards = (data) => {
             <p class="task-detail"><span class="sub-title xp">Experience Points</span> ${each.points}</p>
             <p class="task-detail"><span class="sub-title">Description</span> ${each.taskDescription}</p>
             <p class="task-detail"><span class="sub-title">Useful resources</span> ${each.resourceURL}</p>
+            <p class="task-detail"><span class="sub-title">Author</span> ${each.authorName}</p>
           </div>
           <button class="btn btn-primary" data-id=${each.id} name="assign-task-btn">Assign Task to a Mentee</button>
         </div>
